@@ -23,7 +23,4 @@ public record Set(
     URI scryfallUri,
     URI uri,
     URI iconSvgUri,
-    URI searchUri
-) {
-
-}
+    URI searchUri) {}

@@ -8,7 +8,6 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public enum SetType {
-
   CORE("core"),
   EXPANSION("expansion"),
   MASTERS("masters"),
