@@ -1,27 +1,28 @@
 package com.wpaul15.scryfall.api.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import java.util.UUID;
 
 public record CardFace(
     String artist,
     double cmc,
-    List<Color> colorIndicator,
+    @JsonProperty("color_indicator") List<Color> colorIndicator,
     List<Color> colors,
-    String flavorText,
-    UUID illustrationId,
-    ImageUris imageUris,
+    @JsonProperty("flavor_text") String flavorText,
+    @JsonProperty("illustration_id") UUID illustrationId,
+    @JsonProperty("image_uris") ImageUris imageUris,
     Layout layout,
     String loyalty,
-    String manaCost,
+    @JsonProperty("mana_cost") String manaCost,
     String name,
     String object,
-    UUID oracleId,
-    String oracleText,
+    @JsonProperty("oracle_id") UUID oracleId,
+    @JsonProperty("oracle_text") String oracleText,
     String power,
-    String printedName,
-    String printedText,
-    String printedTypeLine,
+    @JsonProperty("printed_name") String printedName,
+    @JsonProperty("printed_text") String printedText,
+    @JsonProperty("printed_type_line") String printedTypeLine,
     String toughness,
-    String typeLine,
+    @JsonProperty("type_line") String typeLine,
     String watermark) {}

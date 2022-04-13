@@ -1,6 +1,7 @@
 package com.wpaul15.scryfall.api.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.net.URI;
 import java.util.UUID;
 import lombok.AccessLevel;
@@ -8,7 +9,12 @@ import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 public record RelatedCard(
-    UUID id, String object, Component component, String name, String typeLine, URI uri) {
+    UUID id,
+    String object,
+    Component component,
+    String name,
+    @JsonProperty("type_line") String typeLine,
+    URI uri) {
 
   @AllArgsConstructor
   @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
