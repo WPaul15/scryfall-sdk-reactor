@@ -26,12 +26,12 @@ public enum Language {
   SANSKRIT("sa"),
   PHYREXIAN("ph");
 
-  String code;
+  String displayName;
 
   @JsonCreator
   private static Language create(String jsonValue) {
     for (Language language : values()) {
-      if (jsonValue.equals(language.code)) {
+      if (jsonValue.equals(language.displayName)) {
         return language;
       }
     }

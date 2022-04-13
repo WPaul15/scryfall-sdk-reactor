@@ -15,12 +15,12 @@ public enum Color {
   GREEN("G"),
   COLORLESS("");
 
-  String code;
+  String displayName;
 
   @JsonCreator
   private static Color create(String jsonValue) {
     for (Color color : values()) {
-      if (jsonValue.equals(color.code)) {
+      if (jsonValue.equals(color.displayName)) {
         return color;
       }
     }

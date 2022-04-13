@@ -29,12 +29,12 @@ public enum Layout {
   ART_SERIES("art_series"),
   REVERSIBLE_CARD("reversible_card");
 
-  String code;
+  String displayName;
 
   @JsonCreator
   private static Layout create(String jsonValue) {
     for (Layout layout : values()) {
-      if (jsonValue.equals(layout.code)) {
+      if (jsonValue.equals(layout.displayName)) {
         return layout;
       }
     }
