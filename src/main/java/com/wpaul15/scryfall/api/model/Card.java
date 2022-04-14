@@ -5,7 +5,9 @@ import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
+import lombok.Builder;
 
+@Builder
 public record Card(
     // Core Fields
     @JsonProperty("arena_id") int arenaId,

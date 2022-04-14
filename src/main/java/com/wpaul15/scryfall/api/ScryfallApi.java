@@ -8,9 +8,9 @@ import com.wpaul15.scryfall.api.model.Card;
 import reactor.core.publisher.Mono;
 import reactor.netty.http.client.HttpClient;
 
-public class ScryfallApi {
+public final class ScryfallApi {
 
-  private static final String BASE_URL = "https://api.scryfall.com";
+  private static String BASE_URL = "https://api.scryfall.com";
 
   private static final ObjectMapper OBJECT_MAPPER =
       JsonMapper.builder()
@@ -38,6 +38,10 @@ public class ScryfallApi {
                 return Mono.error(ex);
               }
             });
+  }
+
+  void setBaseUrl(String baseUrl) {
+    BASE_URL = baseUrl;
   }
 
   private static HttpClient getClient() {
