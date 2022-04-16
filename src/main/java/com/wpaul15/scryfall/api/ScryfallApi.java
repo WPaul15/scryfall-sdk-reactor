@@ -7,12 +7,15 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.wpaul15.scryfall.api.model.Card;
 import com.wpaul15.scryfall.api.model.Language;
 import java.util.UUID;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import reactor.core.publisher.Mono;
 import reactor.netty.http.client.HttpClient;
 
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public final class ScryfallApi {
 
-  private static String BASE_URL = "https://api.scryfall.com";
+  private static final String BASE_URL = "https://api.scryfall.com";
 
   private static final ObjectMapper OBJECT_MAPPER =
       JsonMapper.builder()
@@ -22,6 +25,24 @@ public final class ScryfallApi {
           // See: https://github.com/FasterXML/jackson-databind/issues/3102
           //          .propertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE)
           .build();
+
+  HttpClient httpClient;
+
+  /** Creates a new Scryfall API client. */
+  public ScryfallApi() {
+    this(BASE_URL);
+  }
+
+  ScryfallApi(String baseUrl) {
+    this.httpClient =
+        HttpClient.create()
+            .baseUrl(baseUrl)
+            .headers(
+                headers -> {
+                  headers.add("Accept", "application/json");
+                  headers.add("Content-Type", "application/json");
+                });
+  }
 
   /**
    * Fetches a single {@link Card} with the given name, using an exact-match search. That is, {@code
@@ -180,7 +201,7 @@ public final class ScryfallApi {
   }
 
   private <T> Mono<T> getSingle(String endpoint, Class<T> clazz) {
-    return getClient()
+    return httpClient
         .get()
         .uri(endpoint)
         // TODO: Handle errors
@@ -193,21 +214,5 @@ public final class ScryfallApi {
                 return Mono.error(ex);
               }
             });
-  }
-
-  private static HttpClient getClient() {
-    return ClientHolder.CLIENT;
-  }
-
-  private static final class ClientHolder {
-
-    private static final HttpClient CLIENT =
-        HttpClient.create()
-            .baseUrl(BASE_URL)
-            .headers(
-                headers -> {
-                  headers.add("Accept", "application/json");
-                  headers.add("Content-Type", "application/json");
-                });
   }
 }
