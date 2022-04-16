@@ -31,6 +31,10 @@ public final class ScryfallApi {
     return getSingle("/cards/mtgoid/" + mtgoId, Card.class);
   }
 
+  public Mono<Card> getCardByArenaId(int arenaId) {
+    return getSingle("/cards/arena/" + arenaId, Card.class);
+  }
+
   void setBaseUrl(String baseUrl) {
     BASE_URL = baseUrl;
   }

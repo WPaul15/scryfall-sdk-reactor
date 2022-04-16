@@ -42,7 +42,7 @@ public class ScryfallApiTest {
   void shouldGetCardByMultiverseId() throws JsonProcessingException {
     int multiverseId = 409574;
 
-    Card expected = Card.builder().multiverseIds(List.of(multiverseId)).build();
+    Card expected = Card.builder().name("Strip Mine").multiverseIds(List.of(multiverseId)).build();
 
     mockWebServer.enqueue(getMockResponse(expected));
 
@@ -55,12 +55,25 @@ public class ScryfallApiTest {
   void shouldGetCardByMtgoId() throws JsonProcessingException {
     int mtgoId = 54957;
 
-    Card expected = Card.builder().mtgoId(mtgoId).build();
+    Card expected = Card.builder().name("Ghost Quarter").mtgoId(mtgoId).build();
 
     mockWebServer.enqueue(getMockResponse(expected));
 
     StepVerifier.create(scryfallApi.getCardByMtgoId(mtgoId))
         .assertNext(card -> assertThat(card.mtgoId()).isEqualTo(mtgoId))
+        .verifyComplete();
+  }
+
+  @Test
+  void shouldGetCardByArenaId() throws JsonProcessingException {
+    int arenaId = 67330;
+
+    Card expected = Card.builder().name("Yargle, Glutton of Urborg").arenaId(arenaId).build();
+
+    mockWebServer.enqueue(getMockResponse(expected));
+
+    StepVerifier.create(scryfallApi.getCardByArenaId(arenaId))
+        .assertNext(card -> assertThat(card.arenaId()).isEqualTo(arenaId))
         .verifyComplete();
   }
 
