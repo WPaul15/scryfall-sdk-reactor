@@ -23,36 +23,89 @@ public final class ScryfallApi {
           //          .propertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE)
           .build();
 
+  /**
+   * Fetches a single {@link Card} from the given set with the given collector number.
+   *
+   * @param setCode the code for the set containing the card
+   * @param collectorNumber the card's collector number within the set
+   * @return a {@link Card} with the given set and collector number
+   */
   public Mono<Card> getCardByCollectorNumber(String setCode, String collectorNumber) {
     return getSingle(String.format("/cards/%s/%s", setCode, collectorNumber), Card.class);
   }
 
+  /**
+   * Fetches a single {@link Card} from the given set with the given collector number and language.
+   * That is, this {@code Card} will have a unique ID representing the card printed in the given
+   * language.
+   *
+   * @param setCode the code for the set containing the card
+   * @param collectorNumber the card's collector number within the set
+   * @param language the card language
+   * @return a {@link Card} with the given set, collector number, and language
+   */
   public Mono<Card> getCardByCollectorNumber(
       String setCode, String collectorNumber, Language language) {
     return getSingle(
         String.format("/cards/%s/%s/%s", setCode, collectorNumber, language), Card.class);
   }
 
+  /**
+   * Fetches a single {@link Card} with the given Multiverse ID.
+   *
+   * @param multiverseId the card's Multiverse ID
+   * @return a {@link Card} with the given Multiverse ID
+   */
   public Mono<Card> getCardByMultiverseId(int multiverseId) {
     return getSingle(String.format("/cards/multiverse/%d", multiverseId), Card.class);
   }
 
+  /**
+   * Fetches a single {@link Card} with the given MTG Online ID.
+   *
+   * @param mtgoId the card's MTG Online ID
+   * @return a {@link Card} with the given MTG Online ID
+   */
   public Mono<Card> getCardByMtgoId(int mtgoId) {
     return getSingle(String.format("/cards/mtgoid/%d", mtgoId), Card.class);
   }
 
+  /**
+   * Fetches a single {@link Card} with the given MTG Arena ID.
+   *
+   * @param arenaId the card's MTG Arena ID
+   * @return a {@link Card} with the given MTG Arena ID
+   */
   public Mono<Card> getCardByArenaId(int arenaId) {
     return getSingle(String.format("/cards/arena/%d", arenaId), Card.class);
   }
 
+  /**
+   * Fetches a single {@link Card} with the given TCGPlayer ID.
+   *
+   * @param tcgplayerId the card's TCGPlayer ID
+   * @return a {@link Card} with the given TCGPlayer ID
+   */
   public Mono<Card> getCardByTcgplayerId(int tcgplayerId) {
     return getSingle(String.format("/cards/tcgplayer/%d", tcgplayerId), Card.class);
   }
 
+  /**
+   * Fetches a single {@link Card} with the given Cardmarket ID.
+   *
+   * @param cardmarketId the card's Cardmarket ID
+   * @return a {@link Card} with the given Cardmarket ID
+   */
   public Mono<Card> getCardByCardmarketId(int cardmarketId) {
     return getSingle(String.format("/cards/cardmarket/%d", cardmarketId), Card.class);
   }
 
+  /**
+   * Fetches a single {@link Card} with the given ID.
+   *
+   * @param id the card's ID
+   * @return a {@link Card} with the given ID
+   */
   public Mono<Card> getCardById(UUID id) {
     return getSingle(String.format("/cards/%s", id), Card.class);
   }
