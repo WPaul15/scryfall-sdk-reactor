@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.wpaul15.scryfall.api.model.Card;
+import com.wpaul15.scryfall.api.model.Language;
 import java.util.UUID;
 import reactor.core.publisher.Mono;
 import reactor.netty.http.client.HttpClient;
@@ -16,13 +17,21 @@ public final class ScryfallApi {
   private static final ObjectMapper OBJECT_MAPPER =
       JsonMapper.builder()
           .addModule(new JavaTimeModule())
-          /*
-          TODO: Use the property naming strategy. There is a known issue regarding the naming
-                strategy and records.
-          See: https://github.com/FasterXML/jackson-databind/issues/3102
-           */
+          // TODO: Use the property naming strategy. There is a known issue regarding the naming
+          //       strategy and records.
+          // See: https://github.com/FasterXML/jackson-databind/issues/3102
           //          .propertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE)
           .build();
+
+  public Mono<Card> getCardByCollectorNumber(String setCode, String collectorNumber) {
+    return getSingle("/cards/" + setCode + "/" + collectorNumber, Card.class);
+  }
+
+  public Mono<Card> getCardByCollectorNumber(
+      String setCode, String collectorNumber, Language language) {
+    return getSingle(
+        "/cards/" + setCode + "/" + collectorNumber + "/" + language.toString(), Card.class);
+  }
 
   public Mono<Card> getCardByMultiverseId(int multiverseId) {
     return getSingle("/cards/multiverse/" + multiverseId, Card.class);

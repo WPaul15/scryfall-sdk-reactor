@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.wpaul15.scryfall.api.model.Card;
+import com.wpaul15.scryfall.api.model.Language;
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
@@ -37,6 +38,54 @@ public class ScryfallApiTest {
   @AfterAll
   static void afterAll() throws IOException {
     mockWebServer.shutdown();
+  }
+
+  @Test
+  void shouldGetCardByCollectorNumber() throws JsonProcessingException {
+    String setCode = "xln";
+    String collectorNumber = "96";
+
+    Card expected =
+        Card.builder().name("Costly Plunder").set(setCode).collectorNumber(collectorNumber).build();
+
+    mockWebServer.enqueue(getMockResponse(expected));
+
+    StepVerifier.create(scryfallApi.getCardByCollectorNumber(setCode, collectorNumber))
+        .assertNext(
+            card -> {
+              assertThat(card.set()).isEqualTo(setCode);
+              assertThat(card.collectorNumber()).isEqualTo(collectorNumber);
+            })
+        .verifyComplete();
+  }
+
+  @Test
+  void shouldGetCardByCollectorNumberWithLanguage() throws JsonProcessingException {
+    String setCode = "dom";
+    String collectorNumber = "1";
+    Language language = Language.GERMAN;
+    String printedName = "Karn, Urzas Spross";
+
+    Card expected =
+        Card.builder()
+            .name("Karn, Scion of Urza")
+            .printedName(printedName)
+            .lang(language)
+            .set(setCode)
+            .collectorNumber(collectorNumber)
+            .build();
+
+    mockWebServer.enqueue(getMockResponse(expected));
+
+    StepVerifier.create(scryfallApi.getCardByCollectorNumber(setCode, collectorNumber, language))
+        .assertNext(
+            card -> {
+              assertThat(card.lang()).isEqualTo(language);
+              assertThat(card.printedName()).isEqualTo(printedName);
+              assertThat(card.set()).isEqualTo(setCode);
+              assertThat(card.collectorNumber()).isEqualTo(collectorNumber);
+            })
+        .verifyComplete();
   }
 
   @Test
