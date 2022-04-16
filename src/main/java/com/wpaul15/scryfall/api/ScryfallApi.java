@@ -51,7 +51,8 @@ public final class ScryfallApi {
    * @return a {@link Card} with the given name
    */
   public Mono<Card> getCardByExactName(String name, String setCode) {
-    return getSingle(String.format("/cards/named?exact=%s&set=%s", name.replace(' ', '+'), setCode), Card.class);
+    return getSingle(
+        String.format("/cards/named?exact=%s&set=%s", name.replace(' ', '+'), setCode), Card.class);
   }
 
   /**
@@ -83,7 +84,8 @@ public final class ScryfallApi {
    * @return a {@link Card} with the given name
    */
   public Mono<Card> getCardByFuzzyName(String name, String setCode) {
-    return getSingle(String.format("/cards/named?fuzzy=%s&set=%s", name.replace(' ', '+'), setCode), Card.class);
+    return getSingle(
+        String.format("/cards/named?fuzzy=%s&set=%s", name.replace(' ', '+'), setCode), Card.class);
   }
 
   /**
@@ -130,7 +132,7 @@ public final class ScryfallApi {
    * @return a {@link Card} with the given MTG Online ID
    */
   public Mono<Card> getCardByMtgoId(int mtgoId) {
-    return getSingle(String.format("/cards/mtgoid/%d", mtgoId), Card.class);
+    return getSingle(String.format("/cards/mtgo/%d", mtgoId), Card.class);
   }
 
   /**
