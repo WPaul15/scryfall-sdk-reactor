@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.wpaul15.scryfall.api.model.Card;
 import com.wpaul15.scryfall.api.model.Language;
+import com.wpaul15.scryfall.api.model.MtgSet;
 import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -196,8 +197,8 @@ public final class ScryfallApi {
     return getSingle(String.format("/cards/%s", id), Card.class);
   }
 
-  void setBaseUrl(String baseUrl) {
-    BASE_URL = baseUrl;
+  public Mono<MtgSet> getSetByCode(String setCode) {
+    return getSingle(String.format("/sets/%s", setCode), MtgSet.class);
   }
 
   private <T> Mono<T> getSingle(String endpoint, Class<T> clazz) {

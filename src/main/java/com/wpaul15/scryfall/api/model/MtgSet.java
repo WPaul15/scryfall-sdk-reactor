@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.UUID;
+import lombok.Builder;
 
+@Builder
 public record MtgSet(
     UUID id,
     String code,
