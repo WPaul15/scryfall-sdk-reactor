@@ -205,6 +205,10 @@ public final class ScryfallApi {
     return getSingle(String.format("/sets/tcgplayer/%d", tcgplayerId), MtgSet.class);
   }
 
+  public Mono<MtgSet> getSetById(UUID id) {
+    return getSingle(String.format("/sets/%s", id), MtgSet.class);
+  }
+
   private <T> Mono<T> getSingle(String endpoint, Class<T> clazz) {
     return httpClient
         .get()
