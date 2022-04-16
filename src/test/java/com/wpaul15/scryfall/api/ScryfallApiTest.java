@@ -1,43 +1,41 @@
 package com.wpaul15.scryfall.api;
 
+import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
+import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
+import static com.github.tomakehurst.wiremock.client.WireMock.get;
+import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
+import static com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo;
+import static java.util.Map.entry;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder;
+import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo;
+import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import com.wpaul15.scryfall.api.model.Card;
 import com.wpaul15.scryfall.api.model.Language;
-import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
-import okhttp3.mockwebserver.MockResponse;
-import okhttp3.mockwebserver.MockWebServer;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import reactor.test.StepVerifier;
 
+@WireMockTest
 public class ScryfallApiTest {
 
   private static final ObjectMapper OBJECT_MAPPER =
       JsonMapper.builder().addModule(new JavaTimeModule()).build();
 
-  private static MockWebServer mockWebServer;
-  private static ScryfallApi scryfallApi;
+  private ScryfallApi scryfallApi;
 
-  @BeforeAll
-  static void beforeAll() throws IOException {
-    mockWebServer = new MockWebServer();
-    mockWebServer.start();
-
+  @BeforeEach
+  void beforeEach(WireMockRuntimeInfo wireMockRuntimeInfo) {
     scryfallApi = new ScryfallApi();
-    scryfallApi.setBaseUrl(mockWebServer.url("/").toString());
-  }
-
-  @AfterAll
-  static void afterAll() throws IOException {
-    mockWebServer.shutdown();
+    scryfallApi.setBaseUrl(wireMockRuntimeInfo.getHttpBaseUrl());
   }
 
   @Test
@@ -46,7 +44,10 @@ public class ScryfallApiTest {
 
     Card expected = Card.builder().name(name).build();
 
-    mockWebServer.enqueue(getMockResponse(expected));
+    stubFor(
+        get(urlPathEqualTo("/cards/named"))
+            .withQueryParam("exact", equalTo(name))
+            .willReturn(mockResponse(expected)));
 
     StepVerifier.create(scryfallApi.getCardByExactName(name))
         .assertNext(card -> assertThat(card.name()).isEqualTo(name))
@@ -60,7 +61,11 @@ public class ScryfallApiTest {
 
     Card expected = Card.builder().name(name).set(setCode).build();
 
-    mockWebServer.enqueue(getMockResponse(expected));
+    stubFor(
+        get(urlPathEqualTo("/cards/named"))
+            .withQueryParams(
+                Map.ofEntries(entry("exact", equalTo(name)), entry("set", equalTo(setCode))))
+            .willReturn(mockResponse(expected)));
 
     StepVerifier.create(scryfallApi.getCardByExactName(name, setCode))
         .assertNext(
@@ -78,7 +83,10 @@ public class ScryfallApiTest {
 
     Card expected = Card.builder().name(name).build();
 
-    mockWebServer.enqueue(getMockResponse(expected));
+    stubFor(
+        get(urlPathEqualTo("/cards/named"))
+            .withQueryParam("fuzzy", equalTo(partialName))
+            .willReturn(mockResponse(expected)));
 
     StepVerifier.create(scryfallApi.getCardByFuzzyName(partialName))
         .assertNext(card -> assertThat(card.name()).isEqualTo(name))
@@ -93,7 +101,11 @@ public class ScryfallApiTest {
 
     Card expected = Card.builder().name(name).set(setCode).build();
 
-    mockWebServer.enqueue(getMockResponse(expected));
+    stubFor(
+        get(urlPathEqualTo("/cards/named"))
+            .withQueryParams(
+                Map.ofEntries(entry("fuzzy", equalTo(partialName)), entry("set", equalTo(setCode))))
+            .willReturn(mockResponse(expected)));
 
     StepVerifier.create(scryfallApi.getCardByFuzzyName(partialName, setCode))
         .assertNext(
@@ -112,7 +124,9 @@ public class ScryfallApiTest {
     Card expected =
         Card.builder().name("Costly Plunder").set(setCode).collectorNumber(collectorNumber).build();
 
-    mockWebServer.enqueue(getMockResponse(expected));
+    stubFor(
+        get(urlPathEqualTo(String.format("/cards/%s/%s", setCode, collectorNumber)))
+            .willReturn(mockResponse(expected)));
 
     StepVerifier.create(scryfallApi.getCardByCollectorNumber(setCode, collectorNumber))
         .assertNext(
@@ -139,7 +153,9 @@ public class ScryfallApiTest {
             .collectorNumber(collectorNumber)
             .build();
 
-    mockWebServer.enqueue(getMockResponse(expected));
+    stubFor(
+        get(urlPathEqualTo(String.format("/cards/%s/%s/%s", setCode, collectorNumber, language)))
+            .willReturn(mockResponse(expected)));
 
     StepVerifier.create(scryfallApi.getCardByCollectorNumber(setCode, collectorNumber, language))
         .assertNext(
@@ -158,7 +174,9 @@ public class ScryfallApiTest {
 
     Card expected = Card.builder().name("Strip Mine").multiverseIds(List.of(multiverseId)).build();
 
-    mockWebServer.enqueue(getMockResponse(expected));
+    stubFor(
+        get(urlPathEqualTo(String.format("/cards/multiverse/%s", multiverseId)))
+            .willReturn(mockResponse(expected)));
 
     StepVerifier.create(scryfallApi.getCardByMultiverseId(multiverseId))
         .assertNext(card -> assertThat(card.multiverseIds()).contains(multiverseId))
@@ -171,7 +189,9 @@ public class ScryfallApiTest {
 
     Card expected = Card.builder().name("Ghost Quarter").mtgoId(mtgoId).build();
 
-    mockWebServer.enqueue(getMockResponse(expected));
+    stubFor(
+        get(urlPathEqualTo(String.format("/cards/mtgo/%s", mtgoId)))
+            .willReturn(mockResponse(expected)));
 
     StepVerifier.create(scryfallApi.getCardByMtgoId(mtgoId))
         .assertNext(card -> assertThat(card.mtgoId()).isEqualTo(mtgoId))
@@ -184,7 +204,9 @@ public class ScryfallApiTest {
 
     Card expected = Card.builder().name("Yargle, Glutton of Urborg").arenaId(arenaId).build();
 
-    mockWebServer.enqueue(getMockResponse(expected));
+    stubFor(
+        get(urlPathEqualTo(String.format("/cards/arena/%s", arenaId)))
+            .willReturn(mockResponse(expected)));
 
     StepVerifier.create(scryfallApi.getCardByArenaId(arenaId))
         .assertNext(card -> assertThat(card.arenaId()).isEqualTo(arenaId))
@@ -197,7 +219,9 @@ public class ScryfallApiTest {
 
     Card expected = Card.builder().name("Rona, Disciple of Gix").tcgplayerId(tcgplayerId).build();
 
-    mockWebServer.enqueue(getMockResponse(expected));
+    stubFor(
+        get(urlPathEqualTo(String.format("/cards/tcgplayer/%s", tcgplayerId)))
+            .willReturn(mockResponse(expected)));
 
     StepVerifier.create(scryfallApi.getCardByTcgplayerId(tcgplayerId))
         .assertNext(card -> assertThat(card.tcgplayerId()).isEqualTo(tcgplayerId))
@@ -210,7 +234,9 @@ public class ScryfallApiTest {
 
     Card expected = Card.builder().name("Embodiment of Agonies").cardmarketId(cardmarketId).build();
 
-    mockWebServer.enqueue(getMockResponse(expected));
+    stubFor(
+        get(urlPathEqualTo(String.format("/cards/cardmarket/%s", cardmarketId)))
+            .willReturn(mockResponse(expected)));
 
     StepVerifier.create(scryfallApi.getCardByCardmarketId(cardmarketId))
         .assertNext(card -> assertThat(card.cardmarketId()).isEqualTo(cardmarketId))
@@ -223,17 +249,18 @@ public class ScryfallApiTest {
 
     Card expected = Card.builder().name("Dusk // Dawn").id(id).build();
 
-    mockWebServer.enqueue(getMockResponse(expected));
+    stubFor(get(urlPathEqualTo(String.format("/cards/%s", id))).willReturn(mockResponse(expected)));
 
     StepVerifier.create(scryfallApi.getCardById(id))
         .assertNext(card -> assertThat(card.id()).isEqualTo(id))
         .verifyComplete();
   }
 
-  private static MockResponse getMockResponse(Object body) throws JsonProcessingException {
-    return new MockResponse()
-        .setResponseCode(200)
-        .setBody(OBJECT_MAPPER.writeValueAsString(body))
-        .addHeader("Content-Type", "application/json");
+  private static ResponseDefinitionBuilder mockResponse(Object body)
+      throws JsonProcessingException {
+    return aResponse()
+        .withStatus(200)
+        .withHeader("Content-Type", "application/json")
+        .withBody(OBJECT_MAPPER.writeValueAsString(body));
   }
 }
