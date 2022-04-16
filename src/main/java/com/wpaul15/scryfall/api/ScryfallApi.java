@@ -24,24 +24,32 @@ public final class ScryfallApi {
           .build();
 
   public Mono<Card> getCardByMultiverseId(int multiverseId) {
+    return getSingle("/cards/multiverse/" + multiverseId, Card.class);
+  }
+
+  public Mono<Card> getCardByMtgoId(int mtgoId) {
+    return getSingle("/cards/mtgoid/" + mtgoId, Card.class);
+  }
+
+  void setBaseUrl(String baseUrl) {
+    BASE_URL = baseUrl;
+  }
+
+  private <T> Mono<T> getSingle(String endpoint, Class<T> clazz) {
     return getClient()
         .get()
-        .uri("/cards/multiverse/" + multiverseId)
+        .uri(endpoint)
         .responseContent()
         .aggregate()
         .asString()
         .flatMap(
             body -> {
               try {
-                return Mono.just(OBJECT_MAPPER.readerFor(Card.class).readValue(body));
+                return Mono.just(OBJECT_MAPPER.readerFor(clazz).readValue(body));
               } catch (JsonProcessingException ex) {
                 return Mono.error(ex);
               }
             });
-  }
-
-  void setBaseUrl(String baseUrl) {
-    BASE_URL = baseUrl;
   }
 
   private static HttpClient getClient() {
