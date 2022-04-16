@@ -181,9 +181,8 @@ public final class ScryfallApi {
     return getClient()
         .get()
         .uri(endpoint)
-        .responseContent()
-        .aggregate()
-        .asString()
+        // TODO: Handle errors
+        .responseSingle(((httpClientResponse, byteBufMono) -> byteBufMono.asString()))
         .flatMap(
             body -> {
               try {
