@@ -72,6 +72,39 @@ public class ScryfallApiTest {
   }
 
   @Test
+  void shouldGetCardByFuzzyName() throws JsonProcessingException {
+    String partialName = "archet cour";
+    String name = "Archetype of Courage";
+
+    Card expected = Card.builder().name(name).build();
+
+    mockWebServer.enqueue(getMockResponse(expected));
+
+    StepVerifier.create(scryfallApi.getCardByFuzzyName(partialName))
+        .assertNext(card -> assertThat(card.name()).isEqualTo(name))
+        .verifyComplete();
+  }
+
+  @Test
+  void shouldGetCardByFuzzyNameWithSet() throws JsonProcessingException {
+    String partialName = "Steel hell";
+    String name = "Steel Hellkite";
+    String setCode = "som";
+
+    Card expected = Card.builder().name(name).set(setCode).build();
+
+    mockWebServer.enqueue(getMockResponse(expected));
+
+    StepVerifier.create(scryfallApi.getCardByFuzzyName(partialName, setCode))
+        .assertNext(
+            card -> {
+              assertThat(card.name()).isEqualTo(name);
+              assertThat(card.set()).isEqualTo(setCode);
+            })
+        .verifyComplete();
+  }
+
+  @Test
   void shouldGetCardByCollectorNumber() throws JsonProcessingException {
     String setCode = "xln";
     String collectorNumber = "96";
