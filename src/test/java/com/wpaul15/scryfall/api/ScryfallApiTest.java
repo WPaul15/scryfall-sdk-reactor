@@ -90,6 +90,19 @@ public class ScryfallApiTest {
         .verifyComplete();
   }
 
+  @Test
+  void shouldGetCardByCardmarketId() throws JsonProcessingException {
+    int cardmarketId = 379041;
+
+    Card expected = Card.builder().name("Embodiment of Agonies").cardmarketId(cardmarketId).build();
+
+    mockWebServer.enqueue(getMockResponse(expected));
+
+    StepVerifier.create(scryfallApi.getCardByCardmarketId(cardmarketId))
+        .assertNext(card -> assertThat(card.cardmarketId()).isEqualTo(cardmarketId))
+        .verifyComplete();
+  }
+
   private static MockResponse getMockResponse(Object body) throws JsonProcessingException {
     return new MockResponse()
         .setResponseCode(200)

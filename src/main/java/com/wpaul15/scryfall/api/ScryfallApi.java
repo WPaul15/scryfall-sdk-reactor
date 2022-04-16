@@ -39,6 +39,10 @@ public final class ScryfallApi {
     return getSingle("/cards/tcgplayer/" + tcgplayerId, Card.class);
   }
 
+  public Mono<Card> getCardByCardmarketId(int cardmarketId) {
+    return getSingle("/cards/cardmarket/" + cardmarketId, Card.class);
+  }
+
   void setBaseUrl(String baseUrl) {
     BASE_URL = baseUrl;
   }
