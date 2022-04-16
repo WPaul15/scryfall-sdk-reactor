@@ -41,6 +41,37 @@ public class ScryfallApiTest {
   }
 
   @Test
+  void shouldGetCardByExactName() throws JsonProcessingException {
+    String name = "Archetype of Courage";
+
+    Card expected = Card.builder().name(name).build();
+
+    mockWebServer.enqueue(getMockResponse(expected));
+
+    StepVerifier.create(scryfallApi.getCardByExactName(name))
+        .assertNext(card -> assertThat(card.name()).isEqualTo(name))
+        .verifyComplete();
+  }
+
+  @Test
+  void shouldGetCardByExactNameWithSet() throws JsonProcessingException {
+    String name = "Steel Hellkite";
+    String setCode = "som";
+
+    Card expected = Card.builder().name(name).set(setCode).build();
+
+    mockWebServer.enqueue(getMockResponse(expected));
+
+    StepVerifier.create(scryfallApi.getCardByExactName(name, setCode))
+        .assertNext(
+            card -> {
+              assertThat(card.name()).isEqualTo(name);
+              assertThat(card.set()).isEqualTo(setCode);
+            })
+        .verifyComplete();
+  }
+
+  @Test
   void shouldGetCardByCollectorNumber() throws JsonProcessingException {
     String setCode = "xln";
     String collectorNumber = "96";

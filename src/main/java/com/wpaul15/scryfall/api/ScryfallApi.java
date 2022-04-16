@@ -24,6 +24,37 @@ public final class ScryfallApi {
           .build();
 
   /**
+   * Fetches a single {@link Card} with the given name, using an exact-match search. That is, {@code
+   * name} must be exactly the name of the desired card. {@code name} is case-insensitive and
+   * punctuation is optional.
+   *
+   * <p>If a card has been printed in multiple sets, this method will return only the most recent
+   * printing. If the version from a specific set is desired, use {@link #getCardByExactName(String,
+   * String)}.
+   *
+   * @param name the card's name
+   * @return a {@link Card} with the given name
+   */
+  public Mono<Card> getCardByExactName(String name) {
+    return getSingle(String.format("/cards/named?exact=%s", name), Card.class);
+  }
+
+  /**
+   * Fetches a single {@link Card} from the given set with the given name, using an exact-match
+   * search. That is, {@code name} must be exactly the name of the desired card. {@code name} is
+   * case-insensitive and punctuation is optional.
+   *
+   * <p>Search results will be limited to cards in the given set.
+   *
+   * @param name the card's name
+   * @param setCode the code for the set containing the card
+   * @return a {@link Card} with the given name
+   */
+  public Mono<Card> getCardByExactName(String name, String setCode) {
+    return getSingle(String.format("/cards/named?exact=%s&set=%s", name, setCode), Card.class);
+  }
+
+  /**
    * Fetches a single {@link Card} from the given set with the given collector number.
    *
    * @param setCode the code for the set containing the card
