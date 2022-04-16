@@ -77,6 +77,19 @@ public class ScryfallApiTest {
         .verifyComplete();
   }
 
+  @Test
+  void shouldGetCardByTcgplayerId() throws JsonProcessingException {
+    int tcgplayerId = 162145;
+
+    Card expected = Card.builder().name("Rona, Disciple of Gix").tcgplayerId(tcgplayerId).build();
+
+    mockWebServer.enqueue(getMockResponse(expected));
+
+    StepVerifier.create(scryfallApi.getCardByTcgplayerId(tcgplayerId))
+        .assertNext(card -> assertThat(card.tcgplayerId()).isEqualTo(tcgplayerId))
+        .verifyComplete();
+  }
+
   private static MockResponse getMockResponse(Object body) throws JsonProcessingException {
     return new MockResponse()
         .setResponseCode(200)
