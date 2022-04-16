@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.wpaul15.scryfall.api.model.Card;
+import java.util.UUID;
 import reactor.core.publisher.Mono;
 import reactor.netty.http.client.HttpClient;
 
@@ -41,6 +42,10 @@ public final class ScryfallApi {
 
   public Mono<Card> getCardByCardmarketId(int cardmarketId) {
     return getSingle("/cards/cardmarket/" + cardmarketId, Card.class);
+  }
+
+  public Mono<Card> getCardById(UUID id) {
+    return getSingle("/cards/" + id, Card.class);
   }
 
   void setBaseUrl(String baseUrl) {

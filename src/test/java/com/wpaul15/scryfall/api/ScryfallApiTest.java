@@ -9,6 +9,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.wpaul15.scryfall.api.model.Card;
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.AfterAll;
@@ -100,6 +101,19 @@ public class ScryfallApiTest {
 
     StepVerifier.create(scryfallApi.getCardByCardmarketId(cardmarketId))
         .assertNext(card -> assertThat(card.cardmarketId()).isEqualTo(cardmarketId))
+        .verifyComplete();
+  }
+
+  @Test
+  void shouldGetCardById() throws JsonProcessingException {
+    UUID id = UUID.fromString("e9d5aee0-5963-41db-a22b-cfea40a967a3");
+
+    Card expected = Card.builder().name("Dusk // Dawn").id(id).build();
+
+    mockWebServer.enqueue(getMockResponse(expected));
+
+    StepVerifier.create(scryfallApi.getCardById(id))
+        .assertNext(card -> assertThat(card.id()).isEqualTo(id))
         .verifyComplete();
   }
 
