@@ -24,37 +24,37 @@ public final class ScryfallApi {
           .build();
 
   public Mono<Card> getCardByCollectorNumber(String setCode, String collectorNumber) {
-    return getSingle("/cards/" + setCode + "/" + collectorNumber, Card.class);
+    return getSingle(String.format("/cards/%s/%s", setCode, collectorNumber), Card.class);
   }
 
   public Mono<Card> getCardByCollectorNumber(
       String setCode, String collectorNumber, Language language) {
     return getSingle(
-        "/cards/" + setCode + "/" + collectorNumber + "/" + language.toString(), Card.class);
+        String.format("/cards/%s/%s/%s", setCode, collectorNumber, language), Card.class);
   }
 
   public Mono<Card> getCardByMultiverseId(int multiverseId) {
-    return getSingle("/cards/multiverse/" + multiverseId, Card.class);
+    return getSingle(String.format("/cards/multiverse/%d", multiverseId), Card.class);
   }
 
   public Mono<Card> getCardByMtgoId(int mtgoId) {
-    return getSingle("/cards/mtgoid/" + mtgoId, Card.class);
+    return getSingle(String.format("/cards/mtgoid/%d", mtgoId), Card.class);
   }
 
   public Mono<Card> getCardByArenaId(int arenaId) {
-    return getSingle("/cards/arena/" + arenaId, Card.class);
+    return getSingle(String.format("/cards/arena/%d", arenaId), Card.class);
   }
 
   public Mono<Card> getCardByTcgplayerId(int tcgplayerId) {
-    return getSingle("/cards/tcgplayer/" + tcgplayerId, Card.class);
+    return getSingle(String.format("/cards/tcgplayer/%d", tcgplayerId), Card.class);
   }
 
   public Mono<Card> getCardByCardmarketId(int cardmarketId) {
-    return getSingle("/cards/cardmarket/" + cardmarketId, Card.class);
+    return getSingle(String.format("/cards/cardmarket/%d", cardmarketId), Card.class);
   }
 
   public Mono<Card> getCardById(UUID id) {
-    return getSingle("/cards/" + id, Card.class);
+    return getSingle(String.format("/cards/%s", id), Card.class);
   }
 
   void setBaseUrl(String baseUrl) {
