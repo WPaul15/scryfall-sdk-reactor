@@ -5,7 +5,7 @@ import java.net.URI;
 import java.time.LocalDate;
 import java.util.UUID;
 
-public record Set(
+public record MtgSet(
     UUID id,
     String code,
     @JsonProperty("mtgo_code") String mtgoCode,
