@@ -36,7 +36,7 @@ public final class ScryfallApi {
    * @return a {@link Card} with the given name
    */
   public Mono<Card> getCardByExactName(String name) {
-    return getSingle(String.format("/cards/named?exact=%s", name), Card.class);
+    return getSingle(String.format("/cards/named?exact=%s", name.replace(' ', '+')), Card.class);
   }
 
   /**
@@ -51,7 +51,7 @@ public final class ScryfallApi {
    * @return a {@link Card} with the given name
    */
   public Mono<Card> getCardByExactName(String name, String setCode) {
-    return getSingle(String.format("/cards/named?exact=%s&set=%s", name, setCode), Card.class);
+    return getSingle(String.format("/cards/named?exact=%s&set=%s", name.replace(' ', '+'), setCode), Card.class);
   }
 
   /**
@@ -67,7 +67,7 @@ public final class ScryfallApi {
    * @return a {@link Card} with the given name
    */
   public Mono<Card> getCardByFuzzyName(String name) {
-    return getSingle(String.format("/cards/named?fuzzy=%s", name), Card.class);
+    return getSingle(String.format("/cards/named?fuzzy=%s", name.replace(' ', '+')), Card.class);
   }
 
   /**
@@ -83,7 +83,7 @@ public final class ScryfallApi {
    * @return a {@link Card} with the given name
    */
   public Mono<Card> getCardByFuzzyName(String name, String setCode) {
-    return getSingle(String.format("/cards/named?fuzzy=%s&set=%s", name, setCode), Card.class);
+    return getSingle(String.format("/cards/named?fuzzy=%s&set=%s", name.replace(' ', '+'), setCode), Card.class);
   }
 
   /**
