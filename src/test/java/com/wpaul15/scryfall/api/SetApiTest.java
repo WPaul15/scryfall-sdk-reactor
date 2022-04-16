@@ -25,4 +25,20 @@ public class SetApiTest extends ScryfallApiTest {
         .assertNext(mtgSet -> assertThat(mtgSet.code()).isEqualTo(setCode))
         .verifyComplete();
   }
+
+  @Test
+  void shouldGetSetByTcgplayerId() throws JsonProcessingException {
+    int tcgplayerId = 1909;
+
+    MtgSet expected =
+        MtgSet.builder().name("Amonkhet Invocations").tcgplayerId(tcgplayerId).build();
+
+    stubFor(
+        get(urlPathEqualTo(String.format("/sets/tcgplayer/%d", tcgplayerId)))
+            .willReturn(mockResponse(expected)));
+
+    StepVerifier.create(scryfallApi.getSetByTcgplayerId(tcgplayerId))
+        .assertNext(mtgSet -> assertThat(mtgSet.tcgplayerId()).isEqualTo(tcgplayerId))
+        .verifyComplete();
+  }
 }
