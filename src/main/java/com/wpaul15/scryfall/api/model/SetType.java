@@ -1,6 +1,7 @@
 package com.wpaul15.scryfall.api.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -32,6 +33,12 @@ public enum SetType {
   MEMORABILIA("memorabilia");
 
   String displayName;
+
+  @Override
+  @JsonValue
+  public String toString() {
+    return displayName;
+  }
 
   @JsonCreator
   private static SetType create(String jsonValue) {
