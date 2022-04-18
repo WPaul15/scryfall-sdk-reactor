@@ -5,10 +5,10 @@ import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-class IsExactly<T> extends AbstractFilter<T> {
+class IsExactly<T> extends ComparingFilter<T> {
 
   IsExactly(Iterable<T> entries) {
-    super(entries);
+    super(entries, "=");
   }
 
   @SafeVarargs
@@ -18,9 +18,5 @@ class IsExactly<T> extends AbstractFilter<T> {
 
   static <T> IsExactly<T> isExactly(Iterable<T> entries) {
     return new IsExactly<>(entries);
-  }
-
-  public String toQueryParams() {
-    return super.toQueryParams("=");
   }
 }

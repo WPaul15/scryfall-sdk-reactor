@@ -7,13 +7,13 @@ import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 @AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PROTECTED)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 abstract class NegatingFilter<T> implements INegatingFilter<T> {
 
   IFilter<T> filter;
 
   @Override
-  public String toQueryParams(String operator) {
+  public String toQueryParams() {
     return filter.toQueryParams();
   }
 }

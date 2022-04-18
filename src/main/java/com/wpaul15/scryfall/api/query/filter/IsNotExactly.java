@@ -2,10 +2,10 @@ package com.wpaul15.scryfall.api.query.filter;
 
 import java.util.Arrays;
 
-class IsNotExactly<T> extends AbstractFilter<T> {
+class IsNotExactly<T> extends ComparingFilter<T> {
 
   IsNotExactly(Iterable<T> entries) {
-    super(entries);
+    super(entries, "!=");
   }
 
   @SafeVarargs
@@ -15,9 +15,5 @@ class IsNotExactly<T> extends AbstractFilter<T> {
 
   static <T> IsNotExactly<T> isNotExactly(Iterable<T> entries) {
     return new IsNotExactly<>(entries);
-  }
-
-  public String toQueryParams() {
-    return super.toQueryParams("!=");
   }
 }

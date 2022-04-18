@@ -2,10 +2,10 @@ package com.wpaul15.scryfall.api.query.filter;
 
 import java.util.Arrays;
 
-public class IsLessThan<T> extends AbstractFilter<T> {
+public class IsLessThan<T> extends ComparingFilter<T> {
 
   IsLessThan(Iterable<T> entries) {
-    super(entries);
+    super(entries, "<");
   }
 
   @SafeVarargs
@@ -15,9 +15,5 @@ public class IsLessThan<T> extends AbstractFilter<T> {
 
   static <T> IsLessThan<T> isLessThan(Iterable<T> entries) {
     return new IsLessThan<>(entries);
-  }
-
-  public String toQueryParams() {
-    return super.toQueryParams("<");
   }
 }

@@ -1,18 +1,19 @@
 package com.wpaul15.scryfall.api.query.filter;
 
-import com.wpaul15.scryfall.api.query.IFilter;
+import com.wpaul15.scryfall.api.query.IComparingFilter;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 @AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PROTECTED)
-abstract class AbstractFilter<T> implements IFilter<T> {
+@FieldDefaults(level = AccessLevel.PRIVATE)
+abstract class ComparingFilter<T> implements IComparingFilter<T> {
 
   Iterable<T> entries;
+  String operator;
 
   @Override
-  public String toQueryParams(String operator) {
+  public String toQueryParams() {
     StringBuilder builder = new StringBuilder(operator);
 
     entries.forEach(entry -> builder.append(entry.toString()));

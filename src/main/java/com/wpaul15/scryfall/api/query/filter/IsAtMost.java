@@ -2,10 +2,10 @@ package com.wpaul15.scryfall.api.query.filter;
 
 import java.util.Arrays;
 
-class IsAtMost<T> extends AbstractFilter<T> {
+class IsAtMost<T> extends ComparingFilter<T> {
 
   IsAtMost(Iterable<T> entries) {
-    super(entries);
+    super(entries, "<=");
   }
 
   @SafeVarargs
@@ -15,9 +15,5 @@ class IsAtMost<T> extends AbstractFilter<T> {
 
   static <T> IsAtMost<T> isAtMost(Iterable<T> entries) {
     return new IsAtMost<>(entries);
-  }
-
-  public String toQueryParams() {
-    return super.toQueryParams("<=");
   }
 }

@@ -17,9 +17,4 @@ class IsNot<T> extends NegatingFilter<T> {
   static <T> IsNot<T> not(T value) {
     return new IsNot<>(isExactly(value));
   }
-
-  @Override
-  public String toQueryParams() {
-    return super.toQueryParams("");
-  }
 }
