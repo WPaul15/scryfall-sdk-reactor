@@ -57,4 +57,12 @@ public class Filters {
   public static <T> IFilter<T> isNotExactly(Iterable<T> entries) {
     return IsNotExactly.isNotExactly(entries);
   }
+
+  public static <T> IFilter<T> not(IFilter<T> filter) {
+    return IsNot.not(filter);
+  }
+
+  public static <T> IFilter<T> not(T value) {
+    return IsNot.not(value);
+  }
 }

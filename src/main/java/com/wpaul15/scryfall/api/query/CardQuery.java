@@ -43,13 +43,16 @@ public class CardQuery implements IQueryParams {
 
     StringBuilder builder = new StringBuilder();
 
-    params.entrySet().stream()
-        .map(
-            entry ->
-                Map.entry(
-                    entry.getKey(),
-                    URLEncoder.encode(entry.getValue().toQueryParams(), StandardCharsets.UTF_8)))
-        .forEach(entry -> builder.append(entry.getKey()).append(entry.getValue()));
+    params.forEach(
+        (key, value) -> {
+          if (value instanceof INegatingFilter<?>) {
+            builder.append("-");
+          }
+
+          builder
+              .append(key)
+              .append(URLEncoder.encode(value.toQueryParams(), StandardCharsets.UTF_8));
+        });
 
     return builder.toString();
   }
