@@ -45,7 +45,7 @@ public class CardQuery implements IQueryParams {
 
     params.forEach(
         (key, value) -> {
-          if (value instanceof INegatingFilter<?>) {
+          if (value instanceof INegatingFilter<?> negatingFilter && negatingFilter.isNegated()) {
             builder.append("-");
           }
 
