@@ -2,7 +2,7 @@ package com.wpaul15.scryfall.api.query.expression;
 
 import java.util.Arrays;
 
-public class IsAtLeast<T> extends AbstractExpression<T> {
+class IsAtLeast<T> extends AbstractExpression<T> {
 
   IsAtLeast(Iterable<T> entries) {
     super(entries);

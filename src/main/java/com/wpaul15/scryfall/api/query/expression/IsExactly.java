@@ -5,7 +5,7 @@ import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class IsExactly<T> extends AbstractExpression<T> {
+class IsExactly<T> extends AbstractExpression<T> {
 
   IsExactly(Iterable<T> entries) {
     super(entries);
