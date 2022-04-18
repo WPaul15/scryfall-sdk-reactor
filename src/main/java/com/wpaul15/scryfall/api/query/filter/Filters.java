@@ -23,6 +23,15 @@ public class Filters {
   }
 
   @SafeVarargs
+  public static <T> IFilter<T> isMoreThan(T... entries) {
+    return IsMoreThan.isMoreThan(entries);
+  }
+
+  public static <T> IFilter<T> isMoreThan(Iterable<T> entries) {
+    return IsMoreThan.isMoreThan(entries);
+  }
+
+  @SafeVarargs
   public static <T> IFilter<T> isAtLeast(T... entries) {
     return IsAtLeast.isAtLeast(entries);
   }
