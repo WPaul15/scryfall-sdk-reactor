@@ -41,6 +41,15 @@ public class Filters {
   }
 
   @SafeVarargs
+  public static <T> IFilter<T> isLessThan(T... entries) {
+    return IsLessThan.isLessThan(entries);
+  }
+
+  public static <T> IFilter<T> isLessThan(Iterable<T> entries) {
+    return IsLessThan.isLessThan(entries);
+  }
+
+  @SafeVarargs
   public static <T> IFilter<T> isNotExactly(T... entries) {
     return IsNotExactly.isNotExactly(entries);
   }
