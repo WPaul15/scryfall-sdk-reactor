@@ -30,4 +30,13 @@ public class Filters {
   public static <T> IFilter<T> isAtLeast(Iterable<T> entries) {
     return IsAtLeast.isAtLeast(entries);
   }
+
+  @SafeVarargs
+  public static <T> IFilter<T> isNotExactly(T... entries) {
+    return IsNotExactly.isNotExactly(entries);
+  }
+
+  public static <T> IFilter<T> isNotExactly(Iterable<T> entries) {
+    return IsNotExactly.isNotExactly(entries);
+  }
 }
