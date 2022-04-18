@@ -7,6 +7,8 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.wpaul15.scryfall.api.model.Card;
 import com.wpaul15.scryfall.api.model.Language;
 import com.wpaul15.scryfall.api.model.MtgSet;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -58,7 +60,9 @@ public final class ScryfallApi {
    * @return a {@link Card} with the given name
    */
   public Mono<Card> getCardByExactName(String name) {
-    return getSingle(String.format("/cards/named?exact=%s", name.replace(' ', '+')), Card.class);
+    return getSingle(
+        String.format("/cards/named?exact=%s", URLEncoder.encode(name, StandardCharsets.UTF_8)),
+        Card.class);
   }
 
   /**
@@ -74,7 +78,10 @@ public final class ScryfallApi {
    */
   public Mono<Card> getCardByExactName(String name, String setCode) {
     return getSingle(
-        String.format("/cards/named?exact=%s&set=%s", name.replace(' ', '+'), setCode), Card.class);
+        String.format(
+            "/cards/named?exact=%s&set=%s",
+            URLEncoder.encode(name, StandardCharsets.UTF_8), setCode),
+        Card.class);
   }
 
   /**
@@ -90,7 +97,9 @@ public final class ScryfallApi {
    * @return a {@link Card} with the given name
    */
   public Mono<Card> getCardByFuzzyName(String name) {
-    return getSingle(String.format("/cards/named?fuzzy=%s", name.replace(' ', '+')), Card.class);
+    return getSingle(
+        String.format("/cards/named?fuzzy=%s", URLEncoder.encode(name, StandardCharsets.UTF_8)),
+        Card.class);
   }
 
   /**
@@ -107,7 +116,10 @@ public final class ScryfallApi {
    */
   public Mono<Card> getCardByFuzzyName(String name, String setCode) {
     return getSingle(
-        String.format("/cards/named?fuzzy=%s&set=%s", name.replace(' ', '+'), setCode), Card.class);
+        String.format(
+            "/cards/named?fuzzy=%s&set=%s",
+            URLEncoder.encode(name, StandardCharsets.UTF_8), setCode),
+        Card.class);
   }
 
   /**
@@ -214,7 +226,7 @@ public final class ScryfallApi {
         .get()
         .uri(endpoint)
         // TODO: Handle errors
-        .responseSingle(((httpClientResponse, byteBufMono) -> byteBufMono.asString()))
+        .responseSingle((httpClientResponse, byteBufMono) -> byteBufMono.asString())
         .flatMap(
             body -> {
               try {
