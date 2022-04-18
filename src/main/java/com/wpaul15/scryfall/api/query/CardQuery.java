@@ -17,7 +17,7 @@ public class CardQuery implements IQueryParams {
     return new CardQuery();
   }
 
-  public CardQuery color(IExpression<Color> colorQuery) {
+  public CardQuery color(IFilter<Color> colorQuery) {
     params.put("c", colorQuery);
     return this;
   }

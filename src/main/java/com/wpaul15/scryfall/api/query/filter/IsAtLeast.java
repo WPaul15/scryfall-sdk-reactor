@@ -1,8 +1,8 @@
-package com.wpaul15.scryfall.api.query.expression;
+package com.wpaul15.scryfall.api.query.filter;
 
 import java.util.Arrays;
 
-class IsAtLeast<T> extends AbstractExpression<T> {
+class IsAtLeast<T> extends AbstractFilter<T> {
 
   IsAtLeast(Iterable<T> entries) {
     super(entries);

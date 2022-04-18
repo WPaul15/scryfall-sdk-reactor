@@ -1,11 +1,11 @@
-package com.wpaul15.scryfall.api.query.expression;
+package com.wpaul15.scryfall.api.query.filter;
 
 import java.util.Arrays;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-class IsExactly<T> extends AbstractExpression<T> {
+class IsExactly<T> extends AbstractFilter<T> {
 
   IsExactly(Iterable<T> entries) {
     super(entries);
