@@ -14,6 +14,15 @@ public class Filters {
   }
 
   @SafeVarargs
+  public static <T> IFilter<T> isAtMost(T... entries) {
+    return IsAtMost.isAtMost(entries);
+  }
+
+  public static <T> IFilter<T> isAtMost(Iterable<T> entries) {
+    return IsAtMost.isAtMost(entries);
+  }
+
+  @SafeVarargs
   public static <T> IFilter<T> isAtLeast(T... entries) {
     return IsAtLeast.isAtLeast(entries);
   }
