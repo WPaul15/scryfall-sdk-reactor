@@ -1,21 +1,26 @@
 package com.wpaul15.scryfall.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.wpaul15.scryfall.api.model.Card;
 import com.wpaul15.scryfall.api.model.Language;
+import com.wpaul15.scryfall.api.model.ListResponse;
 import com.wpaul15.scryfall.api.model.MtgSet;
+import com.wpaul15.scryfall.api.query.CardQuery;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 import reactor.netty.http.client.HttpClient;
 
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Slf4j
 public final class ScryfallApi {
 
   private static final String BASE_URL = "https://api.scryfall.com";
@@ -45,6 +50,15 @@ public final class ScryfallApi {
                   headers.add("Accept", "application/json");
                   headers.add("Content-Type", "application/json");
                 });
+  }
+
+  public Mono<ListResponse<Card>> search(CardQuery cardQuery) {
+    String endpoint =
+        cardQuery.isEmpty()
+            ? "/cards/search"
+            : String.format("/cards/search?q=%s", cardQuery.toQueryParams());
+
+    return getSingle(endpoint, new TypeReference<>() {});
   }
 
   /**
@@ -231,6 +245,21 @@ public final class ScryfallApi {
             body -> {
               try {
                 return Mono.just(OBJECT_MAPPER.readerFor(clazz).readValue(body));
+              } catch (JsonProcessingException ex) {
+                return Mono.error(ex);
+              }
+            });
+  }
+
+  private <T> Mono<T> getSingle(String endpoint, TypeReference<T> typeReference) {
+    return httpClient
+        .get()
+        .uri(endpoint)
+        .responseSingle((httpClientResponse, byteBufMono) -> byteBufMono.asString())
+        .flatMap(
+            body -> {
+              try {
+                return Mono.just(OBJECT_MAPPER.readerFor(typeReference).readValue(body));
               } catch (JsonProcessingException ex) {
                 return Mono.error(ex);
               }
