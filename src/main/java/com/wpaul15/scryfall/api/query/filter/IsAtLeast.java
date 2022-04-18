@@ -17,12 +17,7 @@ class IsAtLeast<T> extends AbstractFilter<T> {
     return new IsAtLeast<>(entries);
   }
 
-  @Override
   public String toQueryParams() {
-    StringBuilder builder = new StringBuilder(">=");
-
-    entries.forEach(entry -> builder.append(entry.toString()));
-
-    return builder.toString();
+    return super.toQueryParams(">=");
   }
 }

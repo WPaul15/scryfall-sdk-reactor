@@ -20,12 +20,7 @@ class IsExactly<T> extends AbstractFilter<T> {
     return new IsExactly<>(entries);
   }
 
-  @Override
   public String toQueryParams() {
-    StringBuilder builder = new StringBuilder("=");
-
-    entries.forEach(entry -> builder.append(entry.toString()));
-
-    return builder.toString();
+    return super.toQueryParams("=");
   }
 }

@@ -12,5 +12,11 @@ abstract class AbstractFilter<T> implements IFilter<T> {
   Iterable<T> entries;
 
   @Override
-  public abstract String toQueryParams();
+  public String toQueryParams(String operator) {
+    StringBuilder builder = new StringBuilder(operator);
+
+    entries.forEach(entry -> builder.append(entry.toString()));
+
+    return builder.toString();
+  }
 }
