@@ -4,16 +4,16 @@ import java.util.Arrays;
 
 class IsAtMost<T> extends ComparingFilter<T> {
 
-  IsAtMost(Iterable<T> entries) {
-    super(entries, "<=");
+  IsAtMost(Iterable<T> values) {
+    super(values, "<=");
   }
 
   @SafeVarargs
-  static <T> IsAtMost<T> isAtMost(T... entries) {
-    return isAtMost(Arrays.asList(entries));
+  static <T> IsAtMost<T> isAtMost(T... values) {
+    return isAtMost(Arrays.asList(values));
   }
 
-  static <T> IsAtMost<T> isAtMost(Iterable<T> entries) {
-    return new IsAtMost<>(entries);
+  static <T> IsAtMost<T> isAtMost(Iterable<T> values) {
+    return new IsAtMost<>(values);
   }
 }

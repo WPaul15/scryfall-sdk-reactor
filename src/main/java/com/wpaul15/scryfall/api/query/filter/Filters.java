@@ -5,111 +5,111 @@ import com.wpaul15.scryfall.api.query.IFilter;
 public class Filters {
 
   @SafeVarargs
-  public static <T> IFilter<T> isExactly(T... entries) {
-    return IsExactly.isExactly(entries);
+  public static <T> IFilter<T> isExactly(T... values) {
+    return IsExactly.isExactly(values);
   }
 
-  public static <T> IFilter<T> isExactly(Iterable<T> entries) {
-    return IsExactly.isExactly(entries);
-  }
-
-  @SafeVarargs
-  public static <T> IFilter<T> exactly(T... entries) {
-    return IsExactly.isExactly(entries);
-  }
-
-  public static <T> IFilter<T> exactly(Iterable<T> entries) {
-    return IsExactly.isExactly(entries);
+  public static <T> IFilter<T> isExactly(Iterable<T> values) {
+    return IsExactly.isExactly(values);
   }
 
   @SafeVarargs
-  public static <T> IFilter<T> isAtMost(T... entries) {
-    return IsAtMost.isAtMost(entries);
+  public static <T> IFilter<T> exactly(T... values) {
+    return IsExactly.isExactly(values);
   }
 
-  public static <T> IFilter<T> isAtMost(Iterable<T> entries) {
-    return IsAtMost.isAtMost(entries);
-  }
-
-  @SafeVarargs
-  public static <T> IFilter<T> atMost(T... entries) {
-    return IsAtMost.isAtMost(entries);
-  }
-
-  public static <T> IFilter<T> atMost(Iterable<T> entries) {
-    return IsAtMost.isAtMost(entries);
+  public static <T> IFilter<T> exactly(Iterable<T> values) {
+    return IsExactly.isExactly(values);
   }
 
   @SafeVarargs
-  public static <T> IFilter<T> isMoreThan(T... entries) {
-    return IsMoreThan.isMoreThan(entries);
+  public static <T> IFilter<T> isAtMost(T... values) {
+    return IsAtMost.isAtMost(values);
   }
 
-  public static <T> IFilter<T> isMoreThan(Iterable<T> entries) {
-    return IsMoreThan.isMoreThan(entries);
-  }
-
-  @SafeVarargs
-  public static <T> IFilter<T> moreThan(T... entries) {
-    return IsMoreThan.isMoreThan(entries);
-  }
-
-  public static <T> IFilter<T> moreThan(Iterable<T> entries) {
-    return IsMoreThan.isMoreThan(entries);
+  public static <T> IFilter<T> isAtMost(Iterable<T> values) {
+    return IsAtMost.isAtMost(values);
   }
 
   @SafeVarargs
-  public static <T> IFilter<T> isAtLeast(T... entries) {
-    return IsAtLeast.isAtLeast(entries);
+  public static <T> IFilter<T> atMost(T... values) {
+    return IsAtMost.isAtMost(values);
   }
 
-  public static <T> IFilter<T> isAtLeast(Iterable<T> entries) {
-    return IsAtLeast.isAtLeast(entries);
-  }
-
-  @SafeVarargs
-  public static <T> IFilter<T> atLeast(T... entries) {
-    return IsAtLeast.isAtLeast(entries);
-  }
-
-  public static <T> IFilter<T> atLeast(Iterable<T> entries) {
-    return IsAtLeast.isAtLeast(entries);
+  public static <T> IFilter<T> atMost(Iterable<T> values) {
+    return IsAtMost.isAtMost(values);
   }
 
   @SafeVarargs
-  public static <T> IFilter<T> isLessThan(T... entries) {
-    return IsLessThan.isLessThan(entries);
+  public static <T> IFilter<T> isMoreThan(T... values) {
+    return IsMoreThan.isMoreThan(values);
   }
 
-  public static <T> IFilter<T> isLessThan(Iterable<T> entries) {
-    return IsLessThan.isLessThan(entries);
-  }
-
-  @SafeVarargs
-  public static <T> IFilter<T> lessThan(T... entries) {
-    return IsLessThan.isLessThan(entries);
-  }
-
-  public static <T> IFilter<T> lessThan(Iterable<T> entries) {
-    return IsLessThan.isLessThan(entries);
+  public static <T> IFilter<T> isMoreThan(Iterable<T> values) {
+    return IsMoreThan.isMoreThan(values);
   }
 
   @SafeVarargs
-  public static <T> IFilter<T> isNotExactly(T... entries) {
-    return IsNotExactly.isNotExactly(entries);
+  public static <T> IFilter<T> moreThan(T... values) {
+    return IsMoreThan.isMoreThan(values);
   }
 
-  public static <T> IFilter<T> isNotExactly(Iterable<T> entries) {
-    return IsNotExactly.isNotExactly(entries);
+  public static <T> IFilter<T> moreThan(Iterable<T> values) {
+    return IsMoreThan.isMoreThan(values);
   }
 
   @SafeVarargs
-  public static <T> IFilter<T> notExactly(T... entries) {
-    return IsNotExactly.isNotExactly(entries);
+  public static <T> IFilter<T> isAtLeast(T... values) {
+    return IsAtLeast.isAtLeast(values);
   }
 
-  public static <T> IFilter<T> notExactly(Iterable<T> entries) {
-    return IsNotExactly.isNotExactly(entries);
+  public static <T> IFilter<T> isAtLeast(Iterable<T> values) {
+    return IsAtLeast.isAtLeast(values);
+  }
+
+  @SafeVarargs
+  public static <T> IFilter<T> atLeast(T... values) {
+    return IsAtLeast.isAtLeast(values);
+  }
+
+  public static <T> IFilter<T> atLeast(Iterable<T> values) {
+    return IsAtLeast.isAtLeast(values);
+  }
+
+  @SafeVarargs
+  public static <T> IFilter<T> isLessThan(T... values) {
+    return IsLessThan.isLessThan(values);
+  }
+
+  public static <T> IFilter<T> isLessThan(Iterable<T> values) {
+    return IsLessThan.isLessThan(values);
+  }
+
+  @SafeVarargs
+  public static <T> IFilter<T> lessThan(T... values) {
+    return IsLessThan.isLessThan(values);
+  }
+
+  public static <T> IFilter<T> lessThan(Iterable<T> values) {
+    return IsLessThan.isLessThan(values);
+  }
+
+  @SafeVarargs
+  public static <T> IFilter<T> isNotExactly(T... values) {
+    return IsNotExactly.isNotExactly(values);
+  }
+
+  public static <T> IFilter<T> isNotExactly(Iterable<T> values) {
+    return IsNotExactly.isNotExactly(values);
+  }
+
+  @SafeVarargs
+  public static <T> IFilter<T> notExactly(T... values) {
+    return IsNotExactly.isNotExactly(values);
+  }
+
+  public static <T> IFilter<T> notExactly(Iterable<T> values) {
+    return IsNotExactly.isNotExactly(values);
   }
 
   public static <T> IFilter<T> isNot(IFilter<T> filter) {

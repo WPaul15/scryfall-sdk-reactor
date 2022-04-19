@@ -4,16 +4,16 @@ import java.util.Arrays;
 
 class IsNotExactly<T> extends ComparingFilter<T> {
 
-  IsNotExactly(Iterable<T> entries) {
-    super(entries, "!=");
+  IsNotExactly(Iterable<T> values) {
+    super(values, "!=");
   }
 
   @SafeVarargs
-  static <T> IsNotExactly<T> isNotExactly(T... entries) {
-    return isNotExactly(Arrays.asList(entries));
+  static <T> IsNotExactly<T> isNotExactly(T... values) {
+    return isNotExactly(Arrays.asList(values));
   }
 
-  static <T> IsNotExactly<T> isNotExactly(Iterable<T> entries) {
-    return new IsNotExactly<>(entries);
+  static <T> IsNotExactly<T> isNotExactly(Iterable<T> values) {
+    return new IsNotExactly<>(values);
   }
 }

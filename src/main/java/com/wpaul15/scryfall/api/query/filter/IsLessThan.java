@@ -4,16 +4,16 @@ import java.util.Arrays;
 
 public class IsLessThan<T> extends ComparingFilter<T> {
 
-  IsLessThan(Iterable<T> entries) {
-    super(entries, "<");
+  IsLessThan(Iterable<T> values) {
+    super(values, "<");
   }
 
   @SafeVarargs
-  static <T> IsLessThan<T> isLessThan(T... entries) {
-    return isLessThan(Arrays.asList(entries));
+  static <T> IsLessThan<T> isLessThan(T... values) {
+    return isLessThan(Arrays.asList(values));
   }
 
-  static <T> IsLessThan<T> isLessThan(Iterable<T> entries) {
-    return new IsLessThan<>(entries);
+  static <T> IsLessThan<T> isLessThan(Iterable<T> values) {
+    return new IsLessThan<>(values);
   }
 }

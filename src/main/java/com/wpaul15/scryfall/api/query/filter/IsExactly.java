@@ -7,16 +7,16 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 class IsExactly<T> extends ComparingFilter<T> {
 
-  IsExactly(Iterable<T> entries) {
-    super(entries, "=");
+  IsExactly(Iterable<T> values) {
+    super(values, "=");
   }
 
   @SafeVarargs
-  static <T> IsExactly<T> isExactly(T... entries) {
-    return isExactly(Arrays.asList(entries));
+  static <T> IsExactly<T> isExactly(T... values) {
+    return isExactly(Arrays.asList(values));
   }
 
-  static <T> IsExactly<T> isExactly(Iterable<T> entries) {
-    return new IsExactly<>(entries);
+  static <T> IsExactly<T> isExactly(Iterable<T> values) {
+    return new IsExactly<>(values);
   }
 }

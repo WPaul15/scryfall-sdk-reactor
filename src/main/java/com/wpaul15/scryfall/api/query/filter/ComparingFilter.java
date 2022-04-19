@@ -9,14 +9,14 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 abstract class ComparingFilter<T> implements IComparingFilter<T> {
 
-  Iterable<T> entries;
+  Iterable<T> values;
   String operator;
 
   @Override
   public String toQueryParams() {
     StringBuilder builder = new StringBuilder(operator);
 
-    entries.forEach(entry -> builder.append(entry.toString()));
+    values.forEach(entry -> builder.append(entry.toString()));
 
     return builder.toString();
   }
