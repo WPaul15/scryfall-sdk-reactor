@@ -1,6 +1,6 @@
 package com.wpaul15.scryfall.api.query.filter;
 
-import com.wpaul15.scryfall.api.query.ICombiningFilter;
+import com.wpaul15.scryfall.api.query.IMultiFilter;
 import com.wpaul15.scryfall.api.query.IFilter;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -10,7 +10,7 @@ import lombok.experimental.FieldDefaults;
 
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-abstract class CombiningFilter<T> implements ICombiningFilter<T> {
+abstract class MultiFilter<T> implements IMultiFilter<T> {
 
   Iterable<IFilter<T>> values;
 
