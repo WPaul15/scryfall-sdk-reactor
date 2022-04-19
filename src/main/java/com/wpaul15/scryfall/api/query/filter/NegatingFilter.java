@@ -23,7 +23,7 @@ abstract class NegatingFilter<T> implements INegatingFilter<T> {
   }
 
   @Override
-  public String toQueryParams() {
-    return filter.toQueryParams();
+  public String toQueryParams(String key) {
+    return filter.toQueryParams(key);
   }
 }

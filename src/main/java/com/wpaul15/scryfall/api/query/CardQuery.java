@@ -12,7 +12,7 @@ import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class CardQuery implements IQueryParams {
+public class CardQuery {
 
   private static final String COLOR_KEY = "c";
 
@@ -48,7 +48,7 @@ public class CardQuery implements IQueryParams {
   }
 
   @Override
-  public String toQueryParams() {
+  public String toString() {
     if (params.isEmpty()) {
       return "";
     }
@@ -68,7 +68,7 @@ public class CardQuery implements IQueryParams {
                     builder.append("-");
                   }
 
-                  builder.append(entry.getKey()).append(entry.getValue().toQueryParams());
+                  builder.append(entry.getValue().toQueryParams(entry.getKey()));
 
                   return builder.toString();
                 })

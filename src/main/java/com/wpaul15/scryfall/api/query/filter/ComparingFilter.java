@@ -13,8 +13,8 @@ abstract class ComparingFilter<T> implements IComparingFilter<T> {
   String operator;
 
   @Override
-  public String toQueryParams() {
-    StringBuilder builder = new StringBuilder(operator);
+  public String toQueryParams(String key) {
+    StringBuilder builder = new StringBuilder(key).append(operator);
 
     values.forEach(entry -> builder.append(entry.toString()));
 

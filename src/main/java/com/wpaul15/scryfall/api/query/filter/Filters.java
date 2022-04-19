@@ -23,6 +23,24 @@ public class Filters {
   }
 
   @SafeVarargs
+  public static <T> IFilter<T> isExactlyOneOf(T... values) {
+    return IsExactlyOneOf.isExactlyOneOf(values);
+  }
+
+  public static <T> IFilter<T> isExactlyOneOf(Iterable<T> values) {
+    return IsExactlyOneOf.isExactlyOneOf(values);
+  }
+
+  @SafeVarargs
+  public static <T> IFilter<T> exactlyOneOf(T... values) {
+    return IsExactlyOneOf.isExactlyOneOf(values);
+  }
+
+  public static <T> IFilter<T> exactlyOneOf(Iterable<T> values) {
+    return IsExactlyOneOf.isExactlyOneOf(values);
+  }
+
+  @SafeVarargs
   public static <T> IFilter<T> isAtMost(T... values) {
     return IsAtMost.isAtMost(values);
   }

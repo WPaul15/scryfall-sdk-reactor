@@ -54,9 +54,7 @@ public final class ScryfallApi {
 
   public Mono<ListResponse<Card>> search(CardQuery cardQuery) {
     String endpoint =
-        cardQuery.isEmpty()
-            ? "/cards/search"
-            : String.format("/cards/search?q=%s", cardQuery.toQueryParams());
+        cardQuery.isEmpty() ? "/cards/search" : String.format("/cards/search?q=%s", cardQuery);
 
     return getSingle(endpoint, new TypeReference<>() {});
   }
