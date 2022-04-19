@@ -14,6 +14,8 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class CardQuery implements IQueryParams {
 
+  private static final String COLOR_KEY = "c";
+
   Map<String, List<IQueryParams>> params = new HashMap<>();
 
   public static CardQuery where() {
@@ -21,12 +23,12 @@ public class CardQuery implements IQueryParams {
   }
 
   public CardQuery color(IFilter<Color> colorQuery) {
-    if (!params.containsKey("c")) {
+    if (!params.containsKey(COLOR_KEY)) {
       List<IQueryParams> list = new ArrayList<>();
       list.add(colorQuery);
-      params.put("c", list);
+      params.put(COLOR_KEY, list);
     } else {
-      params.get("c").add(colorQuery);
+      params.get(COLOR_KEY).add(colorQuery);
     }
 
     return this;
