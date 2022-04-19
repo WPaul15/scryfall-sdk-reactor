@@ -3,22 +3,32 @@ package com.wpaul15.scryfall.api.query;
 import com.wpaul15.scryfall.api.model.Color;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class CardQuery implements IQueryParams {
 
-  Map<String, IQueryParams> params = new HashMap<>();
+  Map<String, List<IQueryParams>> params = new HashMap<>();
 
   public static CardQuery where() {
     return new CardQuery();
   }
 
   public CardQuery color(IFilter<Color> colorQuery) {
-    params.put("c", colorQuery);
+    if (!params.containsKey("c")) {
+      List<IQueryParams> list = new ArrayList<>();
+      list.add(colorQuery);
+      params.put("c", list);
+    } else {
+      params.get("c").add(colorQuery);
+    }
+
     return this;
   }
 
@@ -41,19 +51,27 @@ public class CardQuery implements IQueryParams {
       return "";
     }
 
-    StringBuilder builder = new StringBuilder();
+    String rawParams =
+        params.entrySet().stream()
+            .flatMap(
+                entry ->
+                    entry.getValue().stream()
+                        .map(queryParams -> Map.entry(entry.getKey(), queryParams)))
+            .map(
+                entry -> {
+                  StringBuilder builder = new StringBuilder();
 
-    params.forEach(
-        (key, value) -> {
-          if (value instanceof INegatingFilter<?> negatingFilter && negatingFilter.isNegated()) {
-            builder.append("-");
-          }
+                  if (entry.getValue() instanceof INegatingFilter<?> negatingFilter
+                      && negatingFilter.isNegated()) {
+                    builder.append("-");
+                  }
 
-          builder
-              .append(key)
-              .append(URLEncoder.encode(value.toQueryParams(), StandardCharsets.UTF_8));
-        });
+                  builder.append(entry.getKey()).append(entry.getValue().toQueryParams());
 
-    return builder.toString();
+                  return builder.toString();
+                })
+            .collect(Collectors.joining(" "));
+
+    return URLEncoder.encode(rawParams, StandardCharsets.UTF_8);
   }
 }
