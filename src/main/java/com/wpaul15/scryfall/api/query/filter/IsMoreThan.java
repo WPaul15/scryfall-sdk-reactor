@@ -2,7 +2,7 @@ package com.wpaul15.scryfall.api.query.filter;
 
 import java.util.Arrays;
 
-public class IsMoreThan<T> extends ComparingFilter<T> {
+final class IsMoreThan<T> extends ComparingFilter<T> {
 
   IsMoreThan(Iterable<T> values) {
     super(values, ">");

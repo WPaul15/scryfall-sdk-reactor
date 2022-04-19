@@ -4,7 +4,7 @@ import static com.wpaul15.scryfall.api.query.filter.IsExactly.isExactly;
 
 import com.wpaul15.scryfall.api.query.IFilter;
 
-class IsNot<T> extends NegatingFilter<T> {
+final class IsNot<T> extends NegatingFilter<T> {
 
   IsNot(IFilter<T> filter) {
     super(filter);

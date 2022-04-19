@@ -2,7 +2,7 @@ package com.wpaul15.scryfall.api.query.filter;
 
 import java.util.Arrays;
 
-class IsNotExactly<T> extends ComparingFilter<T> {
+final class IsNotExactly<T> extends ComparingFilter<T> {
 
   IsNotExactly(Iterable<T> values) {
     super(values, "!=");

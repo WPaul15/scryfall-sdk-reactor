@@ -2,7 +2,7 @@ package com.wpaul15.scryfall.api.query.filter;
 
 import java.util.Arrays;
 
-class IsAtLeast<T> extends ComparingFilter<T> {
+final class IsAtLeast<T> extends ComparingFilter<T> {
 
   IsAtLeast(Iterable<T> values) {
     super(values, ">=");

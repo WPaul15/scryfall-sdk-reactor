@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-class IsExactlyOneOf<T> extends CombiningFilter<T> {
+final class IsExactlyOneOf<T> extends CombiningFilter<T> {
 
   IsExactlyOneOf(Iterable<IFilter<T>> values) {
     super(values);

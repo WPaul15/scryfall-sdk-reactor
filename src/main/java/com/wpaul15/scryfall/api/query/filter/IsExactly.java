@@ -5,7 +5,7 @@ import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-class IsExactly<T> extends ComparingFilter<T> {
+final class IsExactly<T> extends ComparingFilter<T> {
 
   IsExactly(Iterable<T> values) {
     super(values, "=");
