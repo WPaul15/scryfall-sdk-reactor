@@ -7,8 +7,8 @@ import java.util.UUID;
 public record CardFace(
     String artist,
     double cmc,
-    @JsonProperty("color_indicator") List<Color> colorIndicator,
-    List<Color> colors,
+    @JsonProperty("color_indicator") List<Colors> colorIndicator,
+    List<Colors> colors,
     @JsonProperty("flavor_text") String flavorText,
     @JsonProperty("illustration_id") UUID illustrationId,
     @JsonProperty("image_uris") ImageUris imageUris,

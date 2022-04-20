@@ -1,6 +1,6 @@
 package com.wpaul15.scryfall.api.query;
 
-import com.wpaul15.scryfall.api.model.Color;
+import com.wpaul15.scryfall.api.model.Colors;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -15,6 +15,7 @@ import lombok.experimental.FieldDefaults;
 public class CardQuery {
 
   private static final String COLOR_KEY = "c";
+  private static final String COLOR_IDENTITY_KEY = "id";
 
   Map<String, List<IQueryParams>> params = new HashMap<>();
 
@@ -22,15 +23,13 @@ public class CardQuery {
     return new CardQuery();
   }
 
-  public CardQuery color(IFilter<Color> colorQuery) {
-    if (!params.containsKey(COLOR_KEY)) {
-      List<IQueryParams> list = new ArrayList<>();
-      list.add(colorQuery);
-      params.put(COLOR_KEY, list);
-    } else {
-      params.get(COLOR_KEY).add(colorQuery);
-    }
+  public CardQuery color(IFilter<Colors> filter) {
+    addToParams(COLOR_KEY, filter);
+    return this;
+  }
 
+  public CardQuery colorIdentity(IFilter<Colors> filter) {
+    addToParams(COLOR_IDENTITY_KEY, filter);
     return this;
   }
 
@@ -75,5 +74,15 @@ public class CardQuery {
             .collect(Collectors.joining(" "));
 
     return URLEncoder.encode(rawParams, StandardCharsets.UTF_8);
+  }
+
+  private void addToParams(String key, IQueryParams queryParams) {
+    if (!params.containsKey(key)) {
+      List<IQueryParams> list = new ArrayList<>();
+      list.add(queryParams);
+      params.put(key, list);
+    } else {
+      params.get(key).add(queryParams);
+    }
   }
 }
