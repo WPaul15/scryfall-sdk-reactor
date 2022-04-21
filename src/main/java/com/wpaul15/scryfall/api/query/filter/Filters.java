@@ -5,144 +5,73 @@ import com.wpaul15.scryfall.api.query.IFilter;
 public class Filters {
 
   @SafeVarargs
-  public static <T> IFilter<T> isExactly(T... values) {
-    return IsExactly.isExactly(values);
-  }
-
-  public static <T> IFilter<T> isExactly(Iterable<T> values) {
-    return IsExactly.isExactly(values);
-  }
-
-  @SafeVarargs
   public static <T> IFilter<T> exactly(T... values) {
-    return IsExactly.isExactly(values);
+    return Exactly.exactly(values);
   }
 
   public static <T> IFilter<T> exactly(Iterable<T> values) {
-    return IsExactly.isExactly(values);
-  }
-
-  @SafeVarargs
-  public static <T> IFilter<T> isExactlyOneOf(T... values) {
-    return IsExactlyOneOf.isExactlyOneOf(values);
-  }
-
-  public static <T> IFilter<T> isExactlyOneOf(Iterable<T> values) {
-    return IsExactlyOneOf.isExactlyOneOf(values);
+    return Exactly.exactly(values);
   }
 
   @SafeVarargs
   public static <T> IFilter<T> exactlyOneOf(T... values) {
-    return IsExactlyOneOf.isExactlyOneOf(values);
+    return ExactlyOneOf.exactlyOneOf(values);
   }
 
   public static <T> IFilter<T> exactlyOneOf(Iterable<T> values) {
-    return IsExactlyOneOf.isExactlyOneOf(values);
-  }
-
-  @SafeVarargs
-  public static <T> IFilter<T> isAtMost(T... values) {
-    return IsAtMost.isAtMost(values);
-  }
-
-  public static <T> IFilter<T> isAtMost(Iterable<T> values) {
-    return IsAtMost.isAtMost(values);
+    return ExactlyOneOf.exactlyOneOf(values);
   }
 
   @SafeVarargs
   public static <T> IFilter<T> atMost(T... values) {
-    return IsAtMost.isAtMost(values);
+    return AtMost.atMost(values);
   }
 
   public static <T> IFilter<T> atMost(Iterable<T> values) {
-    return IsAtMost.isAtMost(values);
-  }
-
-  @SafeVarargs
-  public static <T> IFilter<T> isMoreThan(T... values) {
-    return IsMoreThan.isMoreThan(values);
-  }
-
-  public static <T> IFilter<T> isMoreThan(Iterable<T> values) {
-    return IsMoreThan.isMoreThan(values);
+    return AtMost.atMost(values);
   }
 
   @SafeVarargs
   public static <T> IFilter<T> moreThan(T... values) {
-    return IsMoreThan.isMoreThan(values);
+    return MoreThan.moreThan(values);
   }
 
   public static <T> IFilter<T> moreThan(Iterable<T> values) {
-    return IsMoreThan.isMoreThan(values);
-  }
-
-  @SafeVarargs
-  public static <T> IFilter<T> isAtLeast(T... values) {
-    return IsAtLeast.isAtLeast(values);
-  }
-
-  public static <T> IFilter<T> isAtLeast(Iterable<T> values) {
-    return IsAtLeast.isAtLeast(values);
+    return MoreThan.moreThan(values);
   }
 
   @SafeVarargs
   public static <T> IFilter<T> atLeast(T... values) {
-    return IsAtLeast.isAtLeast(values);
+    return AtLeast.atLeast(values);
   }
 
   public static <T> IFilter<T> atLeast(Iterable<T> values) {
-    return IsAtLeast.isAtLeast(values);
-  }
-
-  @SafeVarargs
-  public static <T> IFilter<T> isLessThan(T... values) {
-    return IsLessThan.isLessThan(values);
-  }
-
-  public static <T> IFilter<T> isLessThan(Iterable<T> values) {
-    return IsLessThan.isLessThan(values);
+    return AtLeast.atLeast(values);
   }
 
   @SafeVarargs
   public static <T> IFilter<T> lessThan(T... values) {
-    return IsLessThan.isLessThan(values);
+    return LessThan.lessThan(values);
   }
 
   public static <T> IFilter<T> lessThan(Iterable<T> values) {
-    return IsLessThan.isLessThan(values);
-  }
-
-  @SafeVarargs
-  public static <T> IFilter<T> isNotExactly(T... values) {
-    return IsNotExactly.isNotExactly(values);
-  }
-
-  public static <T> IFilter<T> isNotExactly(Iterable<T> values) {
-    return IsNotExactly.isNotExactly(values);
+    return LessThan.lessThan(values);
   }
 
   @SafeVarargs
   public static <T> IFilter<T> notExactly(T... values) {
-    return IsNotExactly.isNotExactly(values);
+    return NotExactly.notExactly(values);
   }
 
   public static <T> IFilter<T> notExactly(Iterable<T> values) {
-    return IsNotExactly.isNotExactly(values);
-  }
-
-  public static <T> IFilter<T> isNot(IFilter<T> filter) {
-    return IsNot.not(filter);
-  }
-
-  public static <T> IFilter<T> isNot(T value) {
-    return IsNot.not(value);
+    return NotExactly.notExactly(values);
   }
 
   public static <T> IFilter<T> not(IFilter<T> filter) {
-    return IsNot.not(filter);
+    return Not.not(filter);
   }
 
   public static <T> IFilter<T> not(T value) {
-    return IsNot.not(value);
+    return Not.not(value);
   }
 }

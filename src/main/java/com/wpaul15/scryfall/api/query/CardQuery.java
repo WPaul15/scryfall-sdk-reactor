@@ -23,12 +23,12 @@ public class CardQuery {
     return new CardQuery();
   }
 
-  public CardQuery color(IFilter<Colors> filter) {
+  public CardQuery colorIs(IFilter<Colors> filter) {
     addToParams(COLOR_KEY, filter);
     return this;
   }
 
-  public CardQuery colorIdentity(IFilter<Colors> filter) {
+  public CardQuery colorIdentityIs(IFilter<Colors> filter) {
     addToParams(COLOR_IDENTITY_KEY, filter);
     return this;
   }

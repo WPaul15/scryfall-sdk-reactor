@@ -1,15 +1,13 @@
 package com.wpaul15.scryfall.api;
 
+import static com.wpaul15.scryfall.api.query.filter.Filters.atLeast;
+import static com.wpaul15.scryfall.api.query.filter.Filters.atMost;
+import static com.wpaul15.scryfall.api.query.filter.Filters.exactly;
 import static com.wpaul15.scryfall.api.query.filter.Filters.exactlyOneOf;
-import static com.wpaul15.scryfall.api.query.filter.Filters.isAtLeast;
-import static com.wpaul15.scryfall.api.query.filter.Filters.isAtMost;
-import static com.wpaul15.scryfall.api.query.filter.Filters.isExactly;
-import static com.wpaul15.scryfall.api.query.filter.Filters.isExactlyOneOf;
-import static com.wpaul15.scryfall.api.query.filter.Filters.isLessThan;
-import static com.wpaul15.scryfall.api.query.filter.Filters.isMoreThan;
-import static com.wpaul15.scryfall.api.query.filter.Filters.isNot;
-import static com.wpaul15.scryfall.api.query.filter.Filters.isNotExactly;
+import static com.wpaul15.scryfall.api.query.filter.Filters.lessThan;
+import static com.wpaul15.scryfall.api.query.filter.Filters.moreThan;
 import static com.wpaul15.scryfall.api.query.filter.Filters.not;
+import static com.wpaul15.scryfall.api.query.filter.Filters.notExactly;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.wpaul15.scryfall.api.model.Colors;
@@ -34,26 +32,32 @@ public class FilterTest {
   private static Stream<Arguments> filterArguments() {
     return Stream.of(
         Arguments.of(CardQuery.where(), ""),
-        Arguments.of(CardQuery.where().color(isExactly(Colors.BLUE, Colors.BLACK)), "c=UB"),
-        Arguments.of(CardQuery.where().color(isLessThan(Colors.JESKAI)), "c<jeskai"),
-        Arguments.of(CardQuery.where().color(isMoreThan(Colors.GREEN, Colors.WHITE)), "c>GW"),
-        Arguments.of(CardQuery.where().color(isAtLeast(Colors.BLUE)), "c>=U"),
-        Arguments.of(CardQuery.where().color(isAtMost(Colors.BLACK, Colors.RED)), "c<=BR"),
-        Arguments.of(CardQuery.where().color(isNotExactly(Colors.BLUE, Colors.GREEN)), "c!=UG"),
-        Arguments.of(CardQuery.where().color(isNot(Colors.MULTICOLORED)), "-c=M"),
-        Arguments.of(CardQuery.where().color(isNot(not(Colors.COLORLESS))), "c=C"),
+        Arguments.of(CardQuery.where().colorIs(exactly(Colors.BLUE, Colors.BLACK)), "c=UB"),
+        Arguments.of(CardQuery.where().colorIs(lessThan(Colors.JESKAI)), "c<jeskai"),
+        Arguments.of(CardQuery.where().colorIs(moreThan(Colors.GREEN, Colors.WHITE)), "c>GW"),
+        Arguments.of(CardQuery.where().colorIs(atLeast(Colors.BLUE)), "c>=U"),
+        Arguments.of(CardQuery.where().colorIs(atMost(Colors.BLACK, Colors.RED)), "c<=BR"),
+        Arguments.of(CardQuery.where().colorIs(notExactly(Colors.BLUE, Colors.GREEN)), "c!=UG"),
+        Arguments.of(CardQuery.where().colorIs(not(Colors.MULTICOLORED)), "-c=M"),
+        Arguments.of(CardQuery.where().colorIs(not(not(Colors.COLORLESS))), "c=C"),
         Arguments.of(
-            CardQuery.where().color(isExactlyOneOf(Colors.WHITE, Colors.BLUE, Colors.BLACK)),
+            CardQuery.where().colorIs(exactlyOneOf(Colors.WHITE, Colors.BLUE, Colors.BLACK)),
             "(c=W or c=U or c=B)"),
         Arguments.of(
-            CardQuery.where().color(isNot(exactlyOneOf(Colors.GREEN, Colors.RED))),
+            CardQuery.where().colorIs(not(exactlyOneOf(Colors.GREEN, Colors.RED))),
             "-(c=G or c=R)"),
         Arguments.of(
             CardQuery.where()
-                .color(isAtLeast(List.of(Colors.WHITE, Colors.BLUE)))
+                .colorIs(atLeast(List.of(Colors.WHITE, Colors.BLUE)))
                 .and()
-                .color(isNot(Colors.RED)),
+                .colorIs(not(Colors.RED)),
             "c>=WU -c=R"),
-        Arguments.of(CardQuery.where().colorIdentity(isAtMost(Colors.ESPER)), "id<=esper"));
+        Arguments.of(CardQuery.where().colorIdentityIs(atMost(Colors.ESPER)), "id<=esper"),
+        Arguments.of(
+            CardQuery.where()
+                .colorIdentityIs(atMost(Colors.JUND))
+                .and()
+                .colorIs(not(Colors.MULTICOLORED)),
+            "-c=M id<=jund"));
   }
 }
