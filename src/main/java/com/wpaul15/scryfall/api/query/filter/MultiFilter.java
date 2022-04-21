@@ -1,7 +1,7 @@
 package com.wpaul15.scryfall.api.query.filter;
 
-import com.wpaul15.scryfall.api.query.IMultiFilter;
 import com.wpaul15.scryfall.api.query.IFilter;
+import com.wpaul15.scryfall.api.query.IMultiFilter;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 import lombok.AccessLevel;
