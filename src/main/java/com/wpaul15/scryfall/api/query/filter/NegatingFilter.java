@@ -11,7 +11,7 @@ abstract class NegatingFilter<T> implements INegatingFilter<T> {
   IFilter<T> filter;
   boolean negated;
 
-  public NegatingFilter(IFilter<T> filter) {
+  NegatingFilter(IFilter<T> filter) {
     this.filter = filter;
     this.negated =
         !(filter instanceof INegatingFilter<T> negatingFilter) || !negatingFilter.isNegated();
