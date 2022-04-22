@@ -1,5 +1,6 @@
 package com.wpaul15.scryfall.api;
 
+import static com.wpaul15.scryfall.api.query.CardQuery.where;
 import static com.wpaul15.scryfall.api.query.filter.Filters.atLeast;
 import static com.wpaul15.scryfall.api.query.filter.Filters.atMost;
 import static com.wpaul15.scryfall.api.query.filter.Filters.exactly;
@@ -9,6 +10,7 @@ import static com.wpaul15.scryfall.api.query.filter.Filters.moreThan;
 import static com.wpaul15.scryfall.api.query.filter.Filters.not;
 import static com.wpaul15.scryfall.api.query.filter.Filters.notExactly;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import com.wpaul15.scryfall.api.model.Colors;
 import com.wpaul15.scryfall.api.query.CardQuery;
@@ -31,33 +33,37 @@ public class FilterTest {
 
   private static Stream<Arguments> filterArguments() {
     return Stream.of(
-        Arguments.of(CardQuery.where(), ""),
-        Arguments.of(CardQuery.where().colorIs(exactly(Colors.BLUE, Colors.BLACK)), "c=UB"),
-        Arguments.of(CardQuery.where().colorIs(lessThan(Colors.JESKAI)), "c<jeskai"),
-        Arguments.of(CardQuery.where().colorIs(moreThan(Colors.GREEN, Colors.WHITE)), "c>GW"),
-        Arguments.of(CardQuery.where().colorIs(atLeast(Colors.BLUE)), "c>=U"),
-        Arguments.of(CardQuery.where().colorIs(atMost(Colors.BLACK, Colors.RED)), "c<=BR"),
-        Arguments.of(CardQuery.where().colorIs(notExactly(Colors.BLUE, Colors.GREEN)), "c!=UG"),
-        Arguments.of(CardQuery.where().colorIs(not(Colors.MULTICOLORED)), "-c=M"),
-        Arguments.of(CardQuery.where().colorIs(not(not(Colors.COLORLESS))), "c=C"),
-        Arguments.of(
-            CardQuery.where().colorIs(exactlyOneOf(Colors.WHITE, Colors.BLUE, Colors.BLACK)),
+        arguments(where(), ""),
+        arguments(where().colorIs(exactly(Colors.BLUE, Colors.BLACK)), "c=UB"),
+        arguments(where().colorIs(lessThan(Colors.JESKAI)), "c<jeskai"),
+        arguments(where().colorIs(moreThan(Colors.GREEN, Colors.WHITE)), "c>GW"),
+        arguments(where().colorIs(atLeast(Colors.BLUE)), "c>=U"),
+        arguments(where().colorIs(atMost(Colors.BLACK, Colors.RED)), "c<=BR"),
+        arguments(where().colorIs(notExactly(Colors.BLUE, Colors.GREEN)), "c!=UG"),
+        arguments(where().colorIs(not(Colors.MULTICOLORED)), "-c=M"),
+        arguments(where().colorIs(not(not(Colors.COLORLESS))), "c=C"),
+        arguments(
+            where().colorIs(exactlyOneOf(Colors.WHITE, Colors.BLUE, Colors.BLACK)),
             "(c=W or c=U or c=B)"),
-        Arguments.of(
-            CardQuery.where().colorIs(not(exactlyOneOf(Colors.GREEN, Colors.RED))),
+        arguments(
+            where().colorIs(not(exactlyOneOf(Colors.GREEN, Colors.RED))),
             "-(c=G or c=R)"),
-        Arguments.of(
-            CardQuery.where()
+        arguments(
+            where()
                 .colorIs(atLeast(List.of(Colors.WHITE, Colors.BLUE)))
                 .and()
                 .colorIs(not(Colors.RED)),
             "c>=WU -c=R"),
-        Arguments.of(CardQuery.where().colorIdentityIs(atMost(Colors.ESPER)), "id<=esper"),
-        Arguments.of(
-            CardQuery.where()
+        arguments(
+            where().colorIdentityIs(atMost(Colors.ESPER)).and().typeIs("Artifact"),
+            "t=Artifact id<=esper"),
+        arguments(
+            where()
                 .colorIdentityIs(atMost(Colors.JUND))
                 .and()
-                .colorIs(not(Colors.MULTICOLORED)),
-            "-c=M id<=jund"));
+                .colorIs(not(Colors.MULTICOLORED))
+                .and()
+                .typeIs(exactlyOneOf("Creature", "Instant")),
+            "-c=M (t=Creature or t=Instant) id<=jund"));
   }
 }

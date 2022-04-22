@@ -1,8 +1,16 @@
 package com.wpaul15.scryfall.api.query.filter;
 
 import com.wpaul15.scryfall.api.query.IFilter;
+import com.wpaul15.scryfall.api.query.IMonoFilter;
+import com.wpaul15.scryfall.api.query.IMultiFilter;
+import com.wpaul15.scryfall.api.query.INegatingFilter;
+import com.wpaul15.scryfall.api.query.INegatingMonoFilter;
 
 public class Filters {
+
+  public static <T> IMonoFilter<T> exactly(T value) {
+    return ExactlyMono.exactly(value);
+  }
 
   @SafeVarargs
   public static <T> IFilter<T> exactly(T... values) {
@@ -14,11 +22,11 @@ public class Filters {
   }
 
   @SafeVarargs
-  public static <T> IFilter<T> exactlyOneOf(T... values) {
+  public static <T> IMultiFilter<T> exactlyOneOf(T... values) {
     return ExactlyOneOf.exactlyOneOf(values);
   }
 
-  public static <T> IFilter<T> exactlyOneOf(Iterable<T> values) {
+  public static <T> IMultiFilter<T> exactlyOneOf(Iterable<T> values) {
     return ExactlyOneOf.exactlyOneOf(values);
   }
 
@@ -67,11 +75,15 @@ public class Filters {
     return NotExactly.notExactly(values);
   }
 
-  public static <T> IFilter<T> not(IFilter<T> filter) {
-    return Not.not(filter);
+  public static <T> INegatingMonoFilter<T> not(T value) {
+    return NotMono.not(exactly(value));
   }
 
-  public static <T> IFilter<T> not(T value) {
-    return Not.not(value);
+  public static <T> INegatingMonoFilter<T> not(IMonoFilter<T> filter) {
+    return NotMono.not(filter);
+  }
+
+  public static <T> INegatingFilter<T> not(IFilter<T> filter) {
+    return Not.not(filter);
   }
 }
