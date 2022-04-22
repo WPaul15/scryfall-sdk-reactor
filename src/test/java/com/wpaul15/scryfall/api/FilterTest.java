@@ -45,9 +45,7 @@ public class FilterTest {
         arguments(
             where().colorIs(exactlyOneOf(Colors.WHITE, Colors.BLUE, Colors.BLACK)),
             "(c=W or c=U or c=B)"),
-        arguments(
-            where().colorIs(not(exactlyOneOf(Colors.GREEN, Colors.RED))),
-            "-(c=G or c=R)"),
+        arguments(where().colorIs(not(exactlyOneOf(Colors.GREEN, Colors.RED))), "-(c=G or c=R)"),
         arguments(
             where()
                 .colorIs(atLeast(List.of(Colors.WHITE, Colors.BLUE)))
@@ -56,7 +54,7 @@ public class FilterTest {
             "c>=WU -c=R"),
         arguments(
             where().colorIdentityIs(atMost(Colors.ESPER)).and().typeIs("Artifact"),
-            "t=Artifact id<=esper"),
+            "t=\"Artifact\" id<=esper"),
         arguments(
             where()
                 .colorIdentityIs(atMost(Colors.JUND))
@@ -64,6 +62,6 @@ public class FilterTest {
                 .colorIs(not(Colors.MULTICOLORED))
                 .and()
                 .typeIs(exactlyOneOf("Creature", "Instant")),
-            "-c=M (t=Creature or t=Instant) id<=jund"));
+            "-c=M (t=\"Creature\" or t=\"Instant\") id<=jund"));
   }
 }

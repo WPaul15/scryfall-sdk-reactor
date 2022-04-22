@@ -16,7 +16,14 @@ abstract class ComparingFilter<T> implements IComparingFilter<T> {
   public String toQueryParams(String key) {
     StringBuilder builder = new StringBuilder(key).append(operator);
 
-    values.forEach(entry -> builder.append(entry.toString()));
+    values.forEach(
+        value -> {
+          if (value instanceof String) {
+            builder.append("\"").append(value).append("\"");
+          } else {
+            builder.append(value.toString());
+          }
+        });
 
     return builder.toString();
   }

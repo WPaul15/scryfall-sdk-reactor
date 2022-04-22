@@ -14,6 +14,14 @@ abstract class ComparingMonoFilter<T> implements IMonoFilter<T> {
 
   @Override
   public String toQueryParams(String key) {
-    return key + operator + value.toString();
+    StringBuilder builder = new StringBuilder(key).append(operator);
+
+    if (value instanceof String) {
+      builder.append("\"").append(value).append("\"");
+    } else {
+      builder.append(value.toString());
+    }
+
+    return builder.toString();
   }
 }
