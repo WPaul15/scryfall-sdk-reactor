@@ -62,6 +62,9 @@ public class FilterTest {
                 .colorIs(not(Colors.MULTICOLORED))
                 .and()
                 .typeIs(exactlyOneOf("Creature", "Instant")),
-            "-c=M (t=\"Creature\" or t=\"Instant\") id<=jund"));
+            "-c=M (t=\"Creature\" or t=\"Instant\") id<=jund"),
+        arguments(
+            where().typeIs(not(exactlyOneOf("Enchantment", "Artifact"))),
+            "-(t=\"Enchantment\" or t=\"Artifact\")"));
   }
 }

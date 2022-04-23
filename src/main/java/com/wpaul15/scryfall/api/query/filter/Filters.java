@@ -5,6 +5,7 @@ import com.wpaul15.scryfall.api.query.IMonoFilter;
 import com.wpaul15.scryfall.api.query.IMultiFilter;
 import com.wpaul15.scryfall.api.query.INegatingFilter;
 import com.wpaul15.scryfall.api.query.INegatingMonoFilter;
+import com.wpaul15.scryfall.api.query.INegatingMultiFilter;
 
 public class Filters {
 
@@ -79,11 +80,15 @@ public class Filters {
     return NotMono.not(exactly(value));
   }
 
+  public static <T> INegatingFilter<T> not(IFilter<T> filter) {
+    return Not.not(filter);
+  }
+
   public static <T> INegatingMonoFilter<T> not(IMonoFilter<T> filter) {
     return NotMono.not(filter);
   }
 
-  public static <T> INegatingFilter<T> not(IFilter<T> filter) {
-    return Not.not(filter);
+  public static <T> INegatingMultiFilter<T> not(IMultiFilter<T> filter) {
+    return NotMulti.not(filter);
   }
 }

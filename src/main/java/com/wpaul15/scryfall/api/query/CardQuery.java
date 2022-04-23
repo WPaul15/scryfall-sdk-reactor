@@ -70,6 +70,17 @@ public class CardQuery {
    * @param filter the filter to apply
    * @return this {@code CardQuery}
    */
+  public CardQuery typeIs(IMultiFilter<String> filter) {
+    addToParams(TYPE_KEY, filter);
+    return this;
+  }
+
+  /**
+   * Adds a search term to filter results by type. Accepts supertypes, types, or subtypes.
+   *
+   * @param filter the filter to apply
+   * @return this {@code CardQuery}
+   */
   public CardQuery typeIs(INegatingMonoFilter<String> filter) {
     addToParams(TYPE_KEY, filter);
     return this;
@@ -81,7 +92,7 @@ public class CardQuery {
    * @param filter the filter to apply
    * @return this {@code CardQuery}
    */
-  public CardQuery typeIs(IMultiFilter<String> filter) {
+  public CardQuery typeIs(INegatingMultiFilter<String> filter) {
     addToParams(TYPE_KEY, filter);
     return this;
   }
