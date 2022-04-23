@@ -1,14 +1,13 @@
 package com.wpaul15.scryfall.api.query.filter;
 
 import java.util.Arrays;
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
 
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 final class Exactly<T> extends ComparingFilter<T> {
 
+  private static final String OPERATOR = "=";
+
   Exactly(Iterable<T> values) {
-    super(values, "=");
+    super(values, OPERATOR);
   }
 
   @SafeVarargs
@@ -18,5 +17,16 @@ final class Exactly<T> extends ComparingFilter<T> {
 
   static <T> Exactly<T> exactly(Iterable<T> values) {
     return new Exactly<>(values);
+  }
+
+  static final class ExactlyMono<T> extends ComparingMonoFilter<T> {
+
+    ExactlyMono(T value) {
+      super(value, OPERATOR);
+    }
+
+    static <T> ExactlyMono<T> exactly(T value) {
+      return new ExactlyMono<>(value);
+    }
   }
 }

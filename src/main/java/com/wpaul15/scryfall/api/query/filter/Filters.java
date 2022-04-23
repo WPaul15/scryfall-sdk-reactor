@@ -10,7 +10,7 @@ import com.wpaul15.scryfall.api.query.INegatingMultiFilter;
 public class Filters {
 
   public static <T> IMonoFilter<T> exactly(T value) {
-    return ExactlyMono.exactly(value);
+    return Exactly.ExactlyMono.exactly(value);
   }
 
   @SafeVarargs
@@ -67,28 +67,19 @@ public class Filters {
     return LessThan.lessThan(values);
   }
 
-  @SafeVarargs
-  public static <T> IFilter<T> notExactly(T... values) {
-    return NotExactly.notExactly(values);
-  }
-
-  public static <T> IFilter<T> notExactly(Iterable<T> values) {
-    return NotExactly.notExactly(values);
-  }
-
-  public static <T> INegatingMonoFilter<T> not(T value) {
-    return NotMono.not(exactly(value));
-  }
-
   public static <T> INegatingFilter<T> not(IFilter<T> filter) {
     return Not.not(filter);
   }
 
+  public static <T> INegatingMonoFilter<T> not(T value) {
+    return Not.NotMono.not(value);
+  }
+
   public static <T> INegatingMonoFilter<T> not(IMonoFilter<T> filter) {
-    return NotMono.not(filter);
+    return Not.NotMono.not(filter);
   }
 
   public static <T> INegatingMultiFilter<T> not(IMultiFilter<T> filter) {
-    return NotMulti.not(filter);
+    return Not.NotMulti.not(filter);
   }
 }

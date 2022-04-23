@@ -8,7 +8,6 @@ import static com.wpaul15.scryfall.api.query.filter.Filters.exactlyOneOf;
 import static com.wpaul15.scryfall.api.query.filter.Filters.lessThan;
 import static com.wpaul15.scryfall.api.query.filter.Filters.moreThan;
 import static com.wpaul15.scryfall.api.query.filter.Filters.not;
-import static com.wpaul15.scryfall.api.query.filter.Filters.notExactly;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
@@ -39,7 +38,6 @@ public class FilterTest {
         arguments(where().colorIs(moreThan(Colors.GREEN, Colors.WHITE)), "c>GW"),
         arguments(where().colorIs(atLeast(Colors.BLUE)), "c>=U"),
         arguments(where().colorIs(atMost(Colors.BLACK, Colors.BLACK, Colors.RED)), "c<=BR"),
-        arguments(where().colorIs(notExactly(Colors.BLUE, Colors.GREEN)), "c!=UG"),
         arguments(where().colorIs(not(Colors.MULTICOLORED)), "-c=M"),
         arguments(where().colorIs(not(not(Colors.COLORLESS))), "c=C"),
         arguments(
