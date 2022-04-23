@@ -38,12 +38,12 @@ public class FilterTest {
         arguments(where().colorIs(lessThan(Colors.JESKAI)), "c<jeskai"),
         arguments(where().colorIs(moreThan(Colors.GREEN, Colors.WHITE)), "c>GW"),
         arguments(where().colorIs(atLeast(Colors.BLUE)), "c>=U"),
-        arguments(where().colorIs(atMost(Colors.BLACK, Colors.RED)), "c<=BR"),
+        arguments(where().colorIs(atMost(Colors.BLACK, Colors.BLACK, Colors.RED)), "c<=BR"),
         arguments(where().colorIs(notExactly(Colors.BLUE, Colors.GREEN)), "c!=UG"),
         arguments(where().colorIs(not(Colors.MULTICOLORED)), "-c=M"),
         arguments(where().colorIs(not(not(Colors.COLORLESS))), "c=C"),
         arguments(
-            where().colorIs(exactlyOneOf(Colors.WHITE, Colors.BLUE, Colors.BLACK)),
+            where().colorIs(exactlyOneOf(Colors.WHITE, Colors.WHITE, Colors.BLUE, Colors.BLACK)),
             "(c=W or c=U or c=B)"),
         arguments(where().colorIs(not(exactlyOneOf(Colors.GREEN, Colors.RED))), "-(c=G or c=R)"),
         arguments(

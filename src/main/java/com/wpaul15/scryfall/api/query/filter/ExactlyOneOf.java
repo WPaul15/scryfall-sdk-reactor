@@ -19,6 +19,7 @@ final class ExactlyOneOf<T> extends MultiFilter<T> {
   static <T> ExactlyOneOf<T> exactlyOneOf(Iterable<T> values) {
     return new ExactlyOneOf<>(
         StreamSupport.stream(values.spliterator(), false)
+            .distinct()
             .map(Exactly::exactly)
             .collect(Collectors.toList()));
   }
