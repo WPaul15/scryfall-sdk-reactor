@@ -54,7 +54,11 @@ public class CardQuery {
   }
 
   /**
-   * Adds a search term to filter results by type. Accepts supertypes, types, or subtypes.
+   * Adds a search term to filter results by type. Accepts supertypes, types, or subtypes. The
+   * search value is case-insensitive and may be a partial term, e.g. "drag" instead of "dragon".
+   *
+   * <p>Note that partial search terms may return more cards than expected. For instance, "dra" will
+   * match all cards of type Eldrazi, Drake, Dragon, Hydra, or Chandra
    *
    * @param value the type to filter by
    * @return this {@code CardQuery}
@@ -65,7 +69,11 @@ public class CardQuery {
   }
 
   /**
-   * Adds a search term to filter results by type. Accepts supertypes, types, or subtypes.
+   * Adds a search term to filter results by type. Accepts supertypes, types, or subtypes. The
+   * search values are case-insensitive and may be a partial term, e.g. "drag" instead of "dragon".
+   *
+   * <p>Note that partial search terms may return more cards than expected. For instance, "dra" will
+   * match all cards of type Eldrazi, Drake, Dragon, Hydra, or Chandra
    *
    * @param filter the filter to apply
    * @return this {@code CardQuery}
@@ -76,7 +84,11 @@ public class CardQuery {
   }
 
   /**
-   * Adds a search term to filter results by type. Accepts supertypes, types, or subtypes.
+   * Adds a search term to filter results by type. Accepts supertypes, types, or subtypes. The
+   * search value is case-insensitive and may be a partial term, e.g. "drag" instead of "dragon".
+   *
+   * <p>Note that partial search terms may return more cards than expected. For instance, "dra" will
+   * match all cards of type Eldrazi, Drake, Dragon, Hydra, or Chandra
    *
    * @param filter the filter to apply
    * @return this {@code CardQuery}
@@ -87,7 +99,11 @@ public class CardQuery {
   }
 
   /**
-   * Adds a search term to filter results by type. Accepts supertypes, types, or subtypes.
+   * Adds a search term to filter results by type. Accepts supertypes, types, or subtypes. The
+   * search values are case-insensitive and may be a partial term, e.g. "drag" instead of "dragon".
+   *
+   * <p>Note that partial search terms may return more cards than expected. For instance, "dra" will
+   * match all cards of type Eldrazi, Drake, Dragon, Hydra, or Chandra
    *
    * @param filter the filter to apply
    * @return this {@code CardQuery}
