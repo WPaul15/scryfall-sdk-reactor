@@ -1,19 +1,18 @@
-package com.wpaul15.scryfall.api.query.filter;
+package com.wpaul15.scryfall.api.query;
 
-import com.wpaul15.scryfall.api.query.IMonoFilter;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-abstract class ComparingMonoFilter<T> implements IMonoFilter<T> {
+class ComparingMonoFilter<T> extends MonoFilter<T> {
 
   T value;
   String operator;
 
   @Override
-  public String toQueryParams(String key) {
+  protected String toQueryParams(String key) {
     StringBuilder builder = new StringBuilder(key).append(operator);
 
     if (value instanceof String) {

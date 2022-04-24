@@ -1,13 +1,13 @@
 package com.wpaul15.scryfall.api;
 
 import static com.wpaul15.scryfall.api.query.CardQuery.where;
-import static com.wpaul15.scryfall.api.query.filter.Filters.atLeast;
-import static com.wpaul15.scryfall.api.query.filter.Filters.atMost;
-import static com.wpaul15.scryfall.api.query.filter.Filters.exactly;
-import static com.wpaul15.scryfall.api.query.filter.Filters.exactlyOneOf;
-import static com.wpaul15.scryfall.api.query.filter.Filters.lessThan;
-import static com.wpaul15.scryfall.api.query.filter.Filters.moreThan;
-import static com.wpaul15.scryfall.api.query.filter.Filters.not;
+import static com.wpaul15.scryfall.api.query.Filters.atLeast;
+import static com.wpaul15.scryfall.api.query.Filters.atMost;
+import static com.wpaul15.scryfall.api.query.Filters.exactly;
+import static com.wpaul15.scryfall.api.query.Filters.exactlyOneOf;
+import static com.wpaul15.scryfall.api.query.Filters.lessThan;
+import static com.wpaul15.scryfall.api.query.Filters.moreThan;
+import static com.wpaul15.scryfall.api.query.Filters.not;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 

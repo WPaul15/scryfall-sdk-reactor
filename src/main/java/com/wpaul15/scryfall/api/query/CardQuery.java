@@ -1,6 +1,6 @@
 package com.wpaul15.scryfall.api.query;
 
-import static com.wpaul15.scryfall.api.query.filter.Filters.exactly;
+import static com.wpaul15.scryfall.api.query.Filters.exactly;
 
 import com.wpaul15.scryfall.api.model.Colors;
 import java.net.URLEncoder;
@@ -14,13 +14,13 @@ import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class CardQuery {
+public final class CardQuery {
 
   private static final String COLOR_KEY = "c";
   private static final String COLOR_IDENTITY_KEY = "id";
   public static final String TYPE_KEY = "t";
 
-  Map<String, List<IQueryParams>> params = new HashMap<>();
+  Map<String, List<Filter<?>>> params = new HashMap<>();
 
   /**
    * Starts a new card query.
@@ -37,7 +37,7 @@ public class CardQuery {
    * @param filter the filter to apply
    * @return this {@code CardQuery}
    */
-  public CardQuery colorIs(IFilter<Colors> filter) {
+  public CardQuery colorIs(Filter<Colors> filter) {
     addToParams(COLOR_KEY, filter);
     return this;
   }
@@ -48,7 +48,7 @@ public class CardQuery {
    * @param filter the filter to apply
    * @return this {@code CardQuery}
    */
-  public CardQuery colorIdentityIs(IFilter<Colors> filter) {
+  public CardQuery colorIdentityIs(Filter<Colors> filter) {
     addToParams(COLOR_IDENTITY_KEY, filter);
     return this;
   }
@@ -78,7 +78,7 @@ public class CardQuery {
    * @param filter the filter to apply
    * @return this {@code CardQuery}
    */
-  public CardQuery typeIs(IMultiFilter<String> filter) {
+  public CardQuery typeIs(MultiFilter<String> filter) {
     addToParams(TYPE_KEY, filter);
     return this;
   }
@@ -93,7 +93,7 @@ public class CardQuery {
    * @param filter the filter to apply
    * @return this {@code CardQuery}
    */
-  public CardQuery typeIs(INegatingMonoFilter<String> filter) {
+  public CardQuery typeIs(NegatingMonoFilter<String> filter) {
     addToParams(TYPE_KEY, filter);
     return this;
   }
@@ -108,7 +108,7 @@ public class CardQuery {
    * @param filter the filter to apply
    * @return this {@code CardQuery}
    */
-  public CardQuery typeIs(INegatingMultiFilter<String> filter) {
+  public CardQuery typeIs(NegatingMultiFilter<String> filter) {
     addToParams(TYPE_KEY, filter);
     return this;
   }
@@ -142,7 +142,7 @@ public class CardQuery {
                 entry -> {
                   StringBuilder builder = new StringBuilder();
 
-                  if (entry.getValue() instanceof INegatingFilter<?> negatingFilter
+                  if (entry.getValue() instanceof NegatingFilter<?> negatingFilter
                       && negatingFilter.isNegated()) {
                     builder.append("-");
                   }
@@ -156,13 +156,13 @@ public class CardQuery {
     return URLEncoder.encode(rawParams, StandardCharsets.UTF_8);
   }
 
-  private void addToParams(String key, IQueryParams queryParams) {
+  private void addToParams(String key, Filter<?> filter) {
     if (!params.containsKey(key)) {
-      List<IQueryParams> list = new ArrayList<>();
-      list.add(queryParams);
+      List<Filter<?>> list = new ArrayList<>();
+      list.add(filter);
       params.put(key, list);
     } else {
-      params.get(key).add(queryParams);
+      params.get(key).add(filter);
     }
   }
 }
