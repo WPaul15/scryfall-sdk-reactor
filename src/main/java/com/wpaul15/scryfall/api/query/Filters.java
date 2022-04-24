@@ -1,6 +1,7 @@
 package com.wpaul15.scryfall.api.query;
 
 import java.util.Arrays;
+import java.util.Collection;
 
 public final class Filters {
 
@@ -19,7 +20,7 @@ public final class Filters {
     return new ComparingFilter<>(Arrays.asList(values), EXACTLY);
   }
 
-  public static <T> ComparingFilter<T> exactly(Iterable<T> values) {
+  public static <T> ComparingFilter<T> exactly(Collection<T> values) {
     return new ComparingFilter<>(values, EXACTLY);
   }
 
@@ -28,7 +29,7 @@ public final class Filters {
     return new ComparingFilter<>(Arrays.asList(values), AT_MOST);
   }
 
-  public static <T> ComparingFilter<T> atMost(Iterable<T> values) {
+  public static <T> ComparingFilter<T> atMost(Collection<T> values) {
     return new ComparingFilter<>(values, AT_MOST);
   }
 
@@ -37,7 +38,7 @@ public final class Filters {
     return new ComparingFilter<>(Arrays.asList(values), MORE_THAN);
   }
 
-  public static <T> ComparingFilter<T> moreThan(Iterable<T> values) {
+  public static <T> ComparingFilter<T> moreThan(Collection<T> values) {
     return new ComparingFilter<>(values, MORE_THAN);
   }
 
@@ -46,7 +47,7 @@ public final class Filters {
     return new ComparingFilter<>(Arrays.asList(values), AT_LEAST);
   }
 
-  public static <T> ComparingFilter<T> atLeast(Iterable<T> values) {
+  public static <T> ComparingFilter<T> atLeast(Collection<T> values) {
     return new ComparingFilter<>(values, AT_LEAST);
   }
 
@@ -55,7 +56,7 @@ public final class Filters {
     return new ComparingFilter<>(Arrays.asList(values), LESS_THAN);
   }
 
-  public static <T> ComparingFilter<T> lessThan(Iterable<T> values) {
+  public static <T> ComparingFilter<T> lessThan(Collection<T> values) {
     return new ComparingFilter<>(values, LESS_THAN);
   }
 
@@ -64,7 +65,7 @@ public final class Filters {
     return new MultiFilter<>(Arrays.asList(values), Filters::exactly);
   }
 
-  public static <T> MultiFilter<T> exactlyOneOf(Iterable<T> values) {
+  public static <T> MultiFilter<T> exactlyOneOf(Collection<T> values) {
     return new MultiFilter<>(values, Filters::exactly);
   }
 

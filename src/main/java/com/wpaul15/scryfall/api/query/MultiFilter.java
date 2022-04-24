@@ -1,8 +1,8 @@
 package com.wpaul15.scryfall.api.query;
 
+import java.util.Collection;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -11,13 +11,13 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 class MultiFilter<T> extends Filter<T> {
 
-  Iterable<T> values;
+  Collection<T> values;
   Function<T, Filter<T>> filterType;
 
   @Override
   public String toQueryParams(String key) {
     return "("
-        + StreamSupport.stream(values.spliterator(), false)
+        + values.stream()
             .distinct()
             .map(filterType)
             .map(filter -> filter.toQueryParams(key))

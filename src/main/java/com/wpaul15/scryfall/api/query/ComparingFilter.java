@@ -1,6 +1,6 @@
 package com.wpaul15.scryfall.api.query;
 
-import java.util.stream.StreamSupport;
+import java.util.Collection;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -9,14 +9,14 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 class ComparingFilter<T> extends Filter<T> {
 
-  Iterable<T> values;
+  Collection<T> values;
   String operator;
 
   @Override
   protected String toQueryParams(String key) {
     StringBuilder builder = new StringBuilder(key).append(operator);
 
-    StreamSupport.stream(values.spliterator(), false)
+    values.stream()
         .distinct()
         .forEach(
             value -> {
