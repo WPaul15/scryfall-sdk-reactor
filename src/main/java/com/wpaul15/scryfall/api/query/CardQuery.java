@@ -82,11 +82,11 @@ public final class CardQuery {
    * <p>Note that partial search terms may return more cards than expected. For instance, "dra" will
    * match all cards of type Eldrazi, Drake, Dragon, Hydra, or Chandra
    *
-   * @param value the type to filter by
+   * @param type the type to filter by
    * @return this {@code CardQuery}
    */
-  public CardQuery typeIs(String value) {
-    addToParams(TYPE_KEY, exactly(value));
+  public CardQuery typeIs(String type) {
+    addToParams(TYPE_KEY, exactly(type));
     return this;
   }
 
