@@ -2,6 +2,7 @@ package com.wpaul15.scryfall.api.query;
 
 import java.util.Arrays;
 import java.util.Collection;
+import reactor.core.publisher.Mono;
 
 public final class Filters {
 
@@ -24,6 +25,10 @@ public final class Filters {
     return new ComparingFilter<>(values, EXACTLY);
   }
 
+  public static <T> MonoFilter<T> atMost(T value) {
+    return new ComparingMonoFilter<>(value, AT_MOST);
+  }
+
   @SafeVarargs
   public static <T> ComparingFilter<T> atMost(T... values) {
     return new ComparingFilter<>(Arrays.asList(values), AT_MOST);
@@ -31,6 +36,10 @@ public final class Filters {
 
   public static <T> ComparingFilter<T> atMost(Collection<T> values) {
     return new ComparingFilter<>(values, AT_MOST);
+  }
+
+  public static <T> MonoFilter<T> moreThan(T value) {
+    return new ComparingMonoFilter<>(value, MORE_THAN);
   }
 
   @SafeVarargs
@@ -42,6 +51,10 @@ public final class Filters {
     return new ComparingFilter<>(values, MORE_THAN);
   }
 
+  public static <T> MonoFilter<T> atLeast(T value) {
+    return new ComparingMonoFilter<>(value, AT_LEAST);
+  }
+
   @SafeVarargs
   public static <T> ComparingFilter<T> atLeast(T... values) {
     return new ComparingFilter<>(Arrays.asList(values), AT_LEAST);
@@ -49,6 +62,10 @@ public final class Filters {
 
   public static <T> ComparingFilter<T> atLeast(Collection<T> values) {
     return new ComparingFilter<>(values, AT_LEAST);
+  }
+
+  public static <T> MonoFilter<T> lessThan(T value) {
+    return new ComparingMonoFilter<>(value, LESS_THAN);
   }
 
   @SafeVarargs
