@@ -34,6 +34,17 @@ public final class CardQuery {
   /**
    * Adds a search term to filter results by color.
    *
+   * @param color the color to filter by
+   * @return this {@code CardQuery}
+   */
+  public CardQuery colorIs(Colors color) {
+    addToParams(COLOR_KEY, exactly(color));
+    return this;
+  }
+
+  /**
+   * Adds a search term to filter results by color.
+   *
    * @param filter the filter to apply
    * @return this {@code CardQuery}
    */
