@@ -2,7 +2,6 @@ package com.wpaul15.scryfall.api.query;
 
 import java.util.Arrays;
 import java.util.Collection;
-import reactor.core.publisher.Mono;
 
 public final class Filters {
 
@@ -78,12 +77,21 @@ public final class Filters {
   }
 
   @SafeVarargs
-  public static <T> MultiFilter<T> exactlyOneOf(T... values) {
-    return new MultiFilter<>(Arrays.asList(values), Filters::exactly);
+  public static <T> MultiFilter<T> allOf(T... values) {
+    return new MultiFilter<>(Arrays.asList(values), Filters::exactly, false);
   }
 
-  public static <T> MultiFilter<T> exactlyOneOf(Collection<T> values) {
-    return new MultiFilter<>(values, Filters::exactly);
+  public static <T> MultiFilter<T> allOf(Collection<T> values) {
+    return new MultiFilter<>(values, Filters::exactly, false);
+  }
+
+  @SafeVarargs
+  public static <T> MultiFilter<T> anyOf(T... values) {
+    return new MultiFilter<>(Arrays.asList(values), Filters::exactly, true);
+  }
+
+  public static <T> MultiFilter<T> anyOf(Collection<T> values) {
+    return new MultiFilter<>(values, Filters::exactly, true);
   }
 
   public static <T> NegatingFilter<T> not(Filter<T> filter) {

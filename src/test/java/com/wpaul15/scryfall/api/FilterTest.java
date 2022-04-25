@@ -1,10 +1,11 @@
 package com.wpaul15.scryfall.api;
 
 import static com.wpaul15.scryfall.api.query.CardQuery.where;
+import static com.wpaul15.scryfall.api.query.Filters.allOf;
+import static com.wpaul15.scryfall.api.query.Filters.anyOf;
 import static com.wpaul15.scryfall.api.query.Filters.atLeast;
 import static com.wpaul15.scryfall.api.query.Filters.atMost;
 import static com.wpaul15.scryfall.api.query.Filters.exactly;
-import static com.wpaul15.scryfall.api.query.Filters.exactlyOneOf;
 import static com.wpaul15.scryfall.api.query.Filters.lessThan;
 import static com.wpaul15.scryfall.api.query.Filters.moreThan;
 import static com.wpaul15.scryfall.api.query.Filters.not;
@@ -33,6 +34,7 @@ public class FilterTest {
   private static Stream<Arguments> filterArguments() {
     return Stream.of(
         arguments(where(), ""),
+        arguments(where().colorIdentityIs(Colors.BOROS).and().colorIs(Colors.RED), "c=R id=boros"),
         arguments(where().colorIs(exactly(Colors.BLUE, Colors.BLACK)), "c=UB"),
         arguments(where().colorIs(lessThan(Colors.JESKAI)), "c<jeskai"),
         arguments(where().colorIs(moreThan(Colors.GREEN, Colors.WHITE)), "c>GW"),
@@ -41,9 +43,9 @@ public class FilterTest {
         arguments(where().colorIs(not(Colors.MULTICOLORED)), "-c=M"),
         arguments(where().colorIs(not(not(Colors.COLORLESS))), "c=C"),
         arguments(
-            where().colorIs(exactlyOneOf(Colors.WHITE, Colors.WHITE, Colors.BLUE, Colors.BLACK)),
+            where().colorIs(anyOf(Colors.WHITE, Colors.WHITE, Colors.BLUE, Colors.BLACK)),
             "(c=W or c=U or c=B)"),
-        arguments(where().colorIs(not(exactlyOneOf(Colors.GREEN, Colors.RED))), "-(c=G or c=R)"),
+        arguments(where().colorIs(not(anyOf(Colors.GREEN, Colors.RED))), "-(c=G or c=R)"),
         arguments(
             where()
                 .colorIs(atLeast(List.of(Colors.WHITE, Colors.BLUE)))
@@ -59,7 +61,7 @@ public class FilterTest {
                 .and()
                 .colorIs(not(Colors.MULTICOLORED))
                 .and()
-                .typeIs(exactlyOneOf("Creature", "Instant")),
+                .typeIs(anyOf("Creature", "Instant")),
             "-c=M (t=\"Creature\" or t=\"Instant\") id<=jund"),
         arguments(
             where().typeIs(not(exactlyOneOf("Enchantment", "Artifact"))),

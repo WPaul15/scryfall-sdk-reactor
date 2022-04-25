@@ -13,6 +13,7 @@ class MultiFilter<T> extends Filter<T> {
 
   Collection<T> values;
   Function<T, Filter<T>> filterType;
+  boolean disjunction;
 
   @Override
   public String toQueryParams(String key) {
@@ -21,7 +22,7 @@ class MultiFilter<T> extends Filter<T> {
             .distinct()
             .map(filterType)
             .map(filter -> filter.toQueryParams(key))
-            .collect(Collectors.joining(" or "))
+            .collect(Collectors.joining(disjunction ? " or " : " "))
         + ")";
   }
 }
