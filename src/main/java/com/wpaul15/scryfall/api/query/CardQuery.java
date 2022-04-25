@@ -56,6 +56,17 @@ public final class CardQuery {
   /**
    * Adds a search term to filter results by color identity.
    *
+   * @param colorIdentity the color identity to filter by
+   * @return this {@code CardQuery}
+   */
+  public CardQuery colorIdentityIs(Colors colorIdentity) {
+    addToParams(COLOR_IDENTITY_KEY, exactly(colorIdentity));
+    return this;
+  }
+
+  /**
+   * Adds a search term to filter results by color identity.
+   *
    * @param filter the filter to apply
    * @return this {@code CardQuery}
    */
