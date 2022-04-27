@@ -64,7 +64,19 @@ public class FilterTest {
                 .typeIs(anyOf("Creature", "Instant")),
             "-c=M (t=\"Creature\" or t=\"Instant\") id<=jund"),
         arguments(
-            where().typeIs(not(exactlyOneOf("Enchantment", "Artifact"))),
-            "-(t=\"Enchantment\" or t=\"Artifact\")"));
+            where()
+                .colorIdentityIs(atMost(Colors.MARDU))
+                .and()
+                .typeIs(allOf("Legendary", "Warrior")),
+            "(t=\"Legendary\" t=\"Warrior\") id<=mardu"),
+        arguments(
+            where().typeIs(not(anyOf("Enchantment", "Artifact"))),
+            "-(t=\"Enchantment\" or t=\"Artifact\")"),
+        arguments(
+            where().typeIs("Creature").and().powerIsZeroOrVariable().and().toughnessIs(atMost(3.0)),
+            "t=\"Creature\" pow=\"*\" tou<=3.0"),
+        arguments(
+            where().typeIs("Planeswalker").and().loyaltyIs(lessThan(5)),
+            "t=\"Planeswalker\" loy<5"));
   }
 }

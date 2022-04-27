@@ -18,6 +18,9 @@ public final class CardQuery {
 
   private static final String COLOR_KEY = "c";
   private static final String COLOR_IDENTITY_KEY = "id";
+  private static final String LOYALTY_KEY = "loy";
+  private static final String POWER_KEY = "pow";
+  private static final String TOUGHNESS_KEY = "tou";
   public static final String TYPE_KEY = "t";
 
   Map<String, List<Filter<?>>> params = new HashMap<>();
@@ -33,6 +36,10 @@ public final class CardQuery {
 
   /**
    * Adds a search term to filter results by color.
+   *
+   * <p>This method is a shortcut for
+   *
+   * <pre>colorIs(exactly(color))</pre>
    *
    * @param color the color to filter by
    * @return this {@code CardQuery}
@@ -55,6 +62,10 @@ public final class CardQuery {
 
   /**
    * Adds a search term to filter results by color identity.
+   *
+   * <p>This method is a shortcut for
+   *
+   * <pre>colorIdentityIs(exactly(colorIdentity))</pre>
    *
    * @param colorIdentity the color identity to filter by
    * @return this {@code CardQuery}
@@ -81,6 +92,10 @@ public final class CardQuery {
    *
    * <p>Note that partial search terms may return more cards than expected. For instance, "dra" will
    * match all cards of type Eldrazi, Drake, Dragon, Hydra, or Chandra
+   *
+   * <p>This method is a shortcut for
+   *
+   * <pre>typeIs(exactly(type))</pre>
    *
    * @param type the type to filter by
    * @return this {@code CardQuery}
@@ -132,6 +147,132 @@ public final class CardQuery {
    */
   public CardQuery typeIs(NegatingMultiFilter<String> filter) {
     addToParams(TYPE_KEY, filter);
+    return this;
+  }
+
+  /**
+   * Adds a search term to filter results by power.
+   *
+   * <p>The value is a {@code Double} because there are some cards from the "Un-" sets that have
+   * fractional powers, such as <a href="https://scryfall.com/card/unh/49/bad-ass">Bad Ass</a>.
+   *
+   * <p>This method is a shortcut for
+   *
+   * <pre>powerIs(exactly(power))</pre>
+   *
+   * @param power the power to filter by
+   * @return this {@code CardQuery}
+   */
+  public CardQuery powerIs(Double power) {
+    addToParams(POWER_KEY, exactly(power));
+    return this;
+  }
+
+  /**
+   * Adds a search term to filter results by power.
+   *
+   * <p>The values are {@code Double}s because there are some cards from the "Un-" sets that have
+   * fractional powers, such as <a href="https://scryfall.com/card/unh/49/bad-ass">Bad Ass</a>.
+   *
+   * @param filter the filter to apply
+   * @return this {@code CardQuery}
+   */
+  public CardQuery powerIs(MonoFilter<Double> filter) {
+    addToParams(POWER_KEY, filter);
+    return this;
+  }
+
+  /**
+   * Adds a search term to filter results by power. Specifically, this method will match all cards
+   * with power 0 or * (variable power) and/or cards that enter the battlefield with any number of
+   * +1/+1 counters.
+   *
+   * @return this {@code CardQuery}
+   */
+  public CardQuery powerIsZeroOrVariable() {
+    addToParams(POWER_KEY, exactly("*"));
+    return this;
+  }
+
+  /**
+   * Adds a search term to filter results by toughness.
+   *
+   * <p>The values are {@code Double}s because there are some cards from the "Un-" sets that have
+   * fractional toughnesses, such as <a href="https://scryfall.com/card/unh/95/fat-ass">Fat Ass</a>.
+   *
+   * <p>This method is a shortcut for
+   *
+   * <pre>toughnessIs(exactly(toughness))</pre>
+   *
+   * @param toughness the toughness to filter by
+   * @return this {@code CardQuery}
+   */
+  public CardQuery toughnessIs(Double toughness) {
+    addToParams(TOUGHNESS_KEY, exactly(toughness));
+    return this;
+  }
+
+  /**
+   * Adds a search term to filter results by toughness.
+   *
+   * <p>The values are {@code Double}s because there are some cards from the "Un-" sets that have
+   * fractional toughnesses, such as <a href="https://scryfall.com/card/unh/95/fat-ass">Fat Ass</a>.
+   *
+   * @param filter the filter to apply
+   * @return this {@code CardQuery}
+   */
+  public CardQuery toughnessIs(MonoFilter<Double> filter) {
+    addToParams(TOUGHNESS_KEY, filter);
+    return this;
+  }
+
+  /**
+   * Adds a search term to filter results by toughness. Specifically, this method will match all
+   * cards with toughness 0 or * (variable toughness) and/or cards that enter the battlefield with
+   * any number of +1/+1 counters.
+   *
+   * @return this {@code CardQuery}
+   */
+  public CardQuery toughnessIsZeroOrVariable() {
+    addToParams(TOUGHNESS_KEY, exactly("*"));
+    return this;
+  }
+
+  /**
+   * Adds a search term to filter by loyalty.
+   *
+   * <p>This method is a shortcut for
+   *
+   * <pre>loyaltyIs(exactly(loyalty))</pre>
+   *
+   * @param loyalty the loyalty to filter by
+   * @return this {@code CardQuery}
+   */
+  public CardQuery loyaltyIs(Integer loyalty) {
+    addToParams(LOYALTY_KEY, exactly(loyalty));
+    return this;
+  }
+
+  /**
+   * Adds a search term to filter by loyalty.
+   *
+   * @param filter the filter to apply
+   * @return this {@code CardQuery}
+   */
+  public CardQuery loyaltyIs(MonoFilter<Integer> filter) {
+    addToParams(LOYALTY_KEY, filter);
+    return this;
+  }
+
+  /**
+   * Adds a search term to filter results by loyalty. Specifically, this method will match all cards
+   * with loyalty 0, X, or * (variable loyalty) and/or cards that enter the battlefield with any
+   * number of loyalty counters.
+   *
+   * @return this {@code CardQuery}
+   */
+  public CardQuery loyaltyIsZeroOrVariable() {
+    addToParams(LOYALTY_KEY, exactly("*"));
     return this;
   }
 
