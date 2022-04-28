@@ -20,7 +20,7 @@ class ComparingFilter<T> extends Filter<T> {
         .distinct()
         .forEach(
             value -> {
-              if (value instanceof String) {
+              if (value instanceof String s && WHITESPACE.matcher(s).matches()) {
                 builder.append("\"").append(value).append("\"");
               } else {
                 builder.append(value.toString());

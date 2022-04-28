@@ -5,7 +5,7 @@ import java.util.Collection;
 
 public final class Filters {
 
-  private static final String EXACTLY = "=";
+  private static final String EXACTLY = ":";
   private static final String AT_MOST = "<=";
   private static final String MORE_THAN = ">";
   private static final String AT_LEAST = ">=";

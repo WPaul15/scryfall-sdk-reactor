@@ -15,7 +15,7 @@ class ComparingMonoFilter<T> extends MonoFilter<T> {
   protected String toQueryParams(String key) {
     StringBuilder builder = new StringBuilder(key).append(operator);
 
-    if (value instanceof String) {
+    if (value instanceof String s && WHITESPACE.matcher(s).matches()) {
       builder.append("\"").append(value).append("\"");
     } else {
       builder.append(value.toString());

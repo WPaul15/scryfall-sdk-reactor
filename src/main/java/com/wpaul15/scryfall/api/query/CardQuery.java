@@ -18,6 +18,8 @@ public final class CardQuery {
 
   private static final String COLOR_KEY = "c";
   private static final String COLOR_IDENTITY_KEY = "id";
+  private static final String INCLUDE_KEY = "include";
+  private static final String IS_KEY = "is";
   private static final String LOYALTY_KEY = "loy";
   private static final String POWER_KEY = "pow";
   private static final String TOUGHNESS_KEY = "tou";
@@ -273,6 +275,49 @@ public final class CardQuery {
    */
   public CardQuery loyaltyIsZeroOrVariable() {
     addToParams(LOYALTY_KEY, exactly("*"));
+    return this;
+  }
+
+  /**
+   * Adds a search term to filter by a special search keyword.
+   *
+   * @param searchKeyword the search keyword to filter by
+   * @return this {@code CardQuery}
+   */
+  public CardQuery cardIs(SearchKeywords searchKeyword) {
+    addToParams(IS_KEY, exactly(searchKeyword));
+    return this;
+  }
+
+  /**
+   * Adds a search term to filter by special search keywords.
+   *
+   * @param filter the filter to apply
+   * @return this {@code CardQuery}
+   */
+  public CardQuery cardIs(MultiFilter<SearchKeywords> filter) {
+    addToParams(IS_KEY, filter);
+    return this;
+  }
+
+  /**
+   * Adds a search term to include special cards in the search results, namely:
+   *
+   * <ul>
+   *   <li>Vanguard cards from the Vanguard format;
+   *   <li>Plane cards from the Planechase format;
+   *   <li>Phenomenon cards from the Planechase format;
+   *   <li>Scheme cards from the Archenemy format; and
+   *   <li>Memorabilia cards, such as tournament prize cards, gold-bordered world champion deck
+   *       cards, art series cards, oversized cards, etc.
+   * </ul>
+   *
+   * These cards are hidden from search results by default.
+   *
+   * @return this {@code CardQuery}
+   */
+  public CardQuery extrasAreIncluded() {
+    addToParams(INCLUDE_KEY, exactly("extras"));
     return this;
   }
 
