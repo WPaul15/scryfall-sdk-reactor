@@ -328,7 +328,7 @@ public final class CardQuery {
    *
    * <p>This method is a shortcut for
    *
-   * <pre>rarityIs(exactly(color))</pre>
+   * <pre>rarityIs(exactly(rarity))</pre>
    *
    * @param rarity the rarity to filter by
    * @return this {@code CardQuery}
