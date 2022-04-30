@@ -3,6 +3,7 @@ package com.wpaul15.scryfall.api.query;
 import static com.wpaul15.scryfall.api.query.Filters.exactly;
 
 import com.wpaul15.scryfall.api.model.Colors;
+import com.wpaul15.scryfall.api.model.Rarity;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public final class CardQuery {
   private static final String IS_KEY = "is";
   private static final String LOYALTY_KEY = "loy";
   private static final String POWER_KEY = "pow";
+  private static final String RARITY_KEY = "r";
   private static final String TOUGHNESS_KEY = "tou";
   public static final String TYPE_KEY = "t";
 
@@ -318,6 +320,32 @@ public final class CardQuery {
    */
   public CardQuery extrasAreIncluded() {
     addToParams(INCLUDE_KEY, exactly("extras"));
+    return this;
+  }
+
+  /**
+   * Adds a search term to filter by rarity.
+   *
+   * <p>This method is a shortcut for
+   *
+   * <pre>rarityIs(exactly(color))</pre>
+   *
+   * @param rarity the rarity to filter by
+   * @return this {@code CardQuery}
+   */
+  public CardQuery rarityIs(Rarity rarity) {
+    addToParams(RARITY_KEY, exactly(rarity));
+    return this;
+  }
+
+  /**
+   * Adds a search term to filter by rarity.
+   *
+   * @param filter the filter to apply
+   * @return this {@code CardQuery}
+   */
+  public CardQuery rarityIs(Filter<Rarity> filter) {
+    addToParams(RARITY_KEY, filter);
     return this;
   }
 

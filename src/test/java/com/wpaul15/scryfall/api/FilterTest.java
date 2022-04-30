@@ -13,6 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import com.wpaul15.scryfall.api.model.Colors;
+import com.wpaul15.scryfall.api.model.Rarity;
 import com.wpaul15.scryfall.api.query.CardQuery;
 import com.wpaul15.scryfall.api.query.SearchKeywords;
 import java.net.URLEncoder;
@@ -84,6 +85,10 @@ public class FilterTest {
                 .and()
                 .cardIs(SearchKeywords.FUNNY),
             "(is:frenchvanilla or is:bear) is:funny"),
-        arguments(where().extrasAreIncluded(), "include:extras"));
+        arguments(where().extrasAreIncluded(), "include:extras"),
+        arguments(where().typeIs("Artifact").and().rarityIs(Rarity.COMMON), "r:common t:Artifact"),
+        arguments(
+            where().colorIs(anyOf(Colors.BLUE, Colors.GREEN)).and().rarityIs(atLeast(Rarity.RARE)),
+            "r>=rare (c:U or c:G)"));
   }
 }
