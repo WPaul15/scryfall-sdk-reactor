@@ -5,11 +5,16 @@ import java.util.Collection;
 
 public final class Filters {
 
-  private static final String EXACTLY = ":";
+  private static final String IS = ":";
+  private static final String EXACTLY = "=";
   private static final String AT_MOST = "<=";
   private static final String MORE_THAN = ">";
   private static final String AT_LEAST = ">=";
   private static final String LESS_THAN = "<";
+
+  static <T> MonoFilter<T> is(T value) {
+    return new ComparingMonoFilter<>(value, IS);
+  }
 
   public static <T> MonoFilter<T> exactly(T value) {
     return new ComparingMonoFilter<>(value, EXACTLY);

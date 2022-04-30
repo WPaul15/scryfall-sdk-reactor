@@ -1,6 +1,7 @@
 package com.wpaul15.scryfall.api.query;
 
 import static com.wpaul15.scryfall.api.query.Filters.exactly;
+import static com.wpaul15.scryfall.api.query.Filters.is;
 
 import com.wpaul15.scryfall.api.model.Colors;
 import com.wpaul15.scryfall.api.model.Rarity;
@@ -319,7 +320,7 @@ public final class CardQuery {
    * @return this {@code CardQuery}
    */
   public CardQuery extrasAreIncluded() {
-    addToParams(INCLUDE_KEY, exactly("extras"));
+    addToParams(INCLUDE_KEY, is("extras"));
     return this;
   }
 
