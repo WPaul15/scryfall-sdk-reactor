@@ -1,4 +1,4 @@
-package com.wpaul15.scryfall.api;
+package com.wpaul15.scryfall.api.query;
 
 import static com.wpaul15.scryfall.api.query.CardQuery.where;
 import static com.wpaul15.scryfall.api.query.Filters.allOf;
@@ -14,8 +14,6 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import com.wpaul15.scryfall.api.model.Colors;
 import com.wpaul15.scryfall.api.model.Rarity;
-import com.wpaul15.scryfall.api.query.CardQuery;
-import com.wpaul15.scryfall.api.query.SearchKeywords;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
