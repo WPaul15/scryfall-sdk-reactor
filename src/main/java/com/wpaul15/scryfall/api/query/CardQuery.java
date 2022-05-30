@@ -301,7 +301,7 @@ public final class CardQuery {
 
   @NoArgsConstructor(access = AccessLevel.PRIVATE)
   @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-  static final class CardQueryOptions {
+  public static final class CardQueryOptions {
 
     private static final String INCLUDE_KEY = "include";
     private static final String UNIQUE_KEY = "unique";
