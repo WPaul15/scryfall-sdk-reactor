@@ -55,14 +55,14 @@ public final class CardQuery {
   private static final String NEW_KEY = "new";
 
   Map<String, List<?>> filterMap = new HashMap<>();
-  CardQueryMetadata metadata;
+  CardQueryOptions searchOptions;
 
-  private CardQuery(CardQueryMetadata metadata) {
-    this.metadata = metadata;
+  private CardQuery(CardQueryOptions searchOptions) {
+    this.searchOptions = searchOptions;
   }
 
-  public static CardQueryMetadata withSettings() {
-    return new CardQueryMetadata();
+  public static CardQueryOptions withOptions() {
+    return new CardQueryOptions();
   }
 
   public static CardQuery findCardsWith() {
@@ -301,7 +301,7 @@ public final class CardQuery {
 
   @NoArgsConstructor(access = AccessLevel.PRIVATE)
   @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-  static final class CardQueryMetadata {
+  static final class CardQueryOptions {
 
     private static final String INCLUDE_KEY = "include";
     private static final String UNIQUE_KEY = "unique";
@@ -309,29 +309,29 @@ public final class CardQuery {
     private static final String PREFERENCE_KEY = "prefer";
     private static final String DIRECTION_KEY = "direction";
 
-    Map<String, String> metadataMap = new HashMap<>();
+    Map<String, String> optionMap = new HashMap<>();
 
     public CardQuery findCardsWith() {
       return new CardQuery(this);
     }
 
-    public CardQueryMetadata includeExtras() {
+    public CardQueryOptions includeExtras() {
       return this;
     }
 
-    public CardQueryMetadata showUnique() {
+    public CardQueryOptions showUnique() {
       return this;
     }
 
-    public CardQueryMetadata orderBy() {
+    public CardQueryOptions orderBy() {
       return this;
     }
 
-    public CardQueryMetadata prefer() {
+    public CardQueryOptions prefer() {
       return this;
     }
 
-    public CardQueryMetadata sortDirection() {
+    public CardQueryOptions sortDirection() {
       return this;
     }
 
