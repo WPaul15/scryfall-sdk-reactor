@@ -1,13 +1,21 @@
 package com.wpaul15.scryfall.api.query;
 
+import com.wpaul15.scryfall.api.query.options.Printing;
+import com.wpaul15.scryfall.api.query.options.SortDirection;
+import com.wpaul15.scryfall.api.query.options.SortField;
+import com.wpaul15.scryfall.api.query.options.Uniqueness;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public final class CardQuery {
 
   private static final String COLOR_KEY = "c";
@@ -54,19 +62,16 @@ public final class CardQuery {
   private static final String LANGUAGE_KEY = "language";
   private static final String NEW_KEY = "new";
 
-  Map<String, List<?>> filterMap = new HashMap<>();
+  final Map<String, List<?>> filterMap = new HashMap<>();
   CardQueryOptions searchOptions;
 
-  private CardQuery(CardQueryOptions searchOptions) {
-    this.searchOptions = searchOptions;
-  }
-
-  public static CardQueryOptions withOptions() {
-    return new CardQueryOptions();
-  }
-
   public static CardQuery findCardsWith() {
-    return new CardQuery(null);
+    return new CardQuery();
+  }
+
+  public CardQuery searchOptions(CardQueryOptions searchOptions) {
+    this.searchOptions = searchOptions;
+    return this;
   }
 
   public CardQuery color() {
@@ -296,7 +301,16 @@ public final class CardQuery {
 
   @Override
   public String toString() {
-    return "";
+    StringBuilder builder = new StringBuilder();
+
+    if (searchOptions != null) {
+      builder.append(
+          searchOptions.options.entrySet().stream()
+              .map(entry -> entry.getKey() + ":" + entry.getValue())
+              .collect(Collectors.joining(" ")));
+    }
+
+    return URLEncoder.encode(builder.toString(), StandardCharsets.UTF_8);
   }
 
   @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -304,40 +318,75 @@ public final class CardQuery {
   public static final class CardQueryOptions {
 
     private static final String INCLUDE_KEY = "include";
-    private static final String UNIQUE_KEY = "unique";
+    private static final String UNIQUENESS_KEY = "unique";
     private static final String ORDER_KEY = "order";
     private static final String PREFERENCE_KEY = "prefer";
     private static final String DIRECTION_KEY = "direction";
 
-    Map<String, String> optionMap = new HashMap<>();
+    Map<String, String> options = new HashMap<>();
 
-    public CardQuery findCardsWith() {
-      return new CardQuery(this);
+    /**
+     * Creates a new set of options.
+     *
+     * @return a new {@code CardQueryOptions} instance
+     */
+    public static CardQueryOptions options() {
+      return new CardQueryOptions();
     }
 
+    /**
+     * Sets the query to include "extra" cards such as Vanguard cards, plane cards, art series
+     * cards, etc. This is disabled by default.
+     *
+     * @return this {@code CardQueryOptions}
+     */
     public CardQueryOptions includeExtras() {
+      options.put(INCLUDE_KEY, "extras");
       return this;
     }
 
-    public CardQueryOptions showUnique() {
+    /**
+     * Sets how duplicate printings should be removed. The exact printing(s) returned are determined
+     * by {@link CardQueryOptions#prefer(Printing)}. The default is {@link Uniqueness#CARDS}.
+     *
+     * @return this {@code CardQueryOptions}
+     * @see CardQueryOptions#prefer(Printing)
+     */
+    public CardQueryOptions uniqueness(Uniqueness option) {
+      options.put(UNIQUENESS_KEY, option.toString());
       return this;
     }
 
-    public CardQueryOptions orderBy() {
+    /**
+     * Sets the field by which to sort cards. The default is {@link SortField#NAME}.
+     *
+     * @return this {@code CardQueryOptions}
+     */
+    public CardQueryOptions orderBy(SortField option) {
+      options.put(ORDER_KEY, option.toString());
       return this;
     }
 
-    public CardQueryOptions prefer() {
+    /**
+     * Sets which printing of cards to prefer. The default is {@link Printing#NEWEST}.
+     *
+     * @return this {@code CardQueryOptions}
+     */
+    public CardQueryOptions prefer(Printing option) {
+      options.put(PREFERENCE_KEY, option.toString());
       return this;
     }
 
-    public CardQueryOptions sortDirection() {
+    /**
+     * Sets the sort direction using the field specified in {@link
+     * CardQueryOptions#orderBy(SortField)}. The default is {@link SortDirection#ASCENDING}.
+     *
+     * @return this {@code CardQueryOptions}
+     * @see CardQueryOptions#orderBy(SortField)
+     */
+    public CardQueryOptions sortDirection(SortDirection option) {
+      options.put(DIRECTION_KEY, option.toString());
       return this;
-    }
-
-    @Override
-    public String toString() {
-      return "";
     }
   }
 }
