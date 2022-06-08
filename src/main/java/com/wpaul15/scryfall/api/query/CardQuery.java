@@ -6,9 +6,12 @@ import com.wpaul15.scryfall.api.query.options.SortField;
 import com.wpaul15.scryfall.api.query.options.Uniqueness;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -62,7 +65,7 @@ public final class CardQuery {
   private static final String LANGUAGE_KEY = "language";
   private static final String NEW_KEY = "new";
 
-  final Map<String, List<?>> filterMap = new HashMap<>();
+  final Map<String, List<Filter<?>>> filters = new LinkedHashMap<>();
   CardQueryOptions searchOptions;
 
   public static CardQuery findCardsWith() {
@@ -86,7 +89,33 @@ public final class CardQuery {
     return this;
   }
 
-  public CardQuery type() {
+  /**
+   * Adds a term to filter results by card type. Accepts supertypes, types, and subtypes. The value
+   * is case-insensitive and may be a partial term, e.g. "drag" instead of "dragon".
+   *
+   * <p>Note that partial search terms may return more cards than expected. For instance, "dra" will
+   * match all cards of type Eldrazi, Drake, Dragon, Hydra, or Chandra
+   *
+   * @param filter the filter to add
+   * @return this {@code CardQuery}
+   */
+  public CardQuery type(SingleFilter<String> filter) {
+    addFilter(TYPE_KEY, filter);
+    return this;
+  }
+
+  /**
+   * Adds a term to filter results by card type. Accepts supertypes, types, and subtypes. The value
+   * is case-insensitive and may be a partial term, e.g. "drag" instead of "dragon".
+   *
+   * <p>Note that partial search terms may return more cards than expected. For instance, "dra" will
+   * match all cards of type Eldrazi, Drake, Dragon, Hydra, or Chandra
+   *
+   * @param filter the filter to add
+   * @return this {@code CardQuery}
+   */
+  public CardQuery type(MultiFilter<String> filter) {
+    addFilter(TYPE_KEY, filter);
     return this;
   }
 
@@ -146,6 +175,7 @@ public final class CardQuery {
     return this;
   }
 
+  // TODO: Fix confusing name
   public CardQuery cardType() {
     return this;
   }
@@ -301,16 +331,46 @@ public final class CardQuery {
 
   @Override
   public String toString() {
-    StringBuilder builder = new StringBuilder();
+    String optionsString = "";
 
     if (searchOptions != null) {
-      builder.append(
+      optionsString =
           searchOptions.options.entrySet().stream()
               .map(entry -> entry.getKey() + ":" + entry.getValue())
-              .collect(Collectors.joining(" ")));
+              .collect(Collectors.joining(" "));
+    }
+
+    String filterString =
+        filters.entrySet().stream()
+            .flatMap(
+                entry -> entry.getValue().stream().map(filter -> Map.entry(entry.getKey(), filter)))
+            .map(entry -> entry.getValue().toFilterString(entry.getKey()))
+            .collect(Collectors.joining(" "));
+
+    StringBuilder builder = new StringBuilder();
+
+    if (!optionsString.isBlank()) {
+      builder.append(optionsString);
+
+      if (!filterString.isBlank()) {
+        builder.append(" ").append(filterString);
+      }
+    } else {
+      builder.append(filterString);
     }
 
     return URLEncoder.encode(builder.toString(), StandardCharsets.UTF_8);
+  }
+
+  private void addFilter(String key, Filter<?> filter) {
+    Optional.ofNullable(filters.get(key))
+        .ifPresentOrElse(
+            list -> list.add(filter),
+            () -> {
+              List<Filter<?>> list = new ArrayList<>();
+              list.add(filter);
+              filters.put(key, list);
+            });
   }
 
   @NoArgsConstructor(access = AccessLevel.PRIVATE)
