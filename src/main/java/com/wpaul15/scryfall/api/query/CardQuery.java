@@ -1,5 +1,6 @@
 package com.wpaul15.scryfall.api.query;
 
+import com.wpaul15.scryfall.api.model.Color;
 import com.wpaul15.scryfall.api.query.options.Printing;
 import com.wpaul15.scryfall.api.query.options.SortDirection;
 import com.wpaul15.scryfall.api.query.options.SortField;
@@ -77,7 +78,36 @@ public final class CardQuery {
     return this;
   }
 
-  public CardQuery color() {
+  /**
+   * Adds a search term to filter results by color.
+   *
+   * @param filter the filter to apply
+   * @return this {@code CardQuery}
+   */
+  public CardQuery color(SingleFilter<Color> filter) {
+    addFilter(COLOR_KEY, filter);
+    return this;
+  }
+
+  /**
+   * Adds a search term to filter results by color.
+   *
+   * @param filter the filter to apply
+   * @return this {@code CardQuery}
+   */
+  public CardQuery color(ManyFilter<Color> filter) {
+    addFilter(COLOR_KEY, filter);
+    return this;
+  }
+
+  /**
+   * Adds a search term to filter results by color.
+   *
+   * @param filter the filter to apply
+   * @return this {@code CardQuery}
+   */
+  public CardQuery color(MultiFilter<Color> filter) {
+    addFilter(COLOR_KEY, filter);
     return this;
   }
 

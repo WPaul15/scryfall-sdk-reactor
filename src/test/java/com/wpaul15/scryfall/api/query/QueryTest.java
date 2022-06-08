@@ -2,13 +2,20 @@ package com.wpaul15.scryfall.api.query;
 
 import static com.wpaul15.scryfall.api.query.CardQuery.CardQueryOptions.options;
 import static com.wpaul15.scryfall.api.query.CardQuery.findCardsWith;
+import static com.wpaul15.scryfall.api.query.Filters.allOf;
 import static com.wpaul15.scryfall.api.query.Filters.anyOf;
 import static com.wpaul15.scryfall.api.query.Filters.equalTo;
+import static com.wpaul15.scryfall.api.query.Filters.greaterThan;
+import static com.wpaul15.scryfall.api.query.Filters.greaterThanOrEqualTo;
+import static com.wpaul15.scryfall.api.query.Filters.lessThan;
+import static com.wpaul15.scryfall.api.query.Filters.lessThanOrEqualTo;
 import static com.wpaul15.scryfall.api.query.Filters.noneOf;
 import static com.wpaul15.scryfall.api.query.Filters.not;
+import static com.wpaul15.scryfall.api.query.Filters.notExactly;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
+import com.wpaul15.scryfall.api.model.Color;
 import com.wpaul15.scryfall.api.query.options.Printing;
 import com.wpaul15.scryfall.api.query.options.SortDirection;
 import com.wpaul15.scryfall.api.query.options.SortField;
@@ -65,6 +72,18 @@ public class QueryTest {
         arguments(
             findCardsWith().type(not(anyOf("Sorcery", "Instant"))), "-(t:Sorcery or t:Instant)"),
         arguments(
-            findCardsWith().type(noneOf("Wizard", "Elemental")), "-(t:Wizard or t:Elemental)"));
+            findCardsWith().type(noneOf("Wizard", "Elemental")), "-(t:Wizard or t:Elemental)"),
+        arguments(findCardsWith().type(allOf("Human", "Warrior")), "(t:Human t:Warrior)"),
+        arguments(findCardsWith().type(notExactly("Human", "Warrior")), "-(t:Human t:Warrior)"),
+        arguments(findCardsWith().color(lessThan(Color.RED, Color.WHITE, Color.BLACK)), "c<RWB"),
+        arguments(findCardsWith().color(greaterThan(Color.GREEN, Color.BLUE)), "c>GU"),
+        arguments(
+            findCardsWith().color(lessThanOrEqualTo(Color.BLACK, Color.GREEN, Color.RED)),
+            "c<=BGR"),
+        arguments(
+            findCardsWith().color(greaterThanOrEqualTo(Color.BLACK, Color.BLUE, Color.BLACK)),
+            "c>=BU"),
+        arguments(findCardsWith().color(not(equalTo(Color.BLACK))), "-c=B"),
+        arguments(findCardsWith().color(anyOf(Color.WHITE, Color.COLORLESS)), "(c=W or c=C)"));
   }
 }

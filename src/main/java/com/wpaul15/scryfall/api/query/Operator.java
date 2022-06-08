@@ -12,8 +12,8 @@ enum Operator {
   EQUALS("="),
   LESS_THAN("<"),
   GREATER_THAN(">"),
-  AT_MOST("<="),
-  AT_LEAST(">=");
+  LESS_THAN_OR_EQUAL("<="),
+  GREATER_THAN_OR_EQUAL(">=");
 
   String displayValue;
 

@@ -6,12 +6,17 @@ import java.util.stream.Collectors;
 
 class MultiFilter<T> extends Filter<Collection<Filter<T>>> {
 
-  protected MultiFilter(Collection<T> values, Function<T, Filter<T>> filterType) {
+  boolean disjoining;
+
+  protected MultiFilter(
+      Collection<T> values, Function<T, Filter<T>> filterType, boolean disjoining) {
     super(values.stream().map(filterType).toList(), Operator.NONE);
+    this.disjoining = disjoining;
   }
 
   protected MultiFilter(MultiFilter<T> filter) {
     super(filter);
+    this.disjoining = filter.disjoining;
   }
 
   @Override
@@ -21,7 +26,7 @@ class MultiFilter<T> extends Filter<Collection<Filter<T>>> {
         + value.stream()
             .distinct()
             .map(filter -> filter.toFilterString(key))
-            .collect(Collectors.joining(" or "))
+            .collect(Collectors.joining(disjoining ? " or " : " "))
         + ")";
   }
 }

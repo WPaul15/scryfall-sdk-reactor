@@ -14,7 +14,8 @@ public enum Color {
   BLACK("B"),
   RED("R"),
   GREEN("G"),
-  COLORLESS("");
+  MULTICOLORED("M"),
+  COLORLESS("C");
 
   String displayName;
 
