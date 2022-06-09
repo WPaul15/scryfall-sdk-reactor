@@ -1,5 +1,7 @@
 package com.wpaul15.scryfall.api.query;
 
+import static com.wpaul15.scryfall.api.query.Filters.equalTo;
+
 import com.wpaul15.scryfall.api.query.constants.Colors;
 import com.wpaul15.scryfall.api.query.options.Printing;
 import com.wpaul15.scryfall.api.query.options.SortDirection;
@@ -29,6 +31,7 @@ public final class CardQuery {
   private static final String FULL_ORACLE_TEXT_KEY = "fo";
   private static final String KEYWORD_KEY = "keyword";
   private static final String IS_KEY = "is";
+  private static final String HAS_KEY = "has";
   private static final String MANA_COST_KEY = "m";
   private static final String CMC_KEY = "cmc";
   private static final String DEVOTION_KEY = "devotion";
@@ -134,7 +137,13 @@ public final class CardQuery {
     return this;
   }
 
+  /**
+   * Adds a search term to filter results by cards containing a color indicator.
+   *
+   * @return this {@code CardQuery}
+   */
   public CardQuery colorIndicator() {
+    addFilter(HAS_KEY, equalTo("indicator"));
     return this;
   }
 

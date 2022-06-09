@@ -84,6 +84,7 @@ public class QueryTest {
             "id<=GUR"),
         arguments(
             findCardsWith().colorIdentity(anyOf(Colors.SELESNYA, Colors.BLUE)),
-            "(id=selesnya or id=U)"));
+            "(id=selesnya or id=U)"),
+        arguments(findCardsWith().colorIndicator(), "has:indicator"));
   }
 }
