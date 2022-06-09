@@ -1,6 +1,6 @@
 package com.wpaul15.scryfall.api.query;
 
-import com.wpaul15.scryfall.api.model.Color;
+import com.wpaul15.scryfall.api.query.constants.Colors;
 import com.wpaul15.scryfall.api.query.options.Printing;
 import com.wpaul15.scryfall.api.query.options.SortDirection;
 import com.wpaul15.scryfall.api.query.options.SortField;
@@ -78,13 +78,14 @@ public final class CardQuery {
     return this;
   }
 
+  // TODO: Try to not have to repeat methods as much
   /**
    * Adds a search term to filter results by color.
    *
    * @param filter the filter to apply
    * @return this {@code CardQuery}
    */
-  public CardQuery color(SingleFilter<Color> filter) {
+  public CardQuery color(SingleFilter<Colors> filter) {
     addFilter(COLOR_KEY, filter);
     return this;
   }
@@ -95,7 +96,7 @@ public final class CardQuery {
    * @param filter the filter to apply
    * @return this {@code CardQuery}
    */
-  public CardQuery color(ManyFilter<Color> filter) {
+  public CardQuery color(ManyFilter<Colors> filter) {
     addFilter(COLOR_KEY, filter);
     return this;
   }
@@ -106,12 +107,30 @@ public final class CardQuery {
    * @param filter the filter to apply
    * @return this {@code CardQuery}
    */
-  public CardQuery color(MultiFilter<Color> filter) {
+  public CardQuery color(MultiFilter<Colors> filter) {
     addFilter(COLOR_KEY, filter);
     return this;
   }
 
-  public CardQuery colorIdentity() {
+  /**
+   * Adds a search term to filter results by color identity.
+   *
+   * @param filter the filter to apply
+   * @return this {@code CardQuery}
+   */
+  public CardQuery colorIdentity(ManyFilter<Colors> filter) {
+    addFilter(COLOR_IDENTITY_KEY, filter);
+    return this;
+  }
+
+  /**
+   * Adds a search term to filter results by color identity.
+   *
+   * @param filter the filter to apply
+   * @return this {@code CardQuery}
+   */
+  public CardQuery colorIdentity(MultiFilter<Colors> filter) {
+    addFilter(COLOR_IDENTITY_KEY, filter);
     return this;
   }
 

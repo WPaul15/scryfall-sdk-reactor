@@ -13,7 +13,7 @@ import static com.wpaul15.scryfall.api.query.Filters.not;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
-import com.wpaul15.scryfall.api.model.Color;
+import com.wpaul15.scryfall.api.query.constants.Colors;
 import com.wpaul15.scryfall.api.query.options.Printing;
 import com.wpaul15.scryfall.api.query.options.SortDirection;
 import com.wpaul15.scryfall.api.query.options.SortField;
@@ -72,15 +72,18 @@ public class QueryTest {
         arguments(
             findCardsWith().type(noneOf("Wizard", "Elemental")), "-(t:Wizard or t:Elemental)"),
         arguments(findCardsWith().type(equalTo("Human Warrior")), "t:\"Human Warrior\""),
-        arguments(findCardsWith().color(lessThan(Color.RED, Color.WHITE, Color.BLACK)), "c<RWB"),
-        arguments(findCardsWith().color(greaterThan(Color.GREEN, Color.BLUE)), "c>GU"),
+        arguments(findCardsWith().color(lessThan(Colors.RED, Colors.WHITE, Colors.BLACK)), "c<RWB"),
+        arguments(findCardsWith().color(greaterThan(Colors.GREEN, Colors.BLUE)), "c>GU"),
         arguments(
-            findCardsWith().color(lessThanOrEqualTo(Color.BLACK, Color.GREEN, Color.RED)),
-            "c<=BGR"),
-        arguments(
-            findCardsWith().color(greaterThanOrEqualTo(Color.BLACK, Color.BLUE, Color.BLACK)),
+            findCardsWith().color(greaterThanOrEqualTo(Colors.BLACK, Colors.BLUE, Colors.BLACK)),
             "c>=BU"),
-        arguments(findCardsWith().color(not(equalTo(Color.BLACK))), "-c=B"),
-        arguments(findCardsWith().color(anyOf(Color.WHITE, Color.COLORLESS)), "(c=W or c=C)"));
+        arguments(findCardsWith().color(not(equalTo(Colors.BLACK))), "-c=B"),
+        arguments(findCardsWith().color(anyOf(Colors.WHITE, Colors.COLORLESS)), "(c=W or c=C)"),
+        arguments(
+            findCardsWith().colorIdentity(lessThanOrEqualTo(Colors.GREEN, Colors.BLUE, Colors.RED)),
+            "id<=GUR"),
+        arguments(
+            findCardsWith().colorIdentity(anyOf(Colors.SELESNYA, Colors.BLUE)),
+            "(id=selesnya or id=U)"));
   }
 }
