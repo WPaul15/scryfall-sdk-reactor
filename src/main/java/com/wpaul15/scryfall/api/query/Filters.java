@@ -132,18 +132,6 @@ public class Filters {
   }
 
   /**
-   * Creates a filter that matches if the card property is exactly all of the given values.
-   *
-   * @param values the values to match
-   * @return a filter
-   * @param <T> the type of the values
-   */
-  @SafeVarargs
-  public static <T> MultiFilter<T> allOf(T... values) {
-    return new MultiFilter<>(Arrays.asList(values), Filters::equalTo, false);
-  }
-
-  /**
    * Creates a filter that matches if the card property is exactly one or more of the given values.
    *
    * @param values the values to match
@@ -207,26 +195,5 @@ public class Filters {
   @SafeVarargs
   public static <T> MultiFilter<T> noneOf(T... values) {
     return not(anyOf(values));
-  }
-
-  /**
-   * Creates a filter that matches if the card property is not equal to all the given values. For
-   * instance
-   *
-   * <pre>type(notExactly("Human", "Warrior"))</pre>
-   *
-   * will match all cards with a type that may contain "Human" or "Warrior", but not both.
-   *
-   * <p>This is a shorthand convenience method for
-   *
-   * <pre>not(allOf(values))</pre>
-   *
-   * @param values the values not to match
-   * @return a negated filter
-   * @param <T> the type of the values
-   */
-  @SafeVarargs
-  public static <T> MultiFilter<T> notExactly(T... values) {
-    return not(allOf(values));
   }
 }

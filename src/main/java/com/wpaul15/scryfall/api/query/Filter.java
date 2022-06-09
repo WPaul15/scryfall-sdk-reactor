@@ -23,7 +23,7 @@ abstract class Filter<T> {
     this.negated = !filter.negated;
   }
 
-  protected static final Pattern WHITESPACE = Pattern.compile("\\s");
+  protected static final Pattern WHITESPACE = Pattern.compile(".*?\\s.*?");
 
   protected abstract String toFilterString(String key);
 }
