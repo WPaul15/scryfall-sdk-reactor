@@ -4,11 +4,13 @@ import java.util.regex.Pattern;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
-@FieldDefaults(level = AccessLevel.PROTECTED, makeFinal = true)
+@FieldDefaults(level = AccessLevel.PROTECTED)
 abstract class Filter<T> {
 
-  T value;
-  Operator operator;
+  protected static final Pattern WHITESPACE = Pattern.compile(".*?\\s.*?");
+
+  final T value;
+  final Operator operator;
   boolean negated;
 
   protected Filter(T value, Operator operator) {
@@ -17,13 +19,9 @@ abstract class Filter<T> {
     this.negated = false;
   }
 
-  protected Filter(Filter<T> filter) {
-    this.value = filter.value;
-    this.operator = filter.operator;
-    this.negated = !filter.negated;
-  }
-
-  protected static final Pattern WHITESPACE = Pattern.compile(".*?\\s.*?");
-
   protected abstract String toFilterString(String key);
+
+  protected void negate() {
+    negated = !negated;
+  }
 }

@@ -144,36 +144,39 @@ public class Filters {
   }
 
   /**
-   * Creates a filter that negates the given filter.
+   * Negates the given filter.
    *
    * @param filter the filter to negate
    * @return a negated filter
    * @param <T> the type of the value in {@code filter}
    */
   public static <T> SingleFilter<T> not(SingleFilter<T> filter) {
-    return new SingleFilter<>(filter);
+    filter.negate();
+    return filter;
   }
 
   /**
-   * Creates a filter that negates the given filter.
+   * Negates the given filter.
    *
    * @param filter the filter to negate
    * @return a negated filter
    * @param <T> the type of the values in {@code filter}
    */
   public static <T> ManyFilter<T> not(ManyFilter<T> filter) {
-    return new ManyFilter<>(filter);
+    filter.negate();
+    return filter;
   }
 
   /**
-   * Creates a filter that negates the given filter.
+   * Negates the given filter.
    *
    * @param filter the filter to negate
    * @return a negated filter
    * @param <T> the type of the values in {@code filter}
    */
   public static <T> MultiFilter<T> not(MultiFilter<T> filter) {
-    return new MultiFilter<>(filter);
+    filter.negate();
+    return filter;
   }
 
   /**
