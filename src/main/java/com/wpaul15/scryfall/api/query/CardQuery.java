@@ -323,11 +323,23 @@ public final class CardQuery {
     return this;
   }
 
+  /**
+   * Adds a term to filter results by cards with an even converted mana cost (CMC).
+   *
+   * @return this {@code CardQuery}
+   */
   public CardQuery evenCmc() {
+    addFilter(CMC_KEY, is("even"));
     return this;
   }
 
+  /**
+   * Adds a term to filter results by cards with an odd converted mana cost (CMC).
+   *
+   * @return this {@code CardQuery}
+   */
   public CardQuery oddCmc() {
+    addFilter(CMC_KEY, is("odd"));
     return this;
   }
 

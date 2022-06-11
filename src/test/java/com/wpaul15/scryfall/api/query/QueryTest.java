@@ -102,6 +102,8 @@ public class QueryTest {
             "(fo:\"you may discard\" or fo:\"tap up to\")"),
         arguments(findCardsWith().cmc(lessThanOrEqualTo(5)), "cmc<=5"),
         arguments(findCardsWith().cmc(not(equalTo(3))), "-cmc=3"),
-        arguments(findCardsWith().cmc(anyOf(6, 7)), "(cmc=6 or cmc=7)"));
+        arguments(findCardsWith().cmc(anyOf(6, 7)), "(cmc=6 or cmc=7)"),
+        arguments(findCardsWith().evenCmc(), "cmc:even"),
+        arguments(findCardsWith().oddCmc(), "cmc:odd"));
   }
 }
