@@ -395,11 +395,24 @@ public final class CardQuery {
     return this;
   }
 
+  /**
+   * Adds a term to filter results by cards containing hybrid mana symbols (anywhere on the card).
+   *
+   * @return this {@code CardQuery}
+   */
   public CardQuery hybridManaSymbols() {
+    addFilter(IS_KEY, is("hybrid"));
     return this;
   }
 
+  /**
+   * Adds a term to filter results by cards containing Phyrexian mana symbols (anywhere on the
+   * card).
+   *
+   * @return this {@code CardQuery}
+   */
   public CardQuery phyrexianManaSymbols() {
+    addFilter(IS_KEY, is("phyrexian"));
     return this;
   }
 

@@ -113,7 +113,9 @@ public class QueryTest {
             findCardsWith().manaProduced(anyOf(Colors.RAKDOS, Colors.GRIXIS)),
             "(produces=rakdos or produces=grixis)"),
         arguments(
-            findCardsWith().manaProduced(greaterThanOrEqualTo(Colors.ABZAN)), "produces>=abzan"));
+            findCardsWith().manaProduced(greaterThanOrEqualTo(Colors.ABZAN)), "produces>=abzan"),
+        arguments(findCardsWith().hybridManaSymbols(), "is:hybrid"),
+        arguments(findCardsWith().phyrexianManaSymbols(), "is:phyrexian"));
   }
 
   @ParameterizedTest
