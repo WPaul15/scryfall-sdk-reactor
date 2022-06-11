@@ -180,7 +180,63 @@ public final class CardQuery {
     return this;
   }
 
-  public CardQuery oracleText() {
+  /**
+   * Adds a term to filter results by Oracle text. The value is case-insensitive and may be a
+   * partial term, e.g. "fly" instead of "flying". Use a tilde ("~") as a placeholder for the card's
+   * name.
+   *
+   * <p>Note that partial search terms may return more cards than expected. For instance, "dra" will
+   * match all cards with "draw", "dragon", "drake", etc. in their rules text.
+   *
+   * <p>Additionally, this filter does not search reminder text. To search all rules text, including
+   * reminder text, use {@link CardQuery#fullOracleText()}.
+   *
+   * @param oracleText the Oracle test to filter by
+   * @return this {@code CardQuery}
+   * @see CardQuery#fullOracleText()
+   */
+  public CardQuery oracleText(String oracleText) {
+    addFilter(ORACLE_TEXT_KEY, is(oracleText));
+    return this;
+  }
+
+  /**
+   * Adds a term to filter results by Oracle text. The value is case-insensitive and may be a
+   * partial term, e.g. "fly" instead of "flying". Use a tilde ("~") as a placeholder for the card's
+   * name.
+   *
+   * <p>Note that partial search terms may return more cards than expected. For instance, "dra" will
+   * match all cards with "draw", "dragon", "drake", etc. in their rules text.
+   *
+   * <p>Additionally, this filter does not search reminder text. To search all rules text, including
+   * reminder text, use {@link CardQuery#fullOracleText()}.
+   *
+   * @param filter the filter to add
+   * @return this {@code CardQuery}
+   * @see CardQuery#fullOracleText()
+   */
+  public CardQuery oracleText(SingleFilter<String> filter) {
+    addFilter(ORACLE_TEXT_KEY, filter);
+    return this;
+  }
+
+  /**
+   * Adds a term to filter results by Oracle text. The value is case-insensitive and may be a
+   * partial term, e.g. "fly" instead of "flying". Use a tilde ("~") as a placeholder for the card's
+   * name.
+   *
+   * <p>Note that partial search terms may return more cards than expected. For instance, "dra" will
+   * match all cards with "draw", "dragon", "drake", etc. in their rules text.
+   *
+   * <p>Additionally, this filter does not search reminder text. To search all rules text, including
+   * reminder text, use {@link CardQuery#fullOracleText()}.
+   *
+   * @param filter the filter to add
+   * @return this {@code CardQuery}
+   * @see CardQuery#fullOracleText()
+   */
+  public CardQuery oracleText(MultiFilter<String> filter) {
+    addFilter(ORACLE_TEXT_KEY, filter);
     return this;
   }
 

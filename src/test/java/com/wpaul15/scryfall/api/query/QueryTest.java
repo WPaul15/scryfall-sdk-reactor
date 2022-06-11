@@ -85,6 +85,11 @@ public class QueryTest {
         arguments(
             findCardsWith().colorIdentity(anyOf(Colors.SELESNYA, Colors.BLUE)),
             "(id=selesnya or id=U)"),
-        arguments(findCardsWith().colorIndicator(), "has:indicator"));
+        arguments(findCardsWith().colorIndicator(), "has:indicator"),
+        arguments(findCardsWith().oracleText("mill"), "o:mill"),
+        arguments(
+            findCardsWith().oracleText(not("When ~ enters the battlefield")),
+            "-o:\"When ~ enters the battlefield\""),
+        arguments(findCardsWith().oracleText(anyOf("draw", "discard")), "(o:draw or o:discard)"));
   }
 }
