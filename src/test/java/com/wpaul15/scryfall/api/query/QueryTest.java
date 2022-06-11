@@ -61,6 +61,7 @@ public class QueryTest {
   private static Stream<Arguments> filterArguments() {
     return Stream.of(
         arguments(findCardsWith(), ""),
+        arguments(findCardsWith().type(""), ""),
         arguments(findCardsWith().type("Human"), "t:Human"),
         arguments(findCardsWith().type("Human Warrior"), "t:\"Human Warrior\""),
         arguments(findCardsWith().type(not("Angel")), "-t:Angel"),
@@ -86,6 +87,7 @@ public class QueryTest {
             findCardsWith().colorIdentity(anyOf(Colors.SELESNYA, Colors.BLUE)),
             "(id=selesnya or id=U)"),
         arguments(findCardsWith().colorIndicator(), "has:indicator"),
+        arguments(findCardsWith().oracleText(not("")), ""),
         arguments(findCardsWith().oracleText("mill"), "o:mill"),
         arguments(
             findCardsWith().oracleText(not("When ~ enters the battlefield")),

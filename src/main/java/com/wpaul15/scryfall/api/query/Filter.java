@@ -1,6 +1,8 @@
 package com.wpaul15.scryfall.api.query;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
 import java.util.regex.Pattern;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -25,9 +27,26 @@ class Filter<T> {
   }
 
   protected String toFilterString(String key) {
+    List<T> nonEmpty =
+        values.stream()
+            .filter(Objects::nonNull)
+            .filter(
+                value -> {
+                  if (value instanceof String s && !s.isBlank()) {
+                    return true;
+                  } else {
+                    return !(value instanceof String);
+                  }
+                })
+            .toList();
+
+    if (nonEmpty.isEmpty()) {
+      return "";
+    }
+
     StringBuilder builder = new StringBuilder(negated ? "-" : "").append(key).append(operator);
 
-    values.stream()
+    nonEmpty.stream()
         .distinct()
         .forEach(
             value -> {
