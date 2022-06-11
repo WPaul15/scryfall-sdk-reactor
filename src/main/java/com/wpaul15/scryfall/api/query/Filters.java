@@ -123,45 +123,9 @@ public final class Filters {
    *
    * @param filter the filter to negate
    * @return a negated filter
-   * @param <T> the type of the value in {@code filter}
+   * @param <F> the type of the filter
    */
-  public static <T> SingleFilter<T> not(SingleFilter<T> filter) {
-    filter.negate();
-    return filter;
-  }
-
-  /**
-   * Negates the given filter.
-   *
-   * @param filter the filter to negate
-   * @return a negated filter
-   * @param <T> the type of the values in {@code filter}
-   */
-  public static <T> MultiFilter<T> not(MultiFilter<T> filter) {
-    filter.negate();
-    return filter;
-  }
-
-  /**
-   * Negates the given filter.
-   *
-   * @param filter the filter to negate
-   * @return a negated filter
-   * @param <T> the type of the value in {@code filter}
-   */
-  public static <T> ComparingSingleFilter<T> not(ComparingSingleFilter<T> filter) {
-    filter.negate();
-    return filter;
-  }
-
-  /**
-   * Negates the given filter.
-   *
-   * @param filter the filter to negate
-   * @return a negated filter
-   * @param <T> the type of the value in {@code filter}
-   */
-  public static <T> ComparingFilter<T> not(ComparingFilter<T> filter) {
+  public static <F extends Filter<?>> F not(F filter) {
     filter.negate();
     return filter;
   }
