@@ -207,7 +207,7 @@ public final class CardQuery {
    * <p>Additionally, this filter does not search reminder text. To include reminder text, use
    * {@link CardQuery#fullOracleText(String)}.
    *
-   * @param oracleText the Oracle test to filter by
+   * @param oracleText the Oracle text to filter by
    * @return this {@code CardQuery}
    * @see CardQuery#fullOracleText(String)
    */
