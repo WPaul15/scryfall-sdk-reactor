@@ -99,6 +99,9 @@ public class QueryTest {
         arguments(findCardsWith().fullOracleText(not("you may pay")), "-fo:\"you may pay\""),
         arguments(
             findCardsWith().fullOracleText(anyOf("you may discard", "tap up to")),
-            "(fo:\"you may discard\" or fo:\"tap up to\")"));
+            "(fo:\"you may discard\" or fo:\"tap up to\")"),
+        arguments(findCardsWith().cmc(lessThanOrEqualTo(5)), "cmc<=5"),
+        arguments(findCardsWith().cmc(not(equalTo(3))), "-cmc=3"),
+        arguments(findCardsWith().cmc(anyOf(6, 7)), "(cmc=6 or cmc=7)"));
   }
 }

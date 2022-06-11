@@ -301,7 +301,25 @@ public final class CardQuery {
     return this;
   }
 
-  public CardQuery cmc() {
+  /**
+   * Adds a term to filter results by converted mana cost (CMC).
+   *
+   * @param filter the filter to add
+   * @return this {@code CardQuery}
+   */
+  public CardQuery cmc(ComparingSingleFilter<Integer> filter) {
+    addFilter(CMC_KEY, filter);
+    return this;
+  }
+
+  /**
+   * Adds a term to filter results by converted mana cost (CMC).
+   *
+   * @param filter the filter to add
+   * @return this {@code CardQuery}
+   */
+  public CardQuery cmc(MultiFilter<Integer> filter) {
+    addFilter(CMC_KEY, filter);
     return this;
   }
 

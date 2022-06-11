@@ -32,6 +32,17 @@ public final class Filters {
   }
 
   /**
+   * Creates a filter that matches if and only if the card property is less than the given value.
+   *
+   * @param value the value to match
+   * @return a filter
+   * @param <T> the type of the value
+   */
+  public static <T> ComparingSingleFilter<T> lessThan(T value) {
+    return new ComparingSingleFilter<>(value, Operator.LESS_THAN);
+  }
+
+  /**
    * Creates a filter that matches if and only if the card property is less than the combination of
    * the given values.
    *
@@ -42,6 +53,18 @@ public final class Filters {
   @SafeVarargs
   public static <T> ComparingFilter<T> lessThan(T... values) {
     return new ComparingFilter<>(Arrays.asList(values), Operator.LESS_THAN);
+  }
+
+  /**
+   * Creates a filter that matches if and only if the card property is greater than the given
+   * values.
+   *
+   * @param value the value to match
+   * @return a filter
+   * @param <T> the type of the value
+   */
+  public static <T> ComparingSingleFilter<T> greaterThan(T value) {
+    return new ComparingSingleFilter<>(value, Operator.GREATER_THAN);
   }
 
   /**
@@ -59,6 +82,18 @@ public final class Filters {
 
   /**
    * Creates a filter that matches if and only if the card property is less than or equal to the
+   * given value.
+   *
+   * @param value the value to match
+   * @return a filter
+   * @param <T> the type of the value
+   */
+  public static <T> ComparingSingleFilter<T> lessThanOrEqualTo(T value) {
+    return new ComparingSingleFilter<>(value, Operator.LESS_THAN_OR_EQUAL);
+  }
+
+  /**
+   * Creates a filter that matches if and only if the card property is less than or equal to the
    * combination of the given values.
    *
    * @param values the values to match
@@ -68,6 +103,18 @@ public final class Filters {
   @SafeVarargs
   public static <T> ComparingFilter<T> lessThanOrEqualTo(T... values) {
     return new ComparingFilter<>(Arrays.asList(values), Operator.LESS_THAN_OR_EQUAL);
+  }
+
+  /**
+   * Creates a filter that matches if and only if the card property is greater than or equal to the
+   * given value.
+   *
+   * @param value the value to match
+   * @return a filter
+   * @param <T> the type of the value
+   */
+  public static <T> ComparingSingleFilter<T> greaterThanOrEqualTo(T value) {
+    return new ComparingSingleFilter<>(value, Operator.GREATER_THAN_OR_EQUAL);
   }
 
   /**
