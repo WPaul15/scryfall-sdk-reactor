@@ -90,6 +90,13 @@ public class QueryTest {
         arguments(
             findCardsWith().oracleText(not("When ~ enters the battlefield")),
             "-o:\"When ~ enters the battlefield\""),
-        arguments(findCardsWith().oracleText(anyOf("draw", "discard")), "(o:draw or o:discard)"));
+        arguments(findCardsWith().oracleText(anyOf("draw", "discard")), "(o:draw or o:discard)"),
+        arguments(
+            findCardsWith().fullOracleText("cannot be blocked except by"),
+            "fo:\"cannot be blocked except by\""),
+        arguments(findCardsWith().fullOracleText(not("you may pay")), "-fo:\"you may pay\""),
+        arguments(
+            findCardsWith().fullOracleText(anyOf("you may discard", "tap up to")),
+            "(fo:\"you may discard\" or fo:\"tap up to\")"));
   }
 }
