@@ -20,6 +20,10 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+/**
+ * A class for constructing a card query. This builder supports all filters listed in the <a
+ * href=https://scryfall.com/docs/syntax>Scryfall syntax guide</a>.
+ */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public final class CardQuery {
@@ -72,10 +76,22 @@ public final class CardQuery {
   final Map<String, List<Filter<?>>> filters = new LinkedHashMap<>();
   CardQueryOptions searchOptions;
 
+  /**
+   * Begins a new card query.
+   *
+   * @return a new {@code CardQuery}
+   */
   public static CardQuery findCardsWith() {
     return new CardQuery();
   }
 
+  /**
+   * Begins a new card query with the given options.
+   *
+   * @param searchOptions the options to apply to this query
+   * @return a new {@code CardQuery}
+   * @see CardQueryOptions
+   */
   public CardQuery searchOptions(CardQueryOptions searchOptions) {
     this.searchOptions = searchOptions;
     return this;
@@ -601,6 +617,11 @@ public final class CardQuery {
             });
   }
 
+  /**
+   * A class for building the options to use with a card query.
+   *
+   * @see CardQuery
+   */
   @NoArgsConstructor(access = AccessLevel.PRIVATE)
   @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
   public static final class CardQueryOptions {
