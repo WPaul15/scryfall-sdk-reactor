@@ -135,6 +135,16 @@ public final class CardQuery {
     return this;
   }
 
+  /**
+   * Adds a term to filter results by card type. Accepts supertypes, types, and subtypes. The value
+   * is case-insensitive and may be a partial term, e.g. "drag" instead of "dragon".
+   *
+   * <p>Note that partial search terms may return more cards than expected. For instance, "dra" will
+   * match all cards of type Eldrazi, Drake, Dragon, Hydra, or Chandra
+   *
+   * @param type the type to filter by
+   * @return this {@code CardQuery}
+   */
   public CardQuery type(String type) {
     addFilter(TYPE_KEY, is(type));
     return this;
