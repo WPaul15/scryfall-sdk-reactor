@@ -86,10 +86,10 @@ public final class CardQuery {
   }
 
   /**
-   * Begins a new card query with the given options.
+   * Applies the given options to this query.
    *
    * @param searchOptions the options to apply to this query
-   * @return a new {@code CardQuery}
+   * @return this {@code CardQuery}
    * @see CardQueryOptions
    */
   public CardQuery searchOptions(CardQueryOptions searchOptions) {
