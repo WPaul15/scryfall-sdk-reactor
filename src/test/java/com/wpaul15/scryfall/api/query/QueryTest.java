@@ -61,9 +61,10 @@ public class QueryTest {
   private static Stream<Arguments> filterArguments() {
     return Stream.of(
         arguments(findCardsWith(), ""),
-        arguments(findCardsWith().type(equalTo("Human")), "t:Human"),
-        arguments(findCardsWith().type(not(equalTo("Angel"))), "-t:Angel"),
-        arguments(findCardsWith().type(not(not(equalTo("Demon")))), "t:Demon"),
+        arguments(findCardsWith().type("Human"), "t:Human"),
+        arguments(findCardsWith().type("Human Warrior"), "t:\"Human Warrior\""),
+        arguments(findCardsWith().type(not("Angel")), "-t:Angel"),
+        arguments(findCardsWith().type(not(not("Demon"))), "t:Demon"),
         arguments(
             findCardsWith().type(anyOf("Instant", "Sorcery", "Enchantment")),
             "(t:Instant or t:Sorcery or t:Enchantment)"),
@@ -71,7 +72,6 @@ public class QueryTest {
             findCardsWith().type(not(anyOf("Sorcery", "Instant"))), "-(t:Sorcery or t:Instant)"),
         arguments(
             findCardsWith().type(noneOf("Wizard", "Elemental")), "-(t:Wizard or t:Elemental)"),
-        arguments(findCardsWith().type(equalTo("Human Warrior")), "t:\"Human Warrior\""),
         arguments(findCardsWith().color(lessThan(Colors.RED, Colors.WHITE, Colors.BLACK)), "c<RWB"),
         arguments(findCardsWith().color(greaterThan(Colors.GREEN, Colors.BLUE)), "c>GU"),
         arguments(

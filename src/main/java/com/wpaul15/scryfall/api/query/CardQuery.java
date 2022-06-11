@@ -1,6 +1,6 @@
 package com.wpaul15.scryfall.api.query;
 
-import static com.wpaul15.scryfall.api.query.Filters.equalTo;
+import static com.wpaul15.scryfall.api.query.Filters.is;
 
 import com.wpaul15.scryfall.api.query.constants.Colors;
 import com.wpaul15.scryfall.api.query.options.Printing;
@@ -81,25 +81,13 @@ public final class CardQuery {
     return this;
   }
 
-  // TODO: Try to not have to repeat methods as much
   /**
    * Adds a search term to filter results by color.
    *
    * @param filter the filter to apply
    * @return this {@code CardQuery}
    */
-  public CardQuery color(SingleFilter<Colors> filter) {
-    addFilter(COLOR_KEY, filter);
-    return this;
-  }
-
-  /**
-   * Adds a search term to filter results by color.
-   *
-   * @param filter the filter to apply
-   * @return this {@code CardQuery}
-   */
-  public CardQuery color(ManyFilter<Colors> filter) {
+  public CardQuery color(ComparingFilter<Colors> filter) {
     addFilter(COLOR_KEY, filter);
     return this;
   }
@@ -121,7 +109,7 @@ public final class CardQuery {
    * @param filter the filter to apply
    * @return this {@code CardQuery}
    */
-  public CardQuery colorIdentity(ManyFilter<Colors> filter) {
+  public CardQuery colorIdentity(ComparingFilter<Colors> filter) {
     addFilter(COLOR_IDENTITY_KEY, filter);
     return this;
   }
@@ -143,7 +131,12 @@ public final class CardQuery {
    * @return this {@code CardQuery}
    */
   public CardQuery colorIndicator() {
-    addFilter(HAS_KEY, equalTo("indicator"));
+    addFilter(HAS_KEY, is("indicator"));
+    return this;
+  }
+
+  public CardQuery type(String type) {
+    addFilter(TYPE_KEY, is(type));
     return this;
   }
 

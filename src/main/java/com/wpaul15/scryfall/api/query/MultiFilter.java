@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-class MultiFilter<T> extends Filter<Collection<Filter<T>>> {
+class MultiFilter<T> extends Filter<Filter<T>> {
 
   boolean disjoining;
 
@@ -14,16 +14,11 @@ class MultiFilter<T> extends Filter<Collection<Filter<T>>> {
     this.disjoining = disjoining;
   }
 
-  protected MultiFilter(MultiFilter<T> filter) {
-    super(filter);
-    this.disjoining = filter.disjoining;
-  }
-
   @Override
   protected String toFilterString(String key) {
     return (negated ? "-" : "")
         + "("
-        + value.stream()
+        + values.stream()
             .distinct()
             .map(filter -> filter.toFilterString(key))
             .collect(Collectors.joining(disjoining ? " or " : " "))
