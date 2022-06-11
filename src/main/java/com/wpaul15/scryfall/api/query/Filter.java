@@ -3,6 +3,7 @@ package com.wpaul15.scryfall.api.query;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -24,6 +25,10 @@ class Filter<T> {
 
   protected void negate() {
     negated = !negated;
+  }
+
+  protected boolean isInvalid(Predicate<T> validator) {
+    return !values.stream().allMatch(validator);
   }
 
   protected String toFilterString(String key) {

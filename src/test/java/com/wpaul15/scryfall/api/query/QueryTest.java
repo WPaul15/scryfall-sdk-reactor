@@ -11,6 +11,7 @@ import static com.wpaul15.scryfall.api.query.Filters.lessThanOrEqualTo;
 import static com.wpaul15.scryfall.api.query.Filters.noneOf;
 import static com.wpaul15.scryfall.api.query.Filters.not;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import com.wpaul15.scryfall.api.query.constants.Colors;
@@ -20,6 +21,7 @@ import com.wpaul15.scryfall.api.query.options.SortField;
 import com.wpaul15.scryfall.api.query.options.Uniqueness;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.Callable;
 import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -105,5 +107,17 @@ public class QueryTest {
         arguments(findCardsWith().cmc(anyOf(6, 7)), "(cmc=6 or cmc=7)"),
         arguments(findCardsWith().evenCmc(), "cmc:even"),
         arguments(findCardsWith().oddCmc(), "cmc:odd"));
+  }
+
+  @ParameterizedTest
+  @MethodSource("invalidFilterArguments")
+  void invalidFiltersShouldThrowIllegalArgumentException(Callable<CardQuery> cardQueryFunction) {
+    assertThatThrownBy(cardQueryFunction::call).isInstanceOf(IllegalArgumentException.class);
+  }
+
+  private static Stream<Arguments> invalidFilterArguments() {
+    return Stream.of(
+        arguments((Callable<CardQuery>) () -> findCardsWith().cmc(equalTo(-1))),
+        arguments((Callable<CardQuery>) () -> findCardsWith().cmc(anyOf(2, -1))));
   }
 }

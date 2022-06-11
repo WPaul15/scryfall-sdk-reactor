@@ -306,8 +306,13 @@ public final class CardQuery {
    *
    * @param filter the filter to add
    * @return this {@code CardQuery}
+   * @throws IllegalArgumentException if the given CMC value is negative
    */
   public CardQuery cmc(ComparingSingleFilter<Integer> filter) {
+    if (filter.isInvalid(value -> value >= 0)) {
+      throw new IllegalArgumentException("CMC value must be non-negative");
+    }
+
     addFilter(CMC_KEY, filter);
     return this;
   }
@@ -317,8 +322,13 @@ public final class CardQuery {
    *
    * @param filter the filter to add
    * @return this {@code CardQuery}
+   * @throws IllegalArgumentException if any of the given CMC values are negative
    */
   public CardQuery cmc(MultiFilter<Integer> filter) {
+    if (filter.isInvalid(value -> value >= 0)) {
+      throw new IllegalArgumentException("All CMC values must be non-negative");
+    }
+
     addFilter(CMC_KEY, filter);
     return this;
   }
