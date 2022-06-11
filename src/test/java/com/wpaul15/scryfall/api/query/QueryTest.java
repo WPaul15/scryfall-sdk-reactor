@@ -106,7 +106,14 @@ public class QueryTest {
         arguments(findCardsWith().cmc(not(equalTo(3))), "-cmc=3"),
         arguments(findCardsWith().cmc(anyOf(6, 7)), "(cmc=6 or cmc=7)"),
         arguments(findCardsWith().evenCmc(), "cmc:even"),
-        arguments(findCardsWith().oddCmc(), "cmc:odd"));
+        arguments(findCardsWith().oddCmc(), "cmc:odd"),
+        arguments(findCardsWith().manaProduced(equalTo(Colors.BLUE, Colors.WHITE)), "produces=UW"),
+        arguments(findCardsWith().manaProduced(equalTo(Colors.MULTICOLORED)), "produces=M"),
+        arguments(
+            findCardsWith().manaProduced(anyOf(Colors.RAKDOS, Colors.GRIXIS)),
+            "(produces=rakdos or produces=grixis)"),
+        arguments(
+            findCardsWith().manaProduced(greaterThanOrEqualTo(Colors.ABZAN)), "produces>=abzan"));
   }
 
   @ParameterizedTest
