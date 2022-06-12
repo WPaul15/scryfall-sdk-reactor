@@ -35,6 +35,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public final class CardQuery {
 
+  private static final String NAME_KEY = "";
   private static final String COLOR_KEY = "c";
   private static final String COLOR_IDENTITY_KEY = "id";
   private static final String TYPE_KEY = "t";
@@ -103,6 +104,10 @@ public final class CardQuery {
    */
   public CardQuery searchOptions(CardQueryOptions searchOptions) {
     this.searchOptions = searchOptions;
+    return this;
+  }
+
+  public CardQuery name() {
     return this;
   }
 
