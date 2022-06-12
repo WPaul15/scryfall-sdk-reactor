@@ -1,6 +1,6 @@
 package com.wpaul15.scryfall.api.query;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import lombok.AccessLevel;
@@ -12,8 +12,7 @@ class MultiFilter<T> extends Filter<T> {
   Function<T, Filter<T>> filterFunction;
   boolean disjoining;
 
-  protected MultiFilter(
-      Collection<T> values, Function<T, Filter<T>> filterFunction, boolean disjoining) {
+  protected MultiFilter(List<T> values, Function<T, Filter<T>> filterFunction, boolean disjoining) {
     super(values, Operator.NONE);
     this.filterFunction = filterFunction;
     this.disjoining = disjoining;

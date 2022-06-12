@@ -1,6 +1,5 @@
 package com.wpaul15.scryfall.api.query;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
@@ -13,11 +12,11 @@ class Filter<T> {
 
   protected static final Pattern WHITESPACE = Pattern.compile(".*?\\s.*?");
 
-  final Collection<T> values;
+  final List<T> values;
   final Operator operator;
   boolean negated;
 
-  protected Filter(Collection<T> values, Operator operator) {
+  protected Filter(List<T> values, Operator operator) {
     this.values = values;
     this.operator = operator;
     this.negated = false;
