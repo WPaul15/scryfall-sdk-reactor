@@ -461,7 +461,47 @@ public final class CardQuery {
     return this;
   }
 
-  public CardQuery toughness() {
+  /**
+   * Adds a term to filter results by toughness.
+   *
+   * <p>Note: {@code toughness} is a double because there are some cards from Un- sets with
+   * fractional toughness values.
+   *
+   * @param filter the filter to add
+   * @return this {@code CardQuery}
+   */
+  public CardQuery toughness(ComparingSingleFilter<Double> filter) {
+    addFilter(TOUGHNESS_KEY, filter);
+    return this;
+  }
+
+  /**
+   * Adds a term to filter results by toughness.
+   *
+   * <p>Note: {@code toughness} is a double because there are some cards from Un- sets with
+   * fractional toughness values.
+   *
+   * @param filter the filter to add
+   * @return this {@code CardQuery}
+   */
+  public CardQuery toughness(MultiFilter<Double> filter) {
+    addFilter(TOUGHNESS_KEY, filter);
+    return this;
+  }
+
+  /**
+   * Adds a term to filter results by power in relation to power or loyalty.
+   *
+   * @param filter the filter to add
+   * @return this {@code CardQuery}
+   * @throws IllegalArgumentException if the given value is {@link PTL#TOUGHNESS}
+   */
+  public CardQuery relativeToughness(ComparingSingleFilter<PTL> filter) {
+    if (filter.isInvalid(value -> value == PTL.TOUGHNESS)) {
+      throw new IllegalArgumentException("Toughness cannot be compared to itself");
+    }
+
+    addFilter(TOUGHNESS_KEY, filter);
     return this;
   }
 

@@ -120,7 +120,10 @@ public class QueryTest {
         arguments(findCardsWith().power(lessThan(6.0)), "pow<6.0"),
         arguments(findCardsWith().power(not(greaterThan(2.0))), "-pow>2.0"),
         arguments(findCardsWith().power(anyOf(2.0, 3.0)), "(pow=2.0 or pow=3.0)"),
-        arguments(findCardsWith().relativePower(greaterThan(PTL.TOUGHNESS)), "pow>tou"));
+        arguments(findCardsWith().relativePower(greaterThan(PTL.TOUGHNESS)), "pow>tou"),
+        arguments(findCardsWith().toughness(greaterThanOrEqualTo(4.0)), "tou>=4.0"),
+        arguments(findCardsWith().toughness(anyOf(4.0, 5.0)), "(tou=4.0 or tou=5.0)"),
+        arguments(findCardsWith().relativeToughness(lessThanOrEqualTo(PTL.POWER)), "tou<=pow"));
   }
 
   @ParameterizedTest
@@ -135,6 +138,8 @@ public class QueryTest {
         arguments((Callable<CardQuery>) () -> findCardsWith().cmc(anyOf(2, -1))),
         arguments(
             (Callable<CardQuery>)
-                () -> findCardsWith().relativePower(greaterThanOrEqualTo(PTL.POWER))));
+                () -> findCardsWith().relativePower(greaterThanOrEqualTo(PTL.POWER))),
+        arguments(
+            (Callable<CardQuery>) () -> findCardsWith().relativeToughness(equalTo(PTL.TOUGHNESS))));
   }
 }
