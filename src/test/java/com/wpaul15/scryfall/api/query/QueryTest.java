@@ -143,6 +143,8 @@ public class QueryTest {
             (Callable<CardQuery>)
                 () -> findCardsWith().relativePower(greaterThanOrEqualTo(PTL.POWER))),
         arguments(
-            (Callable<CardQuery>) () -> findCardsWith().relativeToughness(equalTo(PTL.TOUGHNESS))));
+            (Callable<CardQuery>) () -> findCardsWith().relativeToughness(equalTo(PTL.TOUGHNESS))),
+        arguments(
+            (Callable<CardQuery>) () -> findCardsWith().relativeLoyalty(lessThan(PTL.LOYALTY))));
   }
 }
