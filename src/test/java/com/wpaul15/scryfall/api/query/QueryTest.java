@@ -15,6 +15,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import com.wpaul15.scryfall.api.query.constants.Colors;
+import com.wpaul15.scryfall.api.query.constants.PTL;
 import com.wpaul15.scryfall.api.query.options.Printing;
 import com.wpaul15.scryfall.api.query.options.SortDirection;
 import com.wpaul15.scryfall.api.query.options.SortField;
@@ -115,7 +116,11 @@ public class QueryTest {
         arguments(
             findCardsWith().manaProduced(greaterThanOrEqualTo(Colors.ABZAN)), "produces>=abzan"),
         arguments(findCardsWith().hybridManaSymbols(), "is:hybrid"),
-        arguments(findCardsWith().phyrexianManaSymbols(), "is:phyrexian"));
+        arguments(findCardsWith().phyrexianManaSymbols(), "is:phyrexian"),
+        arguments(findCardsWith().power(lessThan(6.0)), "pow<6.0"),
+        arguments(findCardsWith().power(not(greaterThan(2.0))), "-pow>2.0"),
+        arguments(findCardsWith().power(anyOf(2.0, 3.0)), "(pow=2.0 or pow=3.0)"),
+        arguments(findCardsWith().relativePower(greaterThan(PTL.TOUGHNESS)), "pow>tou"));
   }
 
   @ParameterizedTest
@@ -127,6 +132,9 @@ public class QueryTest {
   private static Stream<Arguments> invalidFilterArguments() {
     return Stream.of(
         arguments((Callable<CardQuery>) () -> findCardsWith().cmc(equalTo(-1))),
-        arguments((Callable<CardQuery>) () -> findCardsWith().cmc(anyOf(2, -1))));
+        arguments((Callable<CardQuery>) () -> findCardsWith().cmc(anyOf(2, -1))),
+        arguments(
+            (Callable<CardQuery>)
+                () -> findCardsWith().relativePower(greaterThanOrEqualTo(PTL.POWER))));
   }
 }

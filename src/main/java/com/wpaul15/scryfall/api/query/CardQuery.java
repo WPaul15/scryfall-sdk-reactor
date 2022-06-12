@@ -416,7 +416,47 @@ public final class CardQuery {
     return this;
   }
 
-  public CardQuery power() {
+  /**
+   * Adds a term to filter results by power.
+   *
+   * <p>Note: {@code power} is a double because there are some cards from Un- sets with fractional
+   * power values.
+   *
+   * @param filter the filter to add
+   * @return this {@code CardQuery}
+   */
+  public CardQuery power(ComparingSingleFilter<Double> filter) {
+    addFilter(POWER_KEY, filter);
+    return this;
+  }
+
+  /**
+   * Adds a term to filter results by power.
+   *
+   * <p>Note: {@code power} is a double because there are some cards from Un- sets with fractional
+   * power values.
+   *
+   * @param filter the filter to add
+   * @return this {@code CardQuery}
+   */
+  public CardQuery power(MultiFilter<Double> filter) {
+    addFilter(POWER_KEY, filter);
+    return this;
+  }
+
+  /**
+   * Adds a term to filter results by power in relation to toughness or loyalty.
+   *
+   * @param filter the filter to add
+   * @return this {@code CardQuery}
+   * @throws IllegalArgumentException if the given value is {@link PTL#POWER}
+   */
+  public CardQuery relativePower(ComparingSingleFilter<PTL> filter) {
+    if (filter.isInvalid(value -> value != PTL.POWER)) {
+      throw new IllegalArgumentException("Power cannot be compared to itself");
+    }
+
+    addFilter(POWER_KEY, filter);
     return this;
   }
 
