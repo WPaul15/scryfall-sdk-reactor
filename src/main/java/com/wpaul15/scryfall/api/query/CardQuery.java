@@ -3,6 +3,7 @@ package com.wpaul15.scryfall.api.query;
 import static com.wpaul15.scryfall.api.query.Filters.is;
 
 import com.wpaul15.scryfall.api.query.constants.Colors;
+import com.wpaul15.scryfall.api.query.constants.MultiFace;
 import com.wpaul15.scryfall.api.query.constants.PTL;
 import com.wpaul15.scryfall.api.query.options.Printing;
 import com.wpaul15.scryfall.api.query.options.SortDirection;
@@ -549,7 +550,25 @@ public final class CardQuery {
     return this;
   }
 
-  public CardQuery multipleFacesOfType() {
+  /**
+   * Adds a term to filter results by multi-faced cards of the given type.
+   *
+   * @param multiFace the type of multi-faced card to filter by
+   * @return this {@code CardQuery}
+   */
+  public CardQuery multipleFacesOfType(MultiFace multiFace) {
+    addFilter(IS_KEY, is(multiFace));
+    return this;
+  }
+
+  /**
+   * Adds a term to filter results by multi-faced cards of the given type.
+   *
+   * @param filter the filter to add
+   * @return this {@code CardQuery}
+   */
+  public CardQuery multipleFacesOfType(SingleFilter<MultiFace> filter) {
+    addFilter(IS_KEY, filter);
     return this;
   }
 

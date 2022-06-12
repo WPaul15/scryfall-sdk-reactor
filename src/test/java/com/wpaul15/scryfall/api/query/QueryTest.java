@@ -15,6 +15,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import com.wpaul15.scryfall.api.query.constants.Colors;
+import com.wpaul15.scryfall.api.query.constants.MultiFace;
 import com.wpaul15.scryfall.api.query.constants.PTL;
 import com.wpaul15.scryfall.api.query.options.Printing;
 import com.wpaul15.scryfall.api.query.options.SortDirection;
@@ -126,7 +127,10 @@ public class QueryTest {
         arguments(findCardsWith().relativeToughness(lessThanOrEqualTo(PTL.POWER)), "tou<=pow"),
         arguments(findCardsWith().loyalty(equalTo(5)), "loy=5"),
         arguments(findCardsWith().loyalty(anyOf(0, 3)), "(loy=0 or loy=3)"),
-        arguments(findCardsWith().relativeLoyalty(greaterThan(PTL.TOUGHNESS)), "loy>tou"));
+        arguments(findCardsWith().relativeLoyalty(greaterThan(PTL.TOUGHNESS)), "loy>tou"),
+        arguments(findCardsWith().multipleFacesOfType(MultiFace.FLIP), "is:flip"),
+        arguments(
+            findCardsWith().multipleFacesOfType(not(MultiFace.MODAL_DOUBLE_FACED)), "-is:mdfc"));
   }
 
   @ParameterizedTest
