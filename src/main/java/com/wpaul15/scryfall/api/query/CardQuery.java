@@ -108,18 +108,7 @@ public final class CardQuery {
    * @param filter the filter to apply
    * @return this {@code CardQuery}
    */
-  public CardQuery color(ComparingFilter<Colors> filter) {
-    addFilter(COLOR_KEY, filter);
-    return this;
-  }
-
-  /**
-   * Adds a search term to filter results by color.
-   *
-   * @param filter the filter to apply
-   * @return this {@code CardQuery}
-   */
-  public CardQuery color(MultiFilter<Colors> filter) {
+  public CardQuery color(Filter<Colors> filter) {
     addFilter(COLOR_KEY, filter);
     return this;
   }
@@ -130,18 +119,7 @@ public final class CardQuery {
    * @param filter the filter to apply
    * @return this {@code CardQuery}
    */
-  public CardQuery colorIdentity(ComparingFilter<Colors> filter) {
-    addFilter(COLOR_IDENTITY_KEY, filter);
-    return this;
-  }
-
-  /**
-   * Adds a search term to filter results by color identity.
-   *
-   * @param filter the filter to apply
-   * @return this {@code CardQuery}
-   */
-  public CardQuery colorIdentity(MultiFilter<Colors> filter) {
+  public CardQuery colorIdentity(Filter<Colors> filter) {
     addFilter(COLOR_IDENTITY_KEY, filter);
     return this;
   }
@@ -384,18 +362,7 @@ public final class CardQuery {
    * @param filter the filter to add
    * @return this {@code CardQuery}
    */
-  public CardQuery manaProduced(ComparingFilter<Colors> filter) {
-    addFilter(MANA_PRODUCED_KEY, filter);
-    return this;
-  }
-
-  /**
-   * Adds a term to filter results by the color(s) of mana produced.
-   *
-   * @param filter the filter to add
-   * @return this {@code CardQuery}
-   */
-  public CardQuery manaProduced(MultiFilter<Colors> filter) {
+  public CardQuery manaProduced(Filter<Colors> filter) {
     addFilter(MANA_PRODUCED_KEY, filter);
     return this;
   }
