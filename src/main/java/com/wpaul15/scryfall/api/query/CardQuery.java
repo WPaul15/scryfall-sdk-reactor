@@ -577,7 +577,13 @@ public final class CardQuery {
     return this;
   }
 
+  /**
+   * Adds a term to filter results by funny cards, i.e. Un- cards, holiday cards, etc.
+   *
+   * @return this {@code CardQuery}
+   */
   public CardQuery funnyCards() {
+    addFilter(IS_KEY, is("funny"));
     return this;
   }
 

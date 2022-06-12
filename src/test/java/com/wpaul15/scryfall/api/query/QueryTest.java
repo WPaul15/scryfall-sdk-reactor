@@ -130,7 +130,8 @@ public class QueryTest {
         arguments(findCardsWith().relativeLoyalty(greaterThan(PTL.TOUGHNESS)), "loy>tou"),
         arguments(findCardsWith().multipleFacesOfType(MultiFace.FLIP), "is:flip"),
         arguments(
-            findCardsWith().multipleFacesOfType(not(MultiFace.MODAL_DOUBLE_FACED)), "-is:mdfc"));
+            findCardsWith().multipleFacesOfType(not(MultiFace.MODAL_DOUBLE_FACED)), "-is:mdfc"),
+        arguments(findCardsWith().funnyCards(), "is:funny"));
   }
 
   @ParameterizedTest
