@@ -3,6 +3,7 @@ package com.wpaul15.scryfall.api.query;
 import static com.wpaul15.scryfall.api.query.Filters.is;
 
 import com.wpaul15.scryfall.api.query.constants.Colors;
+import com.wpaul15.scryfall.api.query.constants.PTL;
 import com.wpaul15.scryfall.api.query.options.Printing;
 import com.wpaul15.scryfall.api.query.options.SortDirection;
 import com.wpaul15.scryfall.api.query.options.SortField;
@@ -325,7 +326,7 @@ public final class CardQuery {
    * @throws IllegalArgumentException if the given CMC value is negative
    */
   public CardQuery cmc(ComparingSingleFilter<Integer> filter) {
-    if (filter.isInvalid(value -> value >= 0)) {
+    if (filter.isInvalid(value -> value < 0)) {
       throw new IllegalArgumentException("CMC value must be non-negative");
     }
 
@@ -341,7 +342,7 @@ public final class CardQuery {
    * @throws IllegalArgumentException if any of the given CMC values are negative
    */
   public CardQuery cmc(MultiFilter<Integer> filter) {
-    if (filter.isInvalid(value -> value >= 0)) {
+    if (filter.isInvalid(value -> value < 0)) {
       throw new IllegalArgumentException("All CMC values must be non-negative");
     }
 
@@ -452,7 +453,7 @@ public final class CardQuery {
    * @throws IllegalArgumentException if the given value is {@link PTL#POWER}
    */
   public CardQuery relativePower(ComparingSingleFilter<PTL> filter) {
-    if (filter.isInvalid(value -> value != PTL.POWER)) {
+    if (filter.isInvalid(value -> value == PTL.POWER)) {
       throw new IllegalArgumentException("Power cannot be compared to itself");
     }
 

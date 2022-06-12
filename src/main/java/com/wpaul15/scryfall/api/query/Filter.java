@@ -27,8 +27,8 @@ class Filter<T> {
     negated = !negated;
   }
 
-  protected boolean isInvalid(Predicate<T> validator) {
-    return !values.stream().allMatch(validator);
+  protected boolean isInvalid(Predicate<T> invalidCondition) {
+    return values.stream().anyMatch(invalidCondition);
   }
 
   protected String toFilterString(String key) {
