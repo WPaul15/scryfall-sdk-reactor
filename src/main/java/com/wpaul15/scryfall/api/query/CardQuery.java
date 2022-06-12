@@ -418,9 +418,10 @@ public final class CardQuery {
   }
 
   /**
-   * Adds a term to filter results by power.
+   * Adds a term to filter results by power. A value of 0 will match both cards with a power of 0
+   * and cards with variable power.
    *
-   * <p>Note: {@code power} is a double because there are some cards from Un- sets with fractional
+   * <p>Note: The given value is a double because there are some cards from Un- sets with fractional
    * power values.
    *
    * @param filter the filter to add
@@ -432,9 +433,10 @@ public final class CardQuery {
   }
 
   /**
-   * Adds a term to filter results by power.
+   * Adds a term to filter results by power. A value of 0 will match both cards with a power of 0
+   * and cards with variable power.
    *
-   * <p>Note: {@code power} is a double because there are some cards from Un- sets with fractional
+   * <p>Note: The given value is a double because there are some cards from Un- sets with fractional
    * power values.
    *
    * @param filter the filter to add
@@ -462,10 +464,11 @@ public final class CardQuery {
   }
 
   /**
-   * Adds a term to filter results by toughness.
+   * Adds a term to filter results by toughness. A value of 0 will match both cards with a toughness
+   * of 0 and cards with variable toughness.
    *
-   * <p>Note: {@code toughness} is a double because there are some cards from Un- sets with
-   * fractional toughness values.
+   * <p>Note: The given value is a double because there are some cards from Un- sets with fractional
+   * toughness values.
    *
    * @param filter the filter to add
    * @return this {@code CardQuery}
@@ -476,10 +479,11 @@ public final class CardQuery {
   }
 
   /**
-   * Adds a term to filter results by toughness.
+   * Adds a term to filter results by toughness. A value of 0 will match both cards with a toughness
+   * of 0 and cards with variable toughness.
    *
-   * <p>Note: {@code toughness} is a double because there are some cards from Un- sets with
-   * fractional toughness values.
+   * <p>Note: The given value is a double because there are some cards from Un- sets with fractional
+   * toughness values.
    *
    * @param filter the filter to add
    * @return this {@code CardQuery}
@@ -506,7 +510,8 @@ public final class CardQuery {
   }
 
   /**
-   * Adds a term to filter results by loyalty.
+   * Adds a term to filter results by loyalty. A value of 0 will match both cards with a loyalty of
+   * 0 and cards with variable loyalty.
    *
    * @param filter the filter to add
    * @return this {@code CardQuery}
@@ -517,7 +522,8 @@ public final class CardQuery {
   }
 
   /**
-   * Adds a term to filter results by loyalty.
+   * Adds a term to filter results by loyalty. A value of 0 will match both cards with a loyalty of
+   * 0 and cards with variable loyalty.
    *
    * @param filter the filter to add
    * @return this {@code CardQuery}
