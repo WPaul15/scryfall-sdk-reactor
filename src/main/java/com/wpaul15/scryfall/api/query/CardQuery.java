@@ -108,6 +108,7 @@ public final class CardQuery {
    *
    * @param filter the filter to apply
    * @return this {@code CardQuery}
+   * @throws IllegalArgumentException if a color alias is combined with any other value
    */
   public CardQuery color(Filter<Colors> filter) {
     if (!(filter instanceof MultiFilter<Colors>)
@@ -138,6 +139,7 @@ public final class CardQuery {
    *
    * @param filter the filter to apply
    * @return this {@code CardQuery}
+   * @throws IllegalArgumentException if a color alias is combined with any other value
    */
   public CardQuery colorIdentity(Filter<Colors> filter) {
     if (!(filter instanceof MultiFilter<Colors>)
