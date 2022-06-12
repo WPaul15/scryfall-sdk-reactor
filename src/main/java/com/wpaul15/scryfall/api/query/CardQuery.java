@@ -15,6 +15,7 @@ import com.wpaul15.scryfall.api.query.options.Uniqueness;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -109,6 +110,25 @@ public final class CardQuery {
    * @return this {@code CardQuery}
    */
   public CardQuery color(Filter<Colors> filter) {
+    if (!(filter instanceof MultiFilter<Colors>)
+        && filter.containsInvalidCombination(
+            list ->
+                list.size() > 1
+                    && (Arrays.stream(Colors.values())
+                        .filter(
+                            color ->
+                                !List.of(
+                                        Colors.WHITE,
+                                        Colors.BLUE,
+                                        Colors.BLACK,
+                                        Colors.RED,
+                                        Colors.GREEN)
+                                    .contains(color))
+                        .anyMatch(list::contains)))) {
+      throw new IllegalArgumentException(
+          "Color aliases cannot be combined with other colors or color aliases");
+    }
+
     addFilter(COLOR_KEY, filter);
     return this;
   }
@@ -120,6 +140,25 @@ public final class CardQuery {
    * @return this {@code CardQuery}
    */
   public CardQuery colorIdentity(Filter<Colors> filter) {
+    if (!(filter instanceof MultiFilter<Colors>)
+        && filter.containsInvalidCombination(
+            list ->
+                list.size() > 1
+                    && (Arrays.stream(Colors.values())
+                        .filter(
+                            color ->
+                                !List.of(
+                                        Colors.WHITE,
+                                        Colors.BLUE,
+                                        Colors.BLACK,
+                                        Colors.RED,
+                                        Colors.GREEN)
+                                    .contains(color))
+                        .anyMatch(list::contains)))) {
+      throw new IllegalArgumentException(
+          "Color aliases cannot be combined with other colors or color aliases");
+    }
+
     addFilter(COLOR_IDENTITY_KEY, filter);
     return this;
   }
@@ -308,7 +347,7 @@ public final class CardQuery {
    * @throws IllegalArgumentException if the given CMC value is negative
    */
   public CardQuery cmc(ComparingSingleFilter<Integer> filter) {
-    if (filter.isInvalid(value -> value < 0)) {
+    if (filter.containsInvalidValue(value -> value < 0)) {
       throw new IllegalArgumentException("CMC value must be non-negative");
     }
 
@@ -324,7 +363,7 @@ public final class CardQuery {
    * @throws IllegalArgumentException if any of the given CMC values are negative
    */
   public CardQuery cmc(MultiFilter<Integer> filter) {
-    if (filter.isInvalid(value -> value < 0)) {
+    if (filter.containsInvalidValue(value -> value < 0)) {
       throw new IllegalArgumentException("All CMC values must be non-negative");
     }
 
@@ -426,7 +465,7 @@ public final class CardQuery {
    * @throws IllegalArgumentException if the given value is {@link PTL#POWER}
    */
   public CardQuery relativePower(ComparingSingleFilter<PTL> filter) {
-    if (filter.isInvalid(value -> value == PTL.POWER)) {
+    if (filter.containsInvalidValue(value -> value == PTL.POWER)) {
       throw new IllegalArgumentException("Power cannot be compared to itself");
     }
 
@@ -472,7 +511,7 @@ public final class CardQuery {
    * @throws IllegalArgumentException if the given value is {@link PTL#TOUGHNESS}
    */
   public CardQuery relativeToughness(ComparingSingleFilter<PTL> filter) {
-    if (filter.isInvalid(value -> value == PTL.TOUGHNESS)) {
+    if (filter.containsInvalidValue(value -> value == PTL.TOUGHNESS)) {
       throw new IllegalArgumentException("Toughness cannot be compared to itself");
     }
 
@@ -512,7 +551,7 @@ public final class CardQuery {
    * @throws IllegalArgumentException if the given value is {@link PTL#LOYALTY}
    */
   public CardQuery relativeLoyalty(ComparingSingleFilter<PTL> filter) {
-    if (filter.isInvalid(value -> value == PTL.LOYALTY)) {
+    if (filter.containsInvalidValue(value -> value == PTL.LOYALTY)) {
       throw new IllegalArgumentException("Loyalty cannot be compared to itself");
     }
 

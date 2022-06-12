@@ -151,6 +151,22 @@ public class QueryTest {
 
   private static Stream<Arguments> invalidFilterArguments() {
     return Stream.of(
+        arguments(
+            (Callable<CardQuery>)
+                () -> findCardsWith().color(greaterThan(Colors.GOLGARI, Colors.SIMIC))),
+        arguments(
+            (Callable<CardQuery>)
+                () -> findCardsWith().color(not(equalTo(Colors.RED, Colors.COLORLESS)))),
+        arguments(
+            (Callable<CardQuery>)
+                () ->
+                    findCardsWith()
+                        .colorIdentity(lessThanOrEqualTo(Colors.MULTICOLORED, Colors.WHITE))),
+        arguments(
+            (Callable<CardQuery>)
+                () ->
+                    findCardsWith()
+                        .colorIdentity(lessThan(Colors.BLACK, Colors.BLUE, Colors.JUND))),
         arguments((Callable<CardQuery>) () -> findCardsWith().cmc(equalTo(-1))),
         arguments((Callable<CardQuery>) () -> findCardsWith().cmc(anyOf(2, -1))),
         arguments(

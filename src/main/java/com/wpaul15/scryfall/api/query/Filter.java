@@ -26,8 +26,12 @@ class Filter<T> {
     negated = !negated;
   }
 
-  protected boolean isInvalid(Predicate<T> invalidCondition) {
+  protected boolean containsInvalidValue(Predicate<T> invalidCondition) {
     return values.stream().anyMatch(invalidCondition);
+  }
+
+  protected boolean containsInvalidCombination(Predicate<List<T>> invalidCondition) {
+    return invalidCondition.test(values);
   }
 
   protected String toFilterString(String key) {
