@@ -505,7 +505,41 @@ public final class CardQuery {
     return this;
   }
 
-  public CardQuery loyalty() {
+  /**
+   * Adds a term to filter results by loyalty.
+   *
+   * @param filter the filter to add
+   * @return this {@code CardQuery}
+   */
+  public CardQuery loyalty(ComparingSingleFilter<Integer> filter) {
+    addFilter(LOYALTY_KEY, filter);
+    return this;
+  }
+
+  /**
+   * Adds a term to filter results by loyalty.
+   *
+   * @param filter the filter to add
+   * @return this {@code CardQuery}
+   */
+  public CardQuery loyalty(MultiFilter<Integer> filter) {
+    addFilter(LOYALTY_KEY, filter);
+    return this;
+  }
+
+  /**
+   * Adds a term to filter results by loyalty in relation to power or toughness.
+   *
+   * @param filter the filter to add
+   * @return this {@code CardQuery}
+   * @throws IllegalArgumentException if the given value is {@link PTL#LOYALTY}
+   */
+  public CardQuery relativeLoyalty(ComparingSingleFilter<PTL> filter) {
+    if (filter.isInvalid(value -> value == PTL.LOYALTY)) {
+      throw new IllegalArgumentException("Loyalty cannot be compared to itself");
+    }
+
+    addFilter(LOYALTY_KEY, filter);
     return this;
   }
 

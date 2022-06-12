@@ -120,10 +120,13 @@ public class QueryTest {
         arguments(findCardsWith().power(lessThan(6.0)), "pow<6.0"),
         arguments(findCardsWith().power(not(greaterThan(2.0))), "-pow>2.0"),
         arguments(findCardsWith().power(anyOf(2.0, 3.0)), "(pow=2.0 or pow=3.0)"),
-        arguments(findCardsWith().relativePower(greaterThan(PTL.TOUGHNESS)), "pow>tou"),
+        arguments(findCardsWith().relativePower(greaterThan(PTL.LOYALTY)), "pow>loy"),
         arguments(findCardsWith().toughness(greaterThanOrEqualTo(4.0)), "tou>=4.0"),
         arguments(findCardsWith().toughness(anyOf(4.0, 5.0)), "(tou=4.0 or tou=5.0)"),
-        arguments(findCardsWith().relativeToughness(lessThanOrEqualTo(PTL.POWER)), "tou<=pow"));
+        arguments(findCardsWith().relativeToughness(lessThanOrEqualTo(PTL.POWER)), "tou<=pow"),
+        arguments(findCardsWith().loyalty(equalTo(5)), "loy=5"),
+        arguments(findCardsWith().loyalty(anyOf(0, 3)), "(loy=0 or loy=3)"),
+        arguments(findCardsWith().relativeLoyalty(greaterThan(PTL.TOUGHNESS)), "loy>tou"));
   }
 
   @ParameterizedTest
