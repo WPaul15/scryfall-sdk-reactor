@@ -14,6 +14,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
+import com.wpaul15.scryfall.api.model.Rarity;
+import com.wpaul15.scryfall.api.query.constants.CardAttribute;
 import com.wpaul15.scryfall.api.query.constants.Colors;
 import com.wpaul15.scryfall.api.query.constants.MultiFace;
 import com.wpaul15.scryfall.api.query.constants.PTL;
@@ -131,7 +133,14 @@ public class QueryTest {
         arguments(findCardsWith().multipleFacesOfType(MultiFace.FLIP), "is:flip"),
         arguments(
             findCardsWith().multipleFacesOfType(not(MultiFace.MODAL_DOUBLE_FACED)), "-is:mdfc"),
-        arguments(findCardsWith().funnyCards(), "is:funny"));
+        arguments(findCardsWith().funnyCards(), "is:funny"),
+        arguments(findCardsWith().rarity(equalTo(Rarity.MYTHIC)), "r=mythic"),
+        arguments(
+            findCardsWith().rarity(anyOf(Rarity.SPECIAL, Rarity.BONUS)), "(r=special or r=bonus)"),
+        arguments(findCardsWith().newPrintingsOf(CardAttribute.RARITY), "new:rarity"),
+        arguments(findCardsWith().noNewPrintingsOf(CardAttribute.RARITY), "-new:rarity"),
+        arguments(findCardsWith().printsIn(Rarity.RARE), "in:rare"),
+        arguments(findCardsWith().noPrintsIn(Rarity.UNCOMMON), "-in:uncommon"));
   }
 
   @ParameterizedTest

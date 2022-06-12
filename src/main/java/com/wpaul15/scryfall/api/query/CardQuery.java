@@ -1,7 +1,10 @@
 package com.wpaul15.scryfall.api.query;
 
 import static com.wpaul15.scryfall.api.query.Filters.is;
+import static com.wpaul15.scryfall.api.query.Filters.not;
 
+import com.wpaul15.scryfall.api.model.Rarity;
+import com.wpaul15.scryfall.api.query.constants.CardAttribute;
 import com.wpaul15.scryfall.api.query.constants.Colors;
 import com.wpaul15.scryfall.api.query.constants.MultiFace;
 import com.wpaul15.scryfall.api.query.constants.PTL;
@@ -587,7 +590,25 @@ public final class CardQuery {
     return this;
   }
 
-  public CardQuery rarity() {
+  /**
+   * Adds a term to filter results by rarity.
+   *
+   * @param filter the filter to add
+   * @return this {@code CardQuery}
+   */
+  public CardQuery rarity(ComparingSingleFilter<Rarity> filter) {
+    addFilter(RARITY_KEY, filter);
+    return this;
+  }
+
+  /**
+   * Adds a term to filter results by rarity.
+   *
+   * @param filter the filter to add
+   * @return this {@code CardQuery}
+   */
+  public CardQuery rarity(MultiFilter<Rarity> filter) {
+    addFilter(RARITY_KEY, filter);
     return this;
   }
 
@@ -712,11 +733,49 @@ public final class CardQuery {
     return this;
   }
 
-  public CardQuery firstPrintOf() {
+  /**
+   * Adds a term to filter results by cards printed for the first time with a new value of the given
+   * attribute.
+   *
+   * @param cardAttribute the card attribute to filter by
+   * @return this {@code CardQuery}
+   */
+  public CardQuery newPrintingsOf(CardAttribute cardAttribute) {
+    addFilter(NEW_KEY, is(cardAttribute));
     return this;
   }
 
-  public CardQuery printsIn() {
+  /**
+   * Adds a term to filter results by cards that have never been printed with new values of the
+   * given attribute.
+   *
+   * @param cardAttribute the card attribute to filter by
+   * @return this {@code CardQuery}
+   */
+  public CardQuery noNewPrintingsOf(CardAttribute cardAttribute) {
+    addFilter(NEW_KEY, not(is(cardAttribute)));
+    return this;
+  }
+
+  /**
+   * Adds a term to filter results by cards that have ever been printed at the given rarity.
+   *
+   * @param rarity the rarity to filter by
+   * @return this {@code CardQuery}
+   */
+  public CardQuery printsIn(Rarity rarity) {
+    addFilter(IN_KEY, is(rarity));
+    return this;
+  }
+
+  /**
+   * Adds a term to filter results by cards that have never been printed at the given rarity.
+   *
+   * @param rarity the rarity to filter by
+   * @return this {@code CardQuery}
+   */
+  public CardQuery noPrintsIn(Rarity rarity) {
+    addFilter(IN_KEY, not(is(rarity)));
     return this;
   }
 
