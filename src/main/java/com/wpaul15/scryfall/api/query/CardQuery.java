@@ -21,6 +21,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -78,6 +79,8 @@ public final class CardQuery {
   private static final String NUM_PAPER_SETS_KEY = "papersets";
   private static final String LANGUAGE_KEY = "language";
   private static final String NEW_KEY = "new";
+
+  private static final Pattern VALID_SET_CODE = Pattern.compile("^[A-Za-z\\d]{3,5}$");
 
   final Map<String, List<Filter<?>>> filters = new LinkedHashMap<>();
   CardQueryOptions searchOptions;
@@ -620,7 +623,63 @@ public final class CardQuery {
     return this;
   }
 
-  public CardQuery set() {
+  /**
+   * Adds a term to filter results by set. The value must be a 3-, 4-, or 5-letter set code.
+   *
+   * <p>Note: 4- and 5-letter codes are non-standard codes given by Scryfall to token sets,
+   * promotional sets, etc.
+   *
+   * @param setCode the set code to filter by
+   * @return this {@code CardQuery}
+   * @throws IllegalArgumentException if the given value is not an alphanumeric string between 3 and
+   *     5 characters long, inclusive
+   */
+  public CardQuery set(String setCode) {
+    if (!VALID_SET_CODE.matcher(setCode).matches()) {
+      throw new IllegalArgumentException("Must be a valid set code");
+    }
+
+    addFilter(SET_KEY, is(setCode));
+    return this;
+  }
+
+  /**
+   * Adds a term to filter results by set. The value must be a 3-, 4-, or 5-letter set code.
+   *
+   * <p>Note: 4- and 5-letter codes are non-standard codes given by Scryfall to token sets,
+   * promotional sets, etc.
+   *
+   * @param filter the filter to add
+   * @return this {@code CardQuery}
+   * @throws IllegalArgumentException if the given value is not an alphanumeric string between 3 and
+   *     5 characters long, inclusive
+   */
+  public CardQuery set(SingleFilter<String> filter) {
+    if (filter.containsInvalidValue(value -> !VALID_SET_CODE.matcher(value).matches())) {
+      throw new IllegalArgumentException("Must be a valid set code");
+    }
+
+    addFilter(SET_KEY, filter);
+    return this;
+  }
+
+  /**
+   * Adds a term to filter results by set. The value must be a 3-, 4-, or 5-letter set code.
+   *
+   * <p>Note: 4- and 5-letter codes are non-standard codes given by Scryfall to token sets,
+   * promotional sets, etc.
+   *
+   * @param filter the filter to add
+   * @return this {@code CardQuery}
+   * @throws IllegalArgumentException if the given value is not an alphanumeric string between 3 and
+   *     5 characters long, inclusive
+   */
+  public CardQuery set(MultiFilter<String> filter) {
+    if (filter.containsInvalidValue(value -> !VALID_SET_CODE.matcher(value).matches())) {
+      throw new IllegalArgumentException("Must be a valid set code");
+    }
+
+    addFilter(SET_KEY, filter);
     return this;
   }
 

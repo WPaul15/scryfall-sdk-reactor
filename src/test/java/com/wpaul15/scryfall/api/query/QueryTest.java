@@ -140,7 +140,10 @@ public class QueryTest {
         arguments(findCardsWith().newPrintingsOf(CardAttribute.RARITY), "new:rarity"),
         arguments(findCardsWith().noNewPrintingsOf(CardAttribute.RARITY), "-new:rarity"),
         arguments(findCardsWith().printsIn(Rarity.RARE), "in:rare"),
-        arguments(findCardsWith().noPrintsIn(Rarity.UNCOMMON), "-in:uncommon"));
+        arguments(findCardsWith().noPrintsIn(Rarity.UNCOMMON), "-in:uncommon"),
+        arguments(findCardsWith().set("ISD"), "s:ISD"),
+        arguments(findCardsWith().set(not("KTK")), "-s:KTK"),
+        arguments(findCardsWith().set(anyOf("RTR", "GTC", "DGM")), "(s:RTR or s:GTC or s:DGM)"));
   }
 
   @ParameterizedTest
@@ -175,6 +178,9 @@ public class QueryTest {
         arguments(
             (Callable<CardQuery>) () -> findCardsWith().relativeToughness(equalTo(PTL.TOUGHNESS))),
         arguments(
-            (Callable<CardQuery>) () -> findCardsWith().relativeLoyalty(lessThan(PTL.LOYALTY))));
+            (Callable<CardQuery>) () -> findCardsWith().relativeLoyalty(lessThan(PTL.LOYALTY))),
+        arguments((Callable<CardQuery>) () -> findCardsWith().set("abcdef")),
+        arguments((Callable<CardQuery>) () -> findCardsWith().set(not("AB#"))),
+        arguments((Callable<CardQuery>) () -> findCardsWith().set(anyOf("ABC", "XYZ", "def4$"))));
   }
 }
