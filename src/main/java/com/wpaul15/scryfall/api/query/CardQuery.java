@@ -688,7 +688,39 @@ public final class CardQuery {
     return this;
   }
 
-  public CardQuery cardNumber() {
+  /**
+   * Adds a term to filter results by card number. Combine with {@link CardQuery#set} to find a
+   * specific printing.
+   *
+   * @param filter the filter to add
+   * @return this {@code CardQuery}
+   * @throws IllegalArgumentException if the given value is negative
+   * @see CardQuery#set
+   */
+  public CardQuery cardNumber(ComparingSingleFilter<Integer> filter) {
+    if (filter.containsInvalidValue(value -> value < 0)) {
+      throw new IllegalArgumentException("Card number must be non-negative");
+    }
+
+    addFilter(CARD_NUMBER_KEY, filter);
+    return this;
+  }
+
+  /**
+   * Adds a term to filter results by card number. Combine with {@link CardQuery#set} to find a
+   * specific printing.
+   *
+   * @param filter the filter to add
+   * @return this {@code CardQuery}
+   * @throws IllegalArgumentException if the given value is negative
+   * @see CardQuery#set
+   */
+  public CardQuery cardNumber(MultiFilter<Integer> filter) {
+    if (filter.containsInvalidValue(value -> value < 0)) {
+      throw new IllegalArgumentException("All card numbers must be non-negative");
+    }
+
+    addFilter(CARD_NUMBER_KEY, filter);
     return this;
   }
 
